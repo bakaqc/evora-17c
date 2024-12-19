@@ -1,0 +1,33 @@
+name: Commit message validation
+
+on:
+  push:
+    branches:
+      - feature/*
+      - hotfix/*
+
+jobs:
+  validate:
+    name: Validate commit messages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.18.1
+
+      - name: Install pnpm
+        run: |
+          npm i -g pnpm
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - name: Validate commit messages
+        run: |
+          pnpm commitlint --last --verbose
