@@ -31,7 +31,7 @@
 		"class-validator": "0.14.1",
 		"date-fns": "4.1.0",
 		"module-alias": "2.2.3",
-		"mongoose": "8.6.3",
+		"mongoose": "8.8.3",
 		"morgan": "1.10.0",
 		"passport": "0.7.0",
 		"passport-google-oauth20": "2.0.0",
