@@ -8,18 +8,21 @@
     - [Tools](#tools)
     - [Extensions](#extensions)
   - [Commit Conventions](#commit-conventions)
+  - [Branch Naming Conventions](#branch-naming-conventions)
 
 ## Requirements
 
 ### Tools
 
-- Environment: `Node.js v20.18.1`
-  - You can download it from [here](https://nodejs.org/en/download/).
-- Package manager: `pnpm`
-  - To install it, run `npm i -g pnpm` after installing Node.js.
-  - Make sure install `pnpm v9`
-- Code editor: `Visual Studio Code`
-  - You can download it from [here](https://code.visualstudio.com/).
+- **Environment:** `Node.js v20.18.1`  
+  You can download it from [here](https://nodejs.org/en/download/).
+
+- **Package Manager:** `pnpm`  
+  To install it, run `npm i -g pnpm` after installing Node.js.  
+  Ensure you install `pnpm v9`.
+
+- **Code Editor:** `Visual Studio Code`  
+  You can download it from [here](https://code.visualstudio.com/).
 
 ### Extensions
 
@@ -31,24 +34,51 @@
 
 Format: `<type>: <subject>`
 
-Conventions:
+**Conventions:**
 
-- `add`: Add a new code what does not exist.
-- `update`: Update an existing code.
-- `fix`: Fix a bug, issue, or error, tool scan warning.
+- `add`: Add a new code or feature.
+- `update`: Update existing code or functionality.
+- `fix`: Fix a bug, issue, or error, including tool scan warnings.
 - `docs`: Update or add documentation.
-- `feat`: Add a new feature. (Usually used in the PR title)
-- `refactor`: Refactor an existing code.
-- `delete`: Delete an existing code.
+- `feat`: Add a new feature. (Usually used in PR titles.)
+- `refactor`: Refactor existing code without adding new functionality.
+- `delete`: Remove existing code or features.
 
-Examples:
+**Examples:**
 
-- `add: add a new feature`
-- `update: update a function`
-- `fix: fix a bug`
-- `docs: update contributing guidelines`
-- `feat: add a new feature`
-- `refactor: refactor a function`
-- `delete: delete a function`
+- `add: add user authentication`
+- `update: update dashboard layout`
+- `fix: fix login issue`
+- `docs: update README`
+- `feat: implement user notifications`
+- `refactor: optimize database queries`
+- `delete: remove deprecated API endpoints`
 
-> **Note**: Please follow the conventions to keep the commit history clean and easy to read.
+> **Note:** Following these conventions ensures a clean and easy-to-read commit history.
+
+## Branch Naming Conventions
+
+To maintain consistency and clarity in the development process, we follow these branch naming conventions:
+
+- **feature/**: For branches related to new features.  
+  Example: `feature/user-authentication`
+
+- **bugfix/**: For branches related to bug fixes.  
+  Example: `bugfix/fix-login-error`
+
+- **hotfix/**: For urgent bug fixes in production.  
+  Example: `hotfix/security-patch`
+
+- **release/**: For preparing new releases.  
+  Example: `release/v1.2.0`
+
+### General Rules
+
+1. Use lowercase letters and hyphens (`-`) to separate words.  
+   Example: `feature/add-user-registration`
+
+2. Avoid special characters and spaces in branch names.
+
+3. Keep branch names concise yet descriptive to reflect their purpose.
+
+> **Note:** Following these rules helps the team work efficiently and maintain clear project history.
