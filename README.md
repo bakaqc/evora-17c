@@ -4,6 +4,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/bakaqc/evora-17c)
 ![GitHub repo size](https://img.shields.io/github/repo-size/bakaqc/evora-17c)
 ![GitHub License](https://img.shields.io/github/license/bakaqc/evora-17c)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bakaqc_evora-17c&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bakaqc_evora-17c)
 
 > Evora connects customers with event organizers quickly through detailed online booking.
 
