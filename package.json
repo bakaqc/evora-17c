@@ -1,12 +1,20 @@
 {
-  "name": "evora-17c",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"name": "evora",
+	"description": "Evora connects customers with event organizers quickly through detailed online booking.",
+	"repository": "https://github.com/bakaqc/evora-17c",
+	"author": "Quốc Chương",
+	"license": "GPL-3.0 license",
+	"private": true,
+	"scripts": {
+		"postinstall": "husky",
+		"lint-staged": "lint-staged"
+	},
+	"dependencies": {
+		"@commitlint/cli": "19.6.1",
+		"@commitlint/config-conventional": "19.6.0",
+		"@trivago/prettier-plugin-sort-imports": "5.2.0",
+		"husky": "9.1.7",
+		"lint-staged": "15.2.11",
+		"prettier": "3.4.2"
+	}
 }
