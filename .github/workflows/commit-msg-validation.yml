@@ -3,6 +3,8 @@ name: Commit message validation
 on:
   push:
     branches:
+      - main
+      - dev
       - feature/*
       - hotfix/*
 
