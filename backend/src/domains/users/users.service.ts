@@ -116,6 +116,22 @@ export class UsersService {
 		};
 	}
 
+	async delete(identifier: string, isEmail = false) {
+		const user = await this.findUser(identifier, isEmail);
+
+		await this.userModel.deleteOne({ _id: user._id });
+
+		this.logger.debug(
+			`Deleted user with ${isEmail ? 'email' : 'ID'} ${identifier}`,
+		);
+		this.logger.log('User deleted successfully');
+
+		return {
+			success: true,
+			message: 'User deleted successfully.',
+		};
+	}
+
 	async findUser(identifier: string, isEmail = false) {
 		const query = isEmail ? { email: identifier } : { _id: identifier };
 

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateUserDto } from '@/domains/users/dto/createUser.dto';
@@ -33,5 +41,11 @@ export class UsersController {
 	) {
 		const isEmail = identifier.includes('@');
 		return this.usersService.update(identifier, updateUserDto, isEmail);
+	}
+
+	@Delete(':identifier')
+	async delete(@Param('identifier') identifier: string) {
+		const isEmail = identifier.includes('@');
+		return this.usersService.delete(identifier, isEmail);
 	}
 }
