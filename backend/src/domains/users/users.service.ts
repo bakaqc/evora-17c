@@ -75,4 +75,32 @@ export class UsersService {
 			data: users,
 		};
 	}
+
+	async getOne(identifier: string, isEmail = false) {
+		const query = isEmail ? { email: identifier } : { _id: identifier };
+
+		const user = await this.userModel
+			.findOne(query)
+			.select('-hashedPassword -__v');
+
+		if (!user) {
+			const identifierType = isEmail ? 'email' : 'ID';
+			this.logger.error(`User with ${identifierType} ${identifier} not found`);
+
+			throw new NotFoundException('User not found');
+		}
+
+		this.logger.debug(
+			`Found user with ${isEmail ? 'email' : 'ID'} ${identifier}`,
+			user,
+		);
+
+		this.logger.log('User fetched successfully');
+
+		return {
+			success: true,
+			message: 'User fetched successfully.',
+			data: user,
+		};
+	}
 }
