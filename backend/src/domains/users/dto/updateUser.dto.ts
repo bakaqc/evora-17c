@@ -1,40 +1,53 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsPhoneNumber } from 'class-validator';
+import { IsIn, IsPhoneNumber, ValidateIf } from 'class-validator';
 
-export class CreateUserDto {
+export class UpdateUserDto {
 	@ApiPropertyOptional({ description: 'User full name' })
-	fullName: string;
+	@ValidateIf((o) => o.fullName !== undefined)
+	fullName?: string;
 
 	@ApiPropertyOptional({ description: 'User email' })
-	email: string;
+	@ValidateIf((o) => o.email !== undefined)
+	email?: string;
 
 	@ApiPropertyOptional({ description: 'User phone number' })
-	@IsPhoneNumber('VN')
-	phoneNumber: string;
+	@ValidateIf((o) => o.phoneNumber !== undefined)
+	@IsPhoneNumber('VN', { message: 'Invalid phone number' })
+	phoneNumber?: string;
 
 	@ApiPropertyOptional({ description: 'User address' })
-	address: string;
+	@ValidateIf((o) => o.address !== undefined)
+	address?: string;
 
 	@ApiPropertyOptional({ description: 'User date of birth' })
-	dateOfBirth: Date;
+	@ValidateIf((o) => o.dateOfBirth !== undefined)
+	dateOfBirth?: Date;
 
 	@ApiPropertyOptional({ description: 'User gender' })
-	@IsIn(['male', 'female'])
-	gender: string;
+	@ValidateIf((o) => o.gender !== undefined)
+	@IsIn(['male', 'female'], { message: 'Gender must be male or female' })
+	gender?: string;
 
 	@ApiPropertyOptional({ description: 'User avatar' })
-	avatar: string;
+	@ValidateIf((o) => o.avatar !== undefined)
+	avatar?: string;
 
 	@ApiPropertyOptional({ description: 'User role' })
-	@IsIn(['user', 'admin', 'super-admin'])
-	role: string;
+	@ValidateIf((o) => o.role !== undefined)
+	@IsIn(['user', 'admin', 'super-admin'], {
+		message: 'Role must be user, admin or super-admin',
+	})
+	role?: string;
 
 	@ApiPropertyOptional({ description: 'User verification code' })
-	verificationCode: string;
+	@ValidateIf((o) => o.verificationCode !== undefined)
+	verificationCode?: string;
 
 	@ApiPropertyOptional({ description: 'User verification code expires' })
-	verificationCodeExpires: Date;
+	@ValidateIf((o) => o.verificationCodeExpires !== undefined)
+	verificationCodeExpires?: Date;
 
 	@ApiPropertyOptional({ description: 'User is verified' })
-	isVerified: boolean;
+	@ValidateIf((o) => o.isVerified !== undefined)
+	isVerified?: boolean;
 }

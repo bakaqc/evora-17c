@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateUserDto } from '@/domains/users/dto/createUser.dto';
+import { UpdateUserDto } from '@/domains/users/dto/updateUser.dto';
 import { User } from '@/schemas/user.schema';
 import { hash } from '@/utils/hash.util';
 
@@ -46,13 +47,10 @@ export class UsersService {
 
 		this.logger.log(`User with email ${createdUser.email} created`);
 
-		const userObject = createdUser.toObject();
-		delete userObject.hashedPassword;
-
 		return {
 			success: true,
 			message: 'User created successfully.',
-			data: userObject,
+			data: this.cleanUser(createdUser),
 		};
 	}
 
@@ -77,6 +75,48 @@ export class UsersService {
 	}
 
 	async getOne(identifier: string, isEmail = false) {
+		const user = await this.findUser(identifier, isEmail);
+
+		this.logger.debug(
+			`Found user with ${isEmail ? 'email' : 'ID'} ${identifier}`,
+			user,
+		);
+		this.logger.log('User fetched successfully');
+
+		return {
+			success: true,
+			message: 'User fetched successfully.',
+			data: this.cleanUser(user),
+		};
+	}
+
+	async update(
+		identifier: string,
+		updateUserDto: UpdateUserDto,
+		isEmail = false,
+	) {
+		const user = await this.findUser(identifier, isEmail);
+
+		const updatedUser = await this.userModel.findOneAndUpdate(
+			{ _id: user._id },
+			updateUserDto,
+			{ new: true },
+		);
+
+		this.logger.debug(
+			`Updated user with ${isEmail ? 'email' : 'ID'} ${identifier}`,
+			updatedUser,
+		);
+		this.logger.log('User updated successfully');
+
+		return {
+			success: true,
+			message: 'User updated successfully.',
+			data: this.cleanUser(updatedUser),
+		};
+	}
+
+	async findUser(identifier: string, isEmail = false) {
 		const query = isEmail ? { email: identifier } : { _id: identifier };
 
 		const user = await this.userModel
@@ -86,21 +126,15 @@ export class UsersService {
 		if (!user) {
 			const identifierType = isEmail ? 'email' : 'ID';
 			this.logger.error(`User with ${identifierType} ${identifier} not found`);
-
 			throw new NotFoundException('User not found');
 		}
 
-		this.logger.debug(
-			`Found user with ${isEmail ? 'email' : 'ID'} ${identifier}`,
-			user,
-		);
+		return user;
+	}
 
-		this.logger.log('User fetched successfully');
-
-		return {
-			success: true,
-			message: 'User fetched successfully.',
-			data: user,
-		};
+	cleanUser(user: any) {
+		const userObject = user.toObject();
+		delete userObject.hashedPassword;
+		return userObject;
 	}
 }

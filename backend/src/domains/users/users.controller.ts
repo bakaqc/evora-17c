@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateUserDto } from '@/domains/users/dto/createUser.dto';
+import { UpdateUserDto } from '@/domains/users/dto/updateUser.dto';
 import { UsersService } from '@/domains/users/users.service';
 
 @ApiTags('Users')
@@ -23,5 +24,14 @@ export class UsersController {
 	async getOne(@Param('identifier') identifier: string) {
 		const isEmail = identifier.includes('@');
 		return this.usersService.getOne(identifier, isEmail);
+	}
+
+	@Put(':identifier')
+	async update(
+		@Param('identifier') identifier: string,
+		@Body() updateUserDto: UpdateUserDto,
+	) {
+		const isEmail = identifier.includes('@');
+		return this.usersService.update(identifier, updateUserDto, isEmail);
 	}
 }
