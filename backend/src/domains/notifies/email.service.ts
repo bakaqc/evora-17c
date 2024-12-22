@@ -12,12 +12,14 @@ export class EmailService {
 				user: process.env.EMAIL_USERNAME,
 				pass: process.env.EMAIL_PASSWORD,
 			},
+			debug: true,
+			logger: true,
 		});
 	}
 
 	async sendEmail(to: string, subject: string, text: string) {
 		const mailOptions = {
-			from: 'your-email@gmail.com',
+			from: process.env.EMAIL_USERNAME,
 			to,
 			subject,
 			text,
