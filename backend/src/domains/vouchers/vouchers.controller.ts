@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreateVoucherDto } from '@/domains/vouchers/dto/createVoucher.dto';
+import { UpdateVoucherDto } from '@/domains/vouchers/dto/updateVoucher.dto';
 import { VouchersService } from '@/domains/vouchers/vouchers.service';
 
 @ApiTags('Vouchers')
@@ -25,5 +26,14 @@ export class VouchersController {
 	@Get(':identifier')
 	async getOne(@Param('identifier') identifier: string) {
 		return this.vouchersService.getOne(identifier);
+	}
+
+	@ApiOperation({ summary: 'Update a voucher by ID or Code' })
+	@Put(':identifier')
+	async update(
+		@Param('identifier') identifier: string,
+		@Body() updateVoucherDto: UpdateVoucherDto,
+	) {
+		return this.vouchersService.update(identifier, updateVoucherDto);
 	}
 }

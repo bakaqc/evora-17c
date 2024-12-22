@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateVoucherDto } from '@/domains/vouchers/dto/createVoucher.dto';
+import { UpdateVoucherDto } from '@/domains/vouchers/dto/updateVoucher.dto';
 import { Voucher } from '@/schemas/voucher.schema';
 
 @Injectable()
@@ -65,6 +66,7 @@ export class VouchersService {
 		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
 
 		const query = isObjectId ? { _id: identifier } : { code: identifier };
+
 		const voucher = await this.voucherModel.findOne(query).select('-__v');
 
 		if (!voucher) {
@@ -82,6 +84,36 @@ export class VouchersService {
 			success: true,
 			message: 'Voucher fetched successfully.',
 			data: voucher,
+		};
+	}
+
+	async update(identifier: string, updateVoucherDto: UpdateVoucherDto) {
+		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+
+		const query = isObjectId ? { _id: identifier } : { code: identifier };
+
+		const updatedVoucher = await this.voucherModel
+			.findOneAndUpdate(query, updateVoucherDto, {
+				new: true,
+				runValidators: true,
+			})
+			.select('-__v');
+
+		if (!updatedVoucher) {
+			this.logger.error(
+				`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} not found!`,
+			);
+			throw new NotFoundException('Voucher not found');
+		}
+
+		this.logger.log(
+			`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} updated successfully`,
+		);
+
+		return {
+			success: true,
+			message: 'Voucher updated successfully.',
+			data: updatedVoucher,
 		};
 	}
 }
