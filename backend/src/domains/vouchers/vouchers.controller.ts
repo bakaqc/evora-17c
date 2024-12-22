@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreateVoucherDto } from '@/domains/vouchers/dto/createVoucher.dto';
@@ -35,5 +43,11 @@ export class VouchersController {
 		@Body() updateVoucherDto: UpdateVoucherDto,
 	) {
 		return this.vouchersService.update(identifier, updateVoucherDto);
+	}
+
+	@ApiOperation({ summary: 'Delete a voucher by ID or Code' })
+	@Delete(':identifier')
+	async delete(@Param('identifier') identifier: string) {
+		return this.vouchersService.delete(identifier);
 	}
 }

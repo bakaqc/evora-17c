@@ -63,21 +63,17 @@ export class VouchersService {
 	}
 
 	async getOne(identifier: string) {
-		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
-
-		const query = isObjectId ? { _id: identifier } : { code: identifier };
-
-		const voucher = await this.voucherModel.findOne(query).select('-__v');
+		const voucher = await this.findVoucherByIdentifier(identifier);
 
 		if (!voucher) {
 			this.logger.error(
-				`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} not found!`,
+				`Voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier} not found!`,
 			);
 			throw new NotFoundException('Voucher not found');
 		}
 
 		this.logger.log(
-			`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} fetched successfully`,
+			`Voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier} fetched successfully`,
 		);
 
 		return {
@@ -88,26 +84,29 @@ export class VouchersService {
 	}
 
 	async update(identifier: string, updateVoucherDto: UpdateVoucherDto) {
-		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+		const voucher = await this.findVoucherByIdentifier(identifier);
 
-		const query = isObjectId ? { _id: identifier } : { code: identifier };
+		if (!voucher) {
+			this.logger.error(
+				`Voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier} not found!`,
+			);
+			throw new NotFoundException('Voucher not found');
+		}
+
+		this.logger.debug(
+			`Updating voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier}`,
+			updateVoucherDto,
+		);
 
 		const updatedVoucher = await this.voucherModel
-			.findOneAndUpdate(query, updateVoucherDto, {
+			.findOneAndUpdate({ _id: voucher._id }, updateVoucherDto, {
 				new: true,
 				runValidators: true,
 			})
 			.select('-__v');
 
-		if (!updatedVoucher) {
-			this.logger.error(
-				`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} not found!`,
-			);
-			throw new NotFoundException('Voucher not found');
-		}
-
 		this.logger.log(
-			`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} updated successfully`,
+			`Voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier} updated successfully`,
 		);
 
 		return {
@@ -115,5 +114,34 @@ export class VouchersService {
 			message: 'Voucher updated successfully.',
 			data: updatedVoucher,
 		};
+	}
+
+	async delete(identifier: string) {
+		const voucher = await this.findVoucherByIdentifier(identifier);
+
+		if (!voucher) {
+			this.logger.error(
+				`Voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier} not found!`,
+			);
+			throw new NotFoundException('Voucher not found');
+		}
+
+		await this.voucherModel.findOneAndDelete({ _id: voucher._id });
+
+		this.logger.log(
+			`Voucher with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'code'} ${identifier} deleted successfully`,
+		);
+
+		return {
+			success: true,
+			message: 'Voucher deleted successfully.',
+		};
+	}
+
+	async findVoucherByIdentifier(identifier: string) {
+		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+		const query = isObjectId ? { _id: identifier } : { code: identifier };
+
+		return await this.voucherModel.findOne(query).select('-__v');
 	}
 }
