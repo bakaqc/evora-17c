@@ -43,4 +43,16 @@ export class CategoriesService {
 			data: createdCategory,
 		};
 	}
+
+	async getAll() {
+		const categories = await this.categoryModel.find().select('-__v');
+
+		this.logger.log('Categories fetched successfully');
+
+		return {
+			success: true,
+			message: 'Categories fetched successfully.',
+			data: categories,
+		};
+	}
 }
