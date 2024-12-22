@@ -3,8 +3,8 @@ import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Booking {
-	@Prop({ type: Types.ObjectId, ref: 'Event', required: true })
-	event: Types.ObjectId;
+	@Prop({ type: Types.ObjectId, ref: 'Party', required: true })
+	party: Types.ObjectId;
 
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user: Types.ObjectId;

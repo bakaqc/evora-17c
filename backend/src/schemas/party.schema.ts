@@ -37,9 +37,6 @@ export class Event {
 
 	@Prop({ required: true })
 	ratingCount: number;
-
-	@Prop({ default: false })
-	isDeleted: boolean;
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);
