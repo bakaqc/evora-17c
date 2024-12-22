@@ -6,8 +6,12 @@ export class Party {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user: Types.ObjectId;
 
-	@Prop({ type: Types.ObjectId, ref: 'Category', required: true })
-	category: Types.ObjectId;
+	@Prop({
+		type: String,
+		enum: ['Sinh nhật', 'Đám cưới', 'Khai trương', 'Thôi nôi'],
+		required: true,
+	})
+	category: string;
 
 	@Prop({ required: true })
 	title: string;

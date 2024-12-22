@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
 	IsArray,
+	IsEnum,
 	IsNotEmpty,
 	IsNumber,
 	IsOptional,
@@ -17,9 +18,13 @@ export class CreatePartyDto {
 	@IsNotEmpty()
 	user: string;
 
-	@ApiProperty({ description: 'Category of parties' })
+	@ApiProperty({
+		description: 'Category of parties',
+		enum: ['Sinh nhật', 'Đám cưới', 'Khai trương', 'Thôi nôi'],
+	})
 	@IsString()
 	@IsNotEmpty()
+	@IsEnum(['Sinh nhật', 'Đám cưới', 'Khai trương', 'Thôi nôi'])
 	category: string;
 
 	@ApiProperty({ description: 'Party title' })
@@ -35,6 +40,11 @@ export class CreatePartyDto {
 	@ApiProperty({
 		description: 'Options for the party',
 		type: [PartyOptionDto],
+		example: [
+			{ type: 'Basic', price: 0 },
+			{ type: 'Premium', price: 0 },
+			{ type: 'VIP', price: 0 },
+		],
 	})
 	@IsArray()
 	@ValidateNested({ each: true })
