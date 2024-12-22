@@ -43,4 +43,16 @@ export class VouchersService {
 			data: createdVoucher,
 		};
 	}
+
+	async getAll() {
+		const vouchers = await this.voucherModel.find().select('-__v');
+
+		this.logger.log('Vouchers fetched successfully');
+
+		return {
+			success: true,
+			message: 'Vouchers fetched successfully.',
+			data: vouchers,
+		};
+	}
 }
