@@ -1,21 +1,21 @@
 {
-  "name": "evora-backend",
-  "version": "0.0.5",
-  "description": "Evora connects customers with event organizers quickly through detailed online booking.",
+	"name": "evora-backend",
+	"version": "0.0.5",
+	"description": "Evora connects customers with event organizers quickly through detailed online booking.",
 	"repository": "https://github.com/bakaqc/evora-17c",
-  "author": "Quốc Chương",
+	"author": "Quốc Chương",
 	"license": "GPL-3.0 license",
-  "private": true,
-  "scripts": {
-    "build": "nest build",
+	"private": true,
+	"scripts": {
+		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"start": "nest start",
 		"start:dev": "nest start --watch",
 		"start:debug": "nest start --debug --watch",
 		"start:prod": "node dist/main",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
-  },
-  "dependencies": {
+	},
+	"dependencies": {
 		"@date-fns/tz": "1.1.2",
 		"@nestjs/common": "10.4.4",
 		"@nestjs/config": "3.2.3",
@@ -33,6 +33,7 @@
 		"module-alias": "2.2.3",
 		"mongoose": "8.9.1",
 		"morgan": "1.10.0",
+		"nodemailer": "6.9.16",
 		"passport": "0.7.0",
 		"passport-google-oauth20": "2.0.0",
 		"passport-jwt": "4.0.1",
