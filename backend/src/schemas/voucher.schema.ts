@@ -29,9 +29,6 @@ export class Voucher {
 
 	@Prop({ required: true })
 	usedCount: number;
-
-	@Prop({ default: false })
-	isDeleted: boolean;
 }
 
 export const VoucherSchema = SchemaFactory.createForClass(Voucher);

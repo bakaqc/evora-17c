@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+	IsDateString,
 	IsEmail,
 	IsIn,
 	IsNotEmpty,
@@ -34,7 +35,7 @@ export class CreateUserDto {
 	address: string;
 
 	@ApiProperty({ description: 'User date of birth' })
-	@IsString()
+	@IsDateString()
 	@IsNotEmpty()
 	dateOfBirth: Date;
 
@@ -58,7 +59,7 @@ export class CreateUserDto {
 	verificationCode: string;
 
 	@ApiProperty({ description: 'User verification code expires' })
-	@IsString()
+	@IsDateString()
 	verificationCodeExpires: Date;
 
 	@ApiProperty({ description: 'User is verified' })
