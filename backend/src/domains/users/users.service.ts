@@ -57,14 +57,6 @@ export class UsersService {
 	async getAll() {
 		const users = await this.userModel.find().select('-hashedPassword -__v');
 
-		if (!users) {
-			this.logger.error('No users found');
-
-			throw new NotFoundException('No users found');
-		}
-
-		this.logger.debug(`Found ${users.length} users`, users);
-
 		this.logger.log('Users fetched successfully');
 
 		return {
