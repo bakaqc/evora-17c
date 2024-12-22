@@ -27,7 +27,7 @@ export class Party {
 			},
 		],
 	})
-	attributes: { type: string; price: number }[];
+	options: { type: string; price: number }[];
 
 	@Prop({ required: true })
 	photos: string[];
