@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateCategoryDto } from '@/domains/categories/dto/createCategory.dto';
+import { UpdateCategoryDto } from '@/domains/categories/dto/updateCategory.dto';
 import { Category } from '@/schemas/category.schema';
 
 @Injectable()
@@ -76,6 +77,43 @@ export class CategoriesService {
 			success: true,
 			message: 'Category fetched successfully.',
 			data: category,
+		};
+	}
+
+	async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+		const updatedCategory = await this.categoryModel.findByIdAndUpdate(
+			id,
+			updateCategoryDto,
+			{ new: true },
+		);
+
+		if (!updatedCategory) {
+			this.logger.error(`Category with id ${id} not found!`);
+			throw new NotFoundException('Category not found');
+		}
+
+		this.logger.log(`Category with id ${id} updated successfully`);
+
+		return {
+			success: true,
+			message: 'Category updated successfully.',
+			data: updatedCategory,
+		};
+	}
+
+	async delete(id: string) {
+		const deletedCategory = await this.categoryModel.findByIdAndDelete(id);
+
+		if (!deletedCategory) {
+			this.logger.error(`Category with id ${id} not found!`);
+			throw new NotFoundException('Category not found');
+		}
+
+		this.logger.log(`Category with id ${id} deleted successfully`);
+
+		return {
+			success: true,
+			message: 'Category deleted successfully.',
 		};
 	}
 }
