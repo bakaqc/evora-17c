@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import {
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -42,5 +47,45 @@ export class PartiesService {
 			message: 'Party created successfully.',
 			data: createdParty,
 		};
+	}
+
+	async getAll() {
+		const parties = await this.partyModel.find();
+
+		this.logger.debug('Fetching all parties', parties);
+
+		return {
+			success: true,
+			message: 'Parties fetched successfully.',
+			data: parties,
+		};
+	}
+
+	async getOne(identifier: string) {
+		const party = await this.findPartyByIdentifier(identifier);
+
+		if (!party) {
+			this.logger.error(
+				`Party with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'category'} ${identifier} not found!`,
+			);
+			throw new NotFoundException('Party not found');
+		}
+
+		this.logger.log(
+			`Party with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'category'} ${identifier} fetched successfully`,
+		);
+
+		return {
+			success: true,
+			message: 'Party fetched successfully.',
+			data: party,
+		};
+	}
+
+	async findPartyByIdentifier(identifier: string) {
+		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+		const query = isObjectId ? { _id: identifier } : { category: identifier };
+
+		return await this.partyModel.findOne(query).select('-__v');
 	}
 }
