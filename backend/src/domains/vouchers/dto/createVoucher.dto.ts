@@ -5,7 +5,7 @@ export class CreateVoucherDto {
 	@ApiProperty({ description: 'User Id who own vouchers' })
 	@IsString()
 	@IsNotEmpty()
-	userId: string;
+	user: string;
 
 	@ApiProperty({ description: 'Voucher code' })
 	@IsString()
