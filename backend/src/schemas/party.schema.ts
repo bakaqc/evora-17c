@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
-export class Event {
+export class Party {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user: Types.ObjectId;
 
@@ -39,4 +39,4 @@ export class Event {
 	ratingCount: number;
 }
 
-export const EventSchema = SchemaFactory.createForClass(Event);
+export const PartySchema = SchemaFactory.createForClass(Party);
