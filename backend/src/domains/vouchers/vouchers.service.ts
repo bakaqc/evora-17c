@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import {
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -53,6 +58,30 @@ export class VouchersService {
 			success: true,
 			message: 'Vouchers fetched successfully.',
 			data: vouchers,
+		};
+	}
+
+	async getOne(identifier: string) {
+		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+
+		const query = isObjectId ? { _id: identifier } : { code: identifier };
+		const voucher = await this.voucherModel.findOne(query).select('-__v');
+
+		if (!voucher) {
+			this.logger.error(
+				`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} not found!`,
+			);
+			throw new NotFoundException('Voucher not found');
+		}
+
+		this.logger.log(
+			`Voucher with ${isObjectId ? 'id' : 'code'} ${identifier} fetched successfully`,
+		);
+
+		return {
+			success: true,
+			message: 'Voucher fetched successfully.',
+			data: voucher,
 		};
 	}
 }
