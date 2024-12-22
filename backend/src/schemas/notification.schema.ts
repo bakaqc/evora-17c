@@ -6,8 +6,8 @@ export class Notification {
 	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'User', required: false })
 	users: Types.ObjectId[];
 
-	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Event', required: false })
-	events: Types.ObjectId[];
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Party', required: false })
+	parties: Types.ObjectId[];
 
 	@Prop({ required: true })
 	title: string;
