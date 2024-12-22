@@ -2,12 +2,16 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
-export class Event {
+export class Party {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user: Types.ObjectId;
 
-	@Prop({ type: Types.ObjectId, ref: 'Category', required: true })
-	category: Types.ObjectId;
+	@Prop({
+		type: String,
+		enum: ['Sinh nhật', 'Đám cưới', 'Khai trương', 'Thôi nôi'],
+		required: true,
+	})
+	category: string;
 
 	@Prop({ required: true })
 	title: string;
@@ -27,7 +31,7 @@ export class Event {
 			},
 		],
 	})
-	attributes: { type: string; price: number }[];
+	options: { type: string; price: number }[];
 
 	@Prop({ required: true })
 	photos: string[];
@@ -37,9 +41,6 @@ export class Event {
 
 	@Prop({ required: true })
 	ratingCount: number;
-
-	@Prop({ default: false })
-	isDeleted: boolean;
 }
 
-export const EventSchema = SchemaFactory.createForClass(Event);
+export const PartySchema = SchemaFactory.createForClass(Party);
