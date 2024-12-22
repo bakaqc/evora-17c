@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import {
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -53,6 +58,24 @@ export class CategoriesService {
 			success: true,
 			message: 'Categories fetched successfully.',
 			data: categories,
+		};
+	}
+
+	async getOne(id: string) {
+		const category = await this.categoryModel.findById(id).select('-__v');
+
+		if (!category) {
+			this.logger.error(`Category with id ${id} not found!`);
+
+			throw new NotFoundException('Category not found');
+		}
+
+		this.logger.log(`Category with id ${id} fetched successfully`);
+
+		return {
+			success: true,
+			message: 'Category fetched successfully.',
+			data: category,
 		};
 	}
 }

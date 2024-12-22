@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CategoriesService } from '@/domains/categories/categories.service';
@@ -17,5 +17,10 @@ export class CategoriesController {
 	@Get()
 	async getAll() {
 		return await this.categoriesService.getAll();
+	}
+
+	@Get(':id')
+	async getOne(@Param('id') id: string) {
+		return await this.categoriesService.getOne(id);
 	}
 }
