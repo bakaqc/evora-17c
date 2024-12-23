@@ -8,7 +8,7 @@ import { emailWelcome } from '@/domains/notifies/templateEmail/emailWelcome';
 
 @Injectable()
 export class EmailService {
-	private transporter;
+	private readonly transporter;
 
 	constructor() {
 		this.transporter = nodemailer.createTransport({

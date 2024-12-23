@@ -28,7 +28,7 @@ export class NotifiesService {
 			try {
 				const user = await this.usersService.getOne(userId);
 
-				if (!user || !user.data.email) {
+				if (!user?.data?.email) {
 					this.logger.warn(
 						`User with ID ${userId} does not exist or has no email.`,
 					);
