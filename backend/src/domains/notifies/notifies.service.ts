@@ -17,7 +17,10 @@ export class NotifiesService {
 		private readonly emailService: EmailService,
 	) {}
 
-	async sendPartyNotification(notifyDto: NotifyDto) {
+	async sendPartyNotification(
+		notifyDto: NotifyDto,
+		template: 'welcome' | 'verifyOTP' | 'bookingSuccess',
+	) {
 		const notification = new this.notifyModel(notifyDto);
 		await notification.save();
 
@@ -36,7 +39,7 @@ export class NotifiesService {
 				const subject = `[Evora] ${notifyDto.title}`;
 				const text = notifyDto.message;
 
-				await this.emailService.sendEmail(email, subject, text);
+				await this.emailService.sendEmail(email, subject, text, template);
 				this.logger.log(`Email sent to ${email} successfully.`);
 			} catch (error) {
 				this.logger.error(

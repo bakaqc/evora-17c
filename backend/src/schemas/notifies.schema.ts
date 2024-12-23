@@ -9,7 +9,7 @@ export class Notify {
 	@Prop({ required: true })
 	title: string;
 
-	@Prop({ required: true })
+	@Prop({ required: false })
 	message: string;
 }
 

@@ -14,6 +14,5 @@ export class NotifyDto {
 
 	@ApiProperty({ description: 'Notify message' })
 	@IsString()
-	@IsNotEmpty()
 	message: string;
 }
