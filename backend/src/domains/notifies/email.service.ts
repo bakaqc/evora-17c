@@ -19,6 +19,8 @@ export class EmailService {
 			},
 			debug: true,
 			logger: true,
+			secure: false,
+			requireTLS: false,
 		});
 	}
 
