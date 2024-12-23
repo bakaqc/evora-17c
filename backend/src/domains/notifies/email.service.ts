@@ -19,6 +19,10 @@ export class EmailService {
 			},
 			debug: true,
 			logger: true,
+			secure: true,
+			tls: {
+				rejectUnauthorized: false,
+			},
 		});
 	}
 
