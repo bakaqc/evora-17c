@@ -30,14 +30,6 @@ export class PaymentsService {
 		await newPayment.save();
 
 		switch (createPaymentDto.method) {
-			case 'vn-pay': {
-				const result = await this.zalopayService.create({
-					id: newPayment._id.toString(),
-					amount: newPayment.finalPrice,
-				});
-
-				return { order_url: result.order_url };
-			}
 			case 'zalo-pay': {
 				const result = await this.zalopayService.create({
 					id: newPayment._id.toString(),
