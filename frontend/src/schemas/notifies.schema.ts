@@ -1,6 +1,6 @@
 import { User } from '@/schemas/user.schema';
 
-export interface Notification {
+export interface Notify {
 	_id: string;
 	user: User;
 	title: string;
