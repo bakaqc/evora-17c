@@ -6,6 +6,7 @@ import { CreatePaymentDto } from '@/domains/payments/dto/createPayment.dto';
 import { UpdatePaymentDto } from '@/domains/payments/dto/updatePayment.dto';
 import { MomoService } from '@/domains/payments/momo/momo.service';
 import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
+import { Booking } from '@/schemas/booking.schema';
 import { Payment } from '@/schemas/payment.schema';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class PaymentsService {
 
 	constructor(
 		@InjectModel(Payment.name) private readonly paymentModel: Model<Payment>,
+		@InjectModel(Booking.name) private readonly bookingModel: Model<Booking>,
 		private readonly zalopayService: ZalopayService,
 		private readonly momoService: MomoService,
 	) {}
@@ -26,7 +28,9 @@ export class PaymentsService {
 		this.logger.debug('Payment created', newPayment);
 		this.logger.log('Payment created');
 
-		// Add paymentId to Booking
+		await this.bookingModel.findByIdAndUpdate(createPaymentDto.booking, {
+			$push: { payments: newPayment._id },
+		});
 
 		await newPayment.save();
 
@@ -78,6 +82,22 @@ export class PaymentsService {
 			success: true,
 			message: 'Payment fetched successfully.',
 			data: payment,
+		};
+	}
+
+	async getByBookingId(bookingId: string) {
+		const payments = await this.paymentModel
+			.find({ booking: bookingId })
+			.select('-__v');
+
+		this.logger.log(
+			`Payments with booking ID ${bookingId} fetched successfully`,
+		);
+
+		return {
+			success: true,
+			message: 'Payments fetched successfully.',
+			data: payments,
 		};
 	}
 
