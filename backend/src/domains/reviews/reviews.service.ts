@@ -51,4 +51,46 @@ export class ReviewsService {
 			data: createdReview,
 		};
 	}
+
+	async getAll() {
+		const reviews = await this.reviewModel.find().select('-__v');
+
+		this.logger.log('Reviews fetched successfully');
+
+		return {
+			success: true,
+			message: 'Reviews fetched successfully.',
+			data: reviews,
+		};
+	}
+
+	async getById(id: string) {
+		const review = await this.reviewModel.findById(id).select('-__v');
+
+		if (!review) {
+			throw new NotFoundException('Review not found');
+		}
+
+		this.logger.log('Review fetched successfully');
+
+		return {
+			success: true,
+			message: 'Review fetched successfully.',
+			data: review,
+		};
+	}
+
+	async getByBookingId(bookingId: string) {
+		const reviews = await this.reviewModel
+			.find({ booking: bookingId })
+			.select('-__v');
+
+		this.logger.log('Reviews fetched successfully');
+
+		return {
+			success: true,
+			message: 'Reviews fetched successfully.',
+			data: reviews,
+		};
+	}
 }
