@@ -15,7 +15,7 @@ export class Booking {
 	@Prop({ required: true })
 	status: 'PENDING' | 'APPROVED' | 'CANCELLED';
 
-	@Prop({ type: Types.ObjectId, ref: 'Payment', required: true })
+	@Prop({ type: Types.ObjectId, ref: 'Payment', required: false })
 	payment: Types.ObjectId;
 
 	@Prop({ required: true })

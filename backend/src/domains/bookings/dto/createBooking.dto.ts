@@ -5,6 +5,7 @@ import {
 	IsMongoId,
 	IsNotEmpty,
 	IsNumber,
+	IsOptional,
 	IsString,
 } from 'class-validator';
 
@@ -31,7 +32,7 @@ export class CreateBookingDto {
 
 	@ApiProperty({ description: 'Payment Id which pay for party booking' })
 	@IsMongoId()
-	@IsNotEmpty()
+	@IsOptional()
 	payment: string;
 
 	@ApiProperty({ description: 'Organize date of party' })
