@@ -5,7 +5,7 @@ import { EmailService } from '@/domains/notifies/email.service';
 import { NotifiesController } from '@/domains/notifies/notifies.controller';
 import { NotifiesService } from '@/domains/notifies/notifies.service';
 import { UsersModule } from '@/domains/users/users.module';
-import { NotifySchema } from '@/schemas/notifies.schema';
+import { NotifySchema } from '@/schemas/notify.schema';
 import { UserSchema } from '@/schemas/user.schema';
 
 @Module({
