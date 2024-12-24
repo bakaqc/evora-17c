@@ -3,6 +3,9 @@ import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Payment {
+	@Prop({ type: Types.ObjectId, ref: 'Booking', required: true })
+	booking: Types.ObjectId;
+
 	@Prop({ type: Types.ObjectId, ref: 'Voucher', required: true })
 	voucher: Types.ObjectId;
 
