@@ -1,7 +1,14 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { CreateReviewDto } from '@/domains/reviews/dto/createReview.dto';
+import { Booking } from '@/schemas/booking.schema';
 import { Review } from '@/schemas/review.schema';
 
 @Injectable()
@@ -10,5 +17,38 @@ export class ReviewsService {
 
 	constructor(
 		@InjectModel(Review.name) private readonly reviewModel: Model<Review>,
+		@InjectModel(Booking.name) private readonly bookingModel: Model<Booking>,
 	) {}
+
+	async create(createReviewDto: CreateReviewDto) {
+		const booking = await this.bookingModel.findById(createReviewDto.booking);
+
+		if (!booking) {
+			throw new NotFoundException('Booking not found');
+		}
+
+		const organizeDateFinish = booking.organizeDate;
+
+		const currentDate = new Date();
+
+		if (currentDate <= organizeDateFinish) {
+			throw new BadRequestException(
+				'Cannot create review before the event has finished',
+			);
+		}
+
+		const createdReview = new this.reviewModel(createReviewDto);
+
+		this.logger.debug(`Creating review`, createdReview);
+
+		await createdReview.save();
+
+		this.logger.log(`Review created`);
+
+		return {
+			success: true,
+			message: 'Review created successfully.',
+			data: createdReview,
+		};
+	}
 }

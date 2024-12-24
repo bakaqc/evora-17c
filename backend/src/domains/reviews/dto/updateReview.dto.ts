@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class CreateReviewDto {
+export class UpdateReviewDto {
 	@ApiPropertyOptional({ description: 'Booking Id which booked by user' })
 	booking?: string;
 
