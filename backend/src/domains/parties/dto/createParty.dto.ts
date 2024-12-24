@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import {
 	IsArray,
 	IsEnum,
+	IsMongoId,
 	IsNotEmpty,
 	IsNumber,
 	IsOptional,
@@ -14,7 +15,7 @@ import { PartyOptionDto } from '@/domains/parties/dto/partyOption.dto';
 
 export class CreatePartyDto {
 	@ApiProperty({ description: 'User Id who own parties' })
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
 	user: string;
 
