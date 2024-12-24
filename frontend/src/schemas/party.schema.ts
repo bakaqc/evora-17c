@@ -3,10 +3,10 @@ import { User } from '@/schemas/user.schema';
 export interface Party {
 	_id: string;
 	user: User;
-	category: string;
+	category: 'Sinh nhật' | 'Đám cưới' | 'Khai trương' | 'Thôi nôi';
 	title: string;
 	description: string;
-	options: 'tiệc cưới' | 'sinh nhật' | 'thôi nôi' | 'khai trương';
+	price: number;
 	photos: string[];
 	ratingTotal: number;
 	ratingCount: number;
