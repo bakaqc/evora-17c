@@ -10,7 +10,7 @@ export class CreateReviewDto {
 	@ApiProperty({ description: 'Rating of user ' })
 	@IsNumber()
 	@IsNotEmpty()
-	rating: string;
+	rating: number;
 
 	@ApiProperty({ description: 'Comment of user' })
 	@IsString()

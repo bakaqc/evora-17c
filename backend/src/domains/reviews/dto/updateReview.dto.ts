@@ -5,7 +5,7 @@ export class UpdateReviewDto {
 	booking?: string;
 
 	@ApiPropertyOptional({ description: 'Rating of user ' })
-	rating?: string;
+	rating?: number;
 
 	@ApiPropertyOptional({ description: 'Comment of user' })
 	comment?: string;
