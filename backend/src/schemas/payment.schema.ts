@@ -7,7 +7,7 @@ export class Payment {
 	voucher: Types.ObjectId;
 
 	@Prop({ required: true })
-	method: 'momo' | 'zalo-pay' | 'vn-pay';
+	method: 'momo' | 'zalo-pay';
 
 	@Prop({ required: true })
 	originPrice: number;

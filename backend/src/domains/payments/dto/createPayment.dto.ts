@@ -8,9 +8,9 @@ export class CreatePaymentDto {
 	voucher: string;
 
 	@ApiProperty({ description: 'Payment method' })
-	@IsEnum(['momo', 'zalo-pay', 'vn-pay'])
+	@IsEnum(['momo', 'zalo-pay'])
 	@IsNotEmpty()
-	method: 'momo' | 'zalo-pay' | 'vn-pay';
+	method: 'momo' | 'zalo-pay';
 
 	@ApiProperty({ description: 'Payment origin price' })
 	@IsNumber()
