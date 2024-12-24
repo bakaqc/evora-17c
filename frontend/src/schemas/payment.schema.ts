@@ -7,7 +7,7 @@ export interface Payment {
 	voucher?: Voucher;
 	originPrice: number;
 	finalPrice: number;
-	method: 'vn-pay' | 'momo' | 'zalo-pay';
+	method: 'momo' | 'zalo-pay';
 	createdAt?: Date;
 	updatedAt?: Date;
 }
