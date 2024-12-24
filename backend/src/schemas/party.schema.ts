@@ -36,10 +36,10 @@ export class Party {
 	@Prop({ required: true })
 	photos: string[];
 
-	@Prop({ required: true })
+	@Prop({ required: true, default: 0 })
 	ratingTotal: number;
 
-	@Prop({ required: true })
+	@Prop({ required: true, default: 0 })
 	ratingCount: number;
 }
 
