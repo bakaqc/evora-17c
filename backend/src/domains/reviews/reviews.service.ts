@@ -9,6 +9,7 @@ import { Model } from 'mongoose';
 
 import { CreateReviewDto } from '@/domains/reviews/dto/createReview.dto';
 import { Booking } from '@/schemas/booking.schema';
+import { Party } from '@/schemas/party.schema';
 import { Review } from '@/schemas/review.schema';
 
 @Injectable()
@@ -18,6 +19,7 @@ export class ReviewsService {
 	constructor(
 		@InjectModel(Review.name) private readonly reviewModel: Model<Review>,
 		@InjectModel(Booking.name) private readonly bookingModel: Model<Booking>,
+		@InjectModel(Party.name) private readonly partyModel: Model<Party>,
 	) {}
 
 	async create(createReviewDto: CreateReviewDto) {
@@ -40,6 +42,17 @@ export class ReviewsService {
 		const createdReview = new this.reviewModel(createReviewDto);
 
 		this.logger.debug(`Creating review`, createdReview);
+
+		const party = await this.partyModel.findById(booking.party);
+
+		if (!party) {
+			throw new NotFoundException('Party not found');
+		}
+
+		party.ratingTotal += createdReview.rating;
+		party.ratingCount += 1;
+
+		await party.save();
 
 		await createdReview.save();
 
