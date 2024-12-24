@@ -1,9 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+	IsDateString,
+	IsMongoId,
+	IsNotEmpty,
+	IsNumber,
+	IsString,
+} from 'class-validator';
 
 export class CreateVoucherDto {
 	@ApiProperty({ description: 'User Id who own vouchers' })
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
 	user: string;
 
