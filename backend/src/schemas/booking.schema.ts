@@ -19,7 +19,7 @@ export class Booking {
 	payment: Types.ObjectId;
 
 	@Prop({ required: true })
-	bookingDate: Date;
+	organizeDate: Date;
 
 	@Prop({ required: true })
 	organizedAt: string;

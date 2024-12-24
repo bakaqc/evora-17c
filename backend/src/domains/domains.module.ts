@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 
+import { BookingsModule } from '@/domains/bookings/bookings.module';
 import { NotifiesModule } from '@/domains/notifies/notifies.module';
 import { PartiesModule } from '@/domains/parties/parties.module';
 import { PaymentsModule } from '@/domains/payments/payments.module';
@@ -13,6 +14,7 @@ import { VouchersModule } from '@/domains/vouchers/vouchers.module';
 		PartiesModule,
 		NotifiesModule,
 		PaymentsModule,
+		BookingsModule,
 	],
 })
 export class DomainsModule {}
