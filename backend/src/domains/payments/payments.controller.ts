@@ -48,6 +48,12 @@ export class PaymentsController {
 		return await this.paymentsService.getOne(id);
 	}
 
+	@ApiOperation({ summary: 'Fetch all payments by booking ID' })
+	@Get('booking/:bookingId')
+	async getByBookingId(@Param('bookingId') bookingId: string) {
+		return await this.paymentsService.getByBookingId(bookingId);
+	}
+
 	@ApiOperation({ summary: 'Update a payment by ID' })
 	@Put(':id')
 	async update(

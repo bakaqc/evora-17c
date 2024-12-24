@@ -13,13 +13,13 @@ export class Booking {
 	guestCount: number;
 
 	@Prop({ required: true })
-	bookingStatus: 'PENDING' | 'APPROVED' | 'CANCELLED';
+	status: 'PENDING' | 'APPROVED' | 'CANCELLED';
 
-	@Prop({ type: Types.ObjectId, ref: 'Payment', required: true })
+	@Prop({ type: Types.ObjectId, ref: 'Payment', required: false })
 	payment: Types.ObjectId;
 
 	@Prop({ required: true })
-	bookingDate: Date;
+	organizeDate: Date;
 
 	@Prop({ required: true })
 	organizedAt: string;
