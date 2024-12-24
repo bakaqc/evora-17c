@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+} from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { BookingsService } from '@/domains/bookings/bookings.service';
 import { CreateBookingDto } from '@/domains/bookings/dto/createBooking.dto';
+import { UpdateBookingDto } from '@/domains/bookings/dto/updateBooking.dto';
 
 @ApiTags('Bookings')
 @Controller('bookings')
@@ -43,5 +52,33 @@ export class BookingsController {
 	@Get('payment/:paymentId')
 	async getByPaymentId(@Param('paymentId') paymentId: string) {
 		return this.bookingsService.getByPaymentId(paymentId);
+	}
+
+	@ApiOperation({ summary: 'Fetch bookings by status' })
+	@ApiParam({
+		name: 'status',
+		enum: ['PENDING', 'APPROVED', 'CANCELLED'],
+		required: true,
+	})
+	@Get('status/:status')
+	async getByStatus(
+		@Param('status') status: 'PENDING' | 'APPROVED' | 'CANCELLED',
+	) {
+		return this.bookingsService.getByStatus(status);
+	}
+
+	@ApiOperation({ summary: 'Update booking by ID' })
+	@Put(':id')
+	async update(
+		@Param('id') id: string,
+		@Body() updateBookingDto: UpdateBookingDto,
+	) {
+		return this.bookingsService.update(id, updateBookingDto);
+	}
+
+	@ApiOperation({ summary: 'Delete booking by ID' })
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		return this.bookingsService.delete(id);
 	}
 }
