@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -48,5 +48,35 @@ export class PaymentsService {
 				return { order_url: result.shortLink };
 			}
 		}
+	}
+
+	async getAll() {
+		const payments = await this.paymentModel.find().select('-__v');
+
+		this.logger.log('Payments fetched successfully');
+
+		return {
+			success: true,
+			message: 'Payments fetched successfully.',
+			data: payments,
+		};
+	}
+
+	async getOne(id: string) {
+		const payment = await this.paymentModel.findById(id).select('-__v');
+
+		if (!payment) {
+			this.logger.error(`Payment with ID ${id} not found!`);
+
+			throw new NotFoundException('Payment not found');
+		}
+
+		this.logger.log(`Payment with ID ${id} fetched successfully`);
+
+		return {
+			success: true,
+			message: 'Payment fetched successfully.',
+			data: payment,
+		};
 	}
 }

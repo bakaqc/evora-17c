@@ -1,5 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+	Body,
+	Controller,
+	Get,
+	HttpCode,
+	HttpStatus,
+	Param,
+	Post,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreatePaymentDto } from '@/domains/payments/dto/createPayment.dto';
 import { MomoService } from '@/domains/payments/momo/momo.service';
@@ -16,12 +24,25 @@ export class PaymentsController {
 	) {}
 
 	@HttpCode(HttpStatus.OK)
+	@ApiOperation({ summary: 'Create a new payment' })
 	@Post()
 	async create(@Body() createPaymentDto: CreatePaymentDto) {
 		const response = await this.paymentsService.create(createPaymentDto);
 		const { order_url } = response;
 
 		return { payment_url: order_url };
+	}
+
+	@ApiOperation({ summary: 'Fetch all payments' })
+	@Get()
+	async getAll() {
+		return await this.paymentsService.getAll();
+	}
+
+	@ApiOperation({ summary: 'Fetch a payment by ID' })
+	@Get(':id')
+	async getOne(@Param('id') id: string) {
+		return await this.paymentsService.getOne(id);
 	}
 
 	@HttpCode(HttpStatus.OK)
