@@ -1,15 +1,18 @@
 import {
 	Body,
 	Controller,
+	Delete,
 	Get,
 	HttpCode,
 	HttpStatus,
 	Param,
 	Post,
+	Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreatePaymentDto } from '@/domains/payments/dto/createPayment.dto';
+import { UpdatePaymentDto } from '@/domains/payments/dto/updatePayment.dto';
 import { MomoService } from '@/domains/payments/momo/momo.service';
 import { PaymentsService } from '@/domains/payments/payments.service';
 import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
@@ -43,6 +46,21 @@ export class PaymentsController {
 	@Get(':id')
 	async getOne(@Param('id') id: string) {
 		return await this.paymentsService.getOne(id);
+	}
+
+	@ApiOperation({ summary: 'Update a payment by ID' })
+	@Put(':id')
+	async update(
+		@Param('id') id: string,
+		@Body() updatePaymentDto: UpdatePaymentDto,
+	) {
+		return await this.paymentsService.update(id, updatePaymentDto);
+	}
+
+	@ApiOperation({ summary: 'Delete a payment by ID' })
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		return await this.paymentsService.delete(id);
 	}
 
 	@HttpCode(HttpStatus.OK)

@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreatePaymentDto } from '@/domains/payments/dto/createPayment.dto';
+import { UpdatePaymentDto } from '@/domains/payments/dto/updatePayment.dto';
 import { MomoService } from '@/domains/payments/momo/momo.service';
 import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
 import { Payment } from '@/schemas/payment.schema';
@@ -77,6 +78,47 @@ export class PaymentsService {
 			success: true,
 			message: 'Payment fetched successfully.',
 			data: payment,
+		};
+	}
+
+	async update(id: string, updatePaymentDto: UpdatePaymentDto) {
+		const payment = await this.paymentModel.findByIdAndUpdate(
+			id,
+			updatePaymentDto,
+			{
+				new: true,
+			},
+		);
+
+		if (!payment) {
+			this.logger.error(`Payment with ID ${id} not found!`);
+
+			throw new NotFoundException('Payment not found');
+		}
+
+		this.logger.log(`Payment with ID ${id} updated successfully`);
+
+		return {
+			success: true,
+			message: 'Payment updated successfully.',
+			data: payment,
+		};
+	}
+
+	async delete(id: string) {
+		const payment = await this.paymentModel.findByIdAndDelete(id);
+
+		if (!payment) {
+			this.logger.error(`Payment with ID ${id} not found!`);
+
+			throw new NotFoundException('Payment not found');
+		}
+
+		this.logger.log(`Payment with ID ${id} deleted successfully`);
+
+		return {
+			success: true,
+			message: 'Payment deleted successfully.',
 		};
 	}
 }
