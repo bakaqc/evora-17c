@@ -4,7 +4,7 @@ import { Booking } from '@/schemas/booking.schema';
 export interface Payment {
 	_id: string;
 	booking: Booking;
-	voucher?: Voucher[];
+	voucher?: Voucher;
 	originPrice: number;
 	finalPrice: number;
 	method: 'vn-pay' | 'momo' | 'zalo-pay';
