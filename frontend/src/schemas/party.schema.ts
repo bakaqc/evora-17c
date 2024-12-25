@@ -6,7 +6,7 @@ export interface Party {
 	category: 'Sinh nhật' | 'Đám cưới' | 'Khai trương' | 'Thôi nôi';
 	title: string;
 	description: string;
-	price: number;
+	options: string[];
 	photos: string[];
 	ratingTotal: number;
 	ratingCount: number;
