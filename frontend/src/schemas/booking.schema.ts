@@ -9,7 +9,7 @@ export interface Booking {
   guestCount: number;
   status: 'PENDING' | 'APPROVED' | 'CANCELLED';
   payment: Payment;
-  organizeDate?: Date;
+  organizeDate: Date;
   organizeAt: string;
   createdAt?: Date;
   updatedAt?: Date;
