@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { ChangePasswordDto } from '@/domains/users/dto/changePassword.dto';
 import { CreateUserDto } from '@/domains/users/dto/createUser.dto';
 import { UpdateUserDto } from '@/domains/users/dto/updateUser.dto';
 import { UsersService } from '@/domains/users/users.service';
@@ -52,5 +53,14 @@ export class UsersController {
 	async delete(@Param('identifier') identifier: string) {
 		const isEmail = identifier.includes('@');
 		return this.usersService.delete(identifier, isEmail);
+	}
+
+	@ApiOperation({ summary: 'Change password by Email' })
+	@Put('change-password/:email')
+	async changePassword(
+		@Param('email') email: string,
+		@Body() changePasswordDto: ChangePasswordDto,
+	) {
+		return this.usersService.changePassword(email, changePasswordDto);
 	}
 }
