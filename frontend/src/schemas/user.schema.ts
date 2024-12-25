@@ -9,9 +9,9 @@ export interface User {
 	gender: 'male' | 'female';
 	avatar: string;
 	role: 'user' | 'admin' | 'super-admin';
-	verificationCode: string;
-	verificationCodeExpires: Date;
-	isVerified: boolean;
+	verificationCode?: string;
+	verificationCodeExpires?: Date;
+	isVerified?: boolean;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
