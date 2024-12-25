@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 
+import { AuthModule } from '@/domains/auth/auth.module';
 import { BookingsModule } from '@/domains/bookings/bookings.module';
 import { NotifiesModule } from '@/domains/notifies/notifies.module';
 import { PartiesModule } from '@/domains/parties/parties.module';
@@ -10,13 +11,14 @@ import { VouchersModule } from '@/domains/vouchers/vouchers.module';
 
 @Module({
 	imports: [
+		AuthModule,
+		BookingsModule,
+		NotifiesModule,
+		PartiesModule,
+		PaymentsModule,
+		ReviewsModule,
 		UsersModule,
 		VouchersModule,
-		PartiesModule,
-		NotifiesModule,
-		PaymentsModule,
-		BookingsModule,
-		ReviewsModule,
 	],
 })
 export class DomainsModule {}
