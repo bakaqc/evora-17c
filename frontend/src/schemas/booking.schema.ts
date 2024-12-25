@@ -5,7 +5,7 @@ import { Party } from '@/schemas/party.schema';
 export interface Booking {
   _id: string;
   user: User;
-  party?: Party;
+  party: Party;
   guestCount: number;
   status: 'PENDING' | 'APPROVED' | 'CANCELLED';
   payment: Payment;
