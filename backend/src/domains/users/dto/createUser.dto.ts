@@ -53,15 +53,4 @@ export class CreateUserDto {
 	@IsIn(['user', 'admin', 'super-admin'])
 	@IsNotEmpty()
 	role: string;
-
-	@ApiProperty({ description: 'User verification code' })
-	@IsString()
-	verificationCode: string;
-
-	@ApiProperty({ description: 'User verification code expires' })
-	@IsDateString()
-	verificationCodeExpires: Date;
-
-	@ApiProperty({ description: 'User is verified' })
-	isVerified: boolean;
 }
