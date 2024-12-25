@@ -29,10 +29,10 @@ export class User {
 	@Prop({ required: true })
 	role: 'user' | 'admin' | 'super-admin';
 
-	@Prop({ required: false })
+	@Prop({ required: false, default: null })
 	verificationCode: string;
 
-	@Prop({ required: false })
+	@Prop({ required: false, default: null })
 	verificationCodeExpires: Date;
 
 	@Prop({ default: false })
