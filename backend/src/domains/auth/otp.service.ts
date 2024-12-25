@@ -25,8 +25,25 @@ export class OtpService {
 
 		if (!user) {
 			this.logger.error(`User not found with email: ${sendOTPDto.email}`);
-
 			throw new NotFoundException('User not found');
+		}
+
+		if (
+			user.verificationCodeExpires &&
+			new Date() < user.verificationCodeExpires
+		) {
+			const remainingTime = Math.ceil(
+				(user.verificationCodeExpires.getTime() - new Date().getTime()) / 1000,
+			);
+
+			this.logger.warn(
+				`OTP is still valid for user: ${user.email}. Remaining time: ${remainingTime} seconds.`,
+			);
+
+			return {
+				success: false,
+				message: `OTP was sent earlier. Please try again in ${remainingTime} seconds.`,
+			};
 		}
 
 		const otp = Array.from({ length: 6 }, () =>
@@ -43,7 +60,7 @@ export class OtpService {
 
 		await this.notifiesService.sendPartyNotification(
 			{
-				title: 'OTP Verification',
+				title: 'Mã OTP dùng để xác thực tài Khoản',
 				message: `${otp}`,
 				users: [user._id.toString()],
 			},
