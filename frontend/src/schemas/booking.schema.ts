@@ -8,7 +8,7 @@ export interface Booking {
   party: Party;
   guestCount: number;
   status: 'PENDING' | 'APPROVED' | 'CANCELLED';
-  payment: Payment;
+  payment?: Payment;
   organizeDate: Date;
   organizeAt: string;
   createdAt?: Date;
