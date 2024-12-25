@@ -6,7 +6,7 @@ export class Payment {
 	@Prop({ type: Types.ObjectId, ref: 'Booking', required: true })
 	booking: Types.ObjectId;
 
-	@Prop({ type: Types.ObjectId, ref: 'Voucher', required: true })
+	@Prop({ type: Types.ObjectId, ref: 'Voucher', required: false })
 	voucher: Types.ObjectId;
 
 	@Prop({ required: true })
