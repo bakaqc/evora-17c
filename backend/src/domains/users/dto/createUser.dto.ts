@@ -48,9 +48,4 @@ export class CreateUserDto {
 	@IsString()
 	@IsNotEmpty()
 	avatar: string;
-
-	@ApiProperty({ description: 'User role' })
-	@IsIn(['user', 'admin', 'super-admin'])
-	@IsNotEmpty()
-	role: string;
 }
