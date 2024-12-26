@@ -10,6 +10,8 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { Public } from '@/domains/auth/decorators/public.decorator';
+import { Roles } from '@/domains/auth/decorators/roles.decorator';
+import { Role } from '@/domains/auth/enums/role.enum';
 import { CreateReviewDto } from '@/domains/reviews/dto/createReview.dto';
 import { UpdateReviewDto } from '@/domains/reviews/dto/updateReview.dto';
 import { ReviewsService } from '@/domains/reviews/reviews.service';
@@ -26,8 +28,9 @@ export class ReviewsController {
 		return await this.reviewsService.create(createReviewDto);
 	}
 
+	@Roles(Role.SUPER_ADMIN)
 	@Public()
-	@ApiOperation({ summary: 'Fetch all reviews' })
+	@ApiOperation({ summary: 'Fetch all reviews - Super Admin only' })
 	@Get()
 	async getAll() {
 		return await this.reviewsService.getAll();

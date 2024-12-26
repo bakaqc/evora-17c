@@ -11,6 +11,8 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { Roles } from '@/domains/auth/decorators/roles.decorator';
+import { Role } from '@/domains/auth/enums/role.enum';
 import { CreatePaymentDto } from '@/domains/payments/dto/createPayment.dto';
 import { UpdatePaymentDto } from '@/domains/payments/dto/updatePayment.dto';
 import { MomoService } from '@/domains/payments/momo/momo.service';
@@ -37,7 +39,8 @@ export class PaymentsController {
 		return { payment_url: order_url };
 	}
 
-	@ApiOperation({ summary: 'Fetch all payments' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({ summary: 'Fetch all payments - Super Admin only' })
 	@Get()
 	async getAll() {
 		return await this.paymentsService.getAll();
@@ -55,7 +58,8 @@ export class PaymentsController {
 		return await this.paymentsService.getByBookingId(bookingId);
 	}
 
-	@ApiOperation({ summary: 'Update a payment by ID' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({ summary: 'Update a payment by ID - Super Admin only' })
 	@Put(':id')
 	async update(
 		@Param('id') id: string,
@@ -64,7 +68,8 @@ export class PaymentsController {
 		return await this.paymentsService.update(id, updatePaymentDto);
 	}
 
-	@ApiOperation({ summary: 'Delete a payment by ID' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({ summary: 'Delete a payment by ID  - Super Admin only' })
 	@Delete(':id')
 	async delete(@Param('id') id: string) {
 		return await this.paymentsService.delete(id);

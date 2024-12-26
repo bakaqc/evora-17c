@@ -20,7 +20,6 @@ export class AuthController {
 	) {}
 
 	@Public()
-	@ApiOperation({ summary: 'Create a new user' })
 	@Post('register')
 	async create(@Body() CreateUserDto: CreateUserDto) {
 		return await this.usersService.create(CreateUserDto);
@@ -28,7 +27,6 @@ export class AuthController {
 
 	@Public()
 	@HttpCode(HttpStatus.OK)
-	@ApiOperation({ summary: 'Login for user' })
 	@Post('login')
 	async login(@Body() loginDto: LoginDto) {
 		const user = await this.authService.validateUser(loginDto);
@@ -37,7 +35,10 @@ export class AuthController {
 
 	@Public()
 	@HttpCode(HttpStatus.OK)
-	@ApiOperation({ summary: 'Send OTP to register new user or change password' })
+	@ApiOperation({
+		summary:
+			'Send OTP to verify email when register new user or change password',
+	})
 	@Post('send-otp')
 	async sendOtp(@Body() SendOTPDto: SendOTPDto) {
 		return this.otpService.sendOtp(SendOTPDto);
