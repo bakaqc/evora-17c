@@ -19,6 +19,12 @@ export class AuthService {
 	async validateUser(loginDto: LoginDto) {
 		const user = await this.userModel.findOne({ email: loginDto.email });
 		if (user && (await verify(user.hashedPassword, loginDto.password))) {
+			if (!user.isVerified) {
+				throw new UnauthorizedException(
+					'Your account is not verified. Please verify your email.',
+				);
+			}
+
 			this.logger.log(`User with email ${user.email} authenticated`);
 
 			const result = user.toObject();
