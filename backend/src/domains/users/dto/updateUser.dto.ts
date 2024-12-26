@@ -1,13 +1,19 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsPhoneNumber, ValidateIf } from 'class-validator';
+import {
+	IsDateString,
+	IsEmail,
+	IsIn,
+	IsPhoneNumber,
+	ValidateIf,
+} from 'class-validator';
 
 export class UpdateUserDto {
 	@ApiPropertyOptional({ description: 'User full name' })
-	@ValidateIf((o) => o.fullName !== undefined)
 	fullName?: string;
 
 	@ApiPropertyOptional({ description: 'User email' })
 	@ValidateIf((o) => o.email !== undefined)
+	@IsEmail()
 	email?: string;
 
 	@ApiPropertyOptional({ description: 'User phone number' })
@@ -16,11 +22,11 @@ export class UpdateUserDto {
 	phoneNumber?: string;
 
 	@ApiPropertyOptional({ description: 'User address' })
-	@ValidateIf((o) => o.address !== undefined)
 	address?: string;
 
 	@ApiPropertyOptional({ description: 'User date of birth' })
 	@ValidateIf((o) => o.dateOfBirth !== undefined)
+	@IsDateString()
 	dateOfBirth?: Date;
 
 	@ApiPropertyOptional({ description: 'User gender' })
@@ -29,7 +35,6 @@ export class UpdateUserDto {
 	gender?: string;
 
 	@ApiPropertyOptional({ description: 'User avatar' })
-	@ValidateIf((o) => o.avatar !== undefined)
 	avatar?: string;
 
 	@ApiPropertyOptional({ description: 'User role' })
@@ -40,14 +45,11 @@ export class UpdateUserDto {
 	role?: string;
 
 	@ApiPropertyOptional({ description: 'User verification code' })
-	@ValidateIf((o) => o.verificationCode !== undefined)
 	verificationCode?: string;
 
 	@ApiPropertyOptional({ description: 'User verification code expires' })
-	@ValidateIf((o) => o.verificationCodeExpires !== undefined)
 	verificationCodeExpires?: Date;
 
 	@ApiPropertyOptional({ description: 'User is verified' })
-	@ValidateIf((o) => o.isVerified !== undefined)
 	isVerified?: boolean;
 }

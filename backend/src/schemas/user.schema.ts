@@ -26,13 +26,13 @@ export class User {
 	@Prop({ required: true })
 	avatar: string;
 
-	@Prop({ required: true })
+	@Prop({ required: true, default: 'user' })
 	role: 'user' | 'admin' | 'super-admin';
 
-	@Prop({ required: false })
+	@Prop({ required: false, default: null })
 	verificationCode: string;
 
-	@Prop({ required: false })
+	@Prop({ required: false, default: null })
 	verificationCodeExpires: Date;
 
 	@Prop({ default: false })
