@@ -3,12 +3,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import corsConfig from '@/config/cors.config';
+import jwtConfig from '@/domains/auth/config/jwt.config';
 import { DomainsModule } from '@/domains/domains.module';
 import { MorganMiddleware } from '@/middlewares/morgan.middleware';
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({ load: [corsConfig], isGlobal: true }),
+		ConfigModule.forRoot({ load: [corsConfig, jwtConfig], isGlobal: true }),
 		MongooseModule.forRootAsync({
 			imports: [ConfigModule],
 			useFactory: async (configService: ConfigService) => ({
