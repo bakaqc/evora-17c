@@ -7,13 +7,21 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+	ApiBearerAuth,
+	ApiOperation,
+	ApiParam,
+	ApiTags,
+} from '@nestjs/swagger';
 
+import { Roles } from '@/domains/auth/decorators/roles.decorator';
+import { Role } from '@/domains/auth/enums/role.enum';
 import { BookingsService } from '@/domains/bookings/bookings.service';
 import { CreateBookingDto } from '@/domains/bookings/dto/createBooking.dto';
 import { UpdateBookingDto } from '@/domains/bookings/dto/updateBooking.dto';
 
 @ApiTags('Bookings')
+@ApiBearerAuth()
 @Controller('bookings')
 export class BookingsController {
 	constructor(private readonly bookingsService: BookingsService) {}
@@ -24,7 +32,8 @@ export class BookingsController {
 		return this.bookingsService.create(createBookingDto);
 	}
 
-	@ApiOperation({ summary: 'Fetch all bookings' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({ summary: 'Fetch all bookings - Super Amin only' })
 	@Get()
 	async getAll() {
 		return this.bookingsService.getAll();
@@ -36,7 +45,10 @@ export class BookingsController {
 		return this.bookingsService.getById(id);
 	}
 
-	@ApiOperation({ summary: 'Fetch bookings by party ID' })
+	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
+	@ApiOperation({
+		summary: 'Fetch bookings by party ID - Super Admin & Admin only',
+	})
 	@Get('party/:partyId')
 	async getByPartyId(@Param('partyId') partyId: string) {
 		return this.bookingsService.getByPartyId(partyId);
@@ -54,7 +66,8 @@ export class BookingsController {
 		return this.bookingsService.getByPaymentId(paymentId);
 	}
 
-	@ApiOperation({ summary: 'Fetch bookings by status' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({ summary: 'Fetch bookings by status -  - Super Admin only' })
 	@ApiParam({
 		name: 'status',
 		enum: ['PENDING', 'APPROVED', 'CANCELLED'],
@@ -67,7 +80,10 @@ export class BookingsController {
 		return this.bookingsService.getByStatus(status);
 	}
 
-	@ApiOperation({ summary: 'Update booking by ID' })
+	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
+	@ApiOperation({
+		summary: 'Update booking by ID -  - Super Admin & Admin only',
+	})
 	@Put(':id')
 	async update(
 		@Param('id') id: string,
@@ -76,7 +92,8 @@ export class BookingsController {
 		return this.bookingsService.update(id, updateBookingDto);
 	}
 
-	@ApiOperation({ summary: 'Delete booking by ID' })
+	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
+	@ApiOperation({ summary: 'Delete booking by ID - Super Admin & Admin only' })
 	@Delete(':id')
 	async delete(@Param('id') id: string) {
 		return this.bookingsService.delete(id);

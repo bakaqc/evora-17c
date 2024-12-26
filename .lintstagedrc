@@ -1,7 +1,7 @@
 {
-	"backend/**/*.ts": ["yarn prettier --write \"./backend/**/*.ts\""],
-	"backend/**/*.js": ["yarn prettier --write \"./backend/**/*.js\""],
-	"frontend/**/*.ts": ["yarn prettier --write \"./frontend/**/*.ts\""],
-	"frontend/**/*.tsx": ["yarn prettier --write \"./frontend/**/*.tsx\""],
-	"frontend/**/*.js": ["yarn prettier --write \"./frontend/**/*.js\""]
+	"backend/**/*.ts": ["pnpm prettier --write \"./backend/**/*.ts\""],
+	"backend/**/*.js": ["pnpm prettier --write \"./backend/**/*.js\""],
+	"frontend/**/*.ts": ["pnpm prettier --write \"./frontend/**/*.ts\""],
+	"frontend/**/*.tsx": ["pnpm prettier --write \"./frontend/**/*.tsx\""],
+	"frontend/**/*.js": ["pnpm prettier --write \"./frontend/**/*.js\""]
 }

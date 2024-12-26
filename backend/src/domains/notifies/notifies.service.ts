@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { NotifyDto } from '@/domains/notifies/dto/notify.dto';
 import { EmailService } from '@/domains/notifies/email.service';
 import { UsersService } from '@/domains/users/users.service';
-import { Notify } from '@/schemas/notifies.schema';
+import { Notify } from '@/schemas/notify.schema';
 
 @Injectable()
 export class NotifiesService {

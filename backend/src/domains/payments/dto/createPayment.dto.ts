@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsMongoId, IsNotEmpty, IsNumber } from 'class-validator';
+import {
+	IsEnum,
+	IsMongoId,
+	IsNotEmpty,
+	IsNumber,
+	IsOptional,
+} from 'class-validator';
 
 export class CreatePaymentDto {
 	@ApiProperty({ description: 'Booking ID have payment' })
@@ -9,7 +15,7 @@ export class CreatePaymentDto {
 
 	@ApiProperty({ description: 'Vouchers ID have used by user' })
 	@IsMongoId()
-	@IsNotEmpty()
+	@IsOptional()
 	voucher: string;
 
 	@ApiProperty({ description: 'Payment method' })

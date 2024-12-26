@@ -7,36 +7,45 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { Public } from '@/domains/auth/decorators/public.decorator';
+import { Roles } from '@/domains/auth/decorators/roles.decorator';
+import { Role } from '@/domains/auth/enums/role.enum';
 import { CreatePartyDto } from '@/domains/parties/dto/createParty.dto';
 import { UpdatePartyDto } from '@/domains/parties/dto/updateParty.dto';
 import { PartiesService } from '@/domains/parties/parties.service';
 
 @ApiTags('Parties')
+@ApiBearerAuth()
 @Controller('parties')
 export class PartiesController {
 	constructor(private readonly partiesService: PartiesService) {}
 
-	@ApiOperation({ summary: 'Create a new party' })
+	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
+	@ApiOperation({ summary: 'Create a new party - Super Admin & Admin only' })
 	@Post()
 	async create(@Body() createPartyDto: CreatePartyDto) {
 		return await this.partiesService.create(createPartyDto);
 	}
 
-	@ApiOperation({ summary: 'Fetch all parties' })
+	@Roles(Role.SUPER_ADMIN)
+	@Public()
+	@ApiOperation({ summary: 'Fetch all parties - Super Admin only' })
 	@Get()
 	async getAll() {
 		return await this.partiesService.getAll();
 	}
 
+	@Public()
 	@ApiOperation({ summary: 'Fetch a party by ID or Category' })
 	@Get(':identifier')
 	async getOne(@Param('identifier') identifier: string) {
 		return this.partiesService.getOne(identifier);
 	}
 
-	@ApiOperation({ summary: 'Update a party by ID' })
+	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
+	@ApiOperation({ summary: 'Update a party by ID - Super Admin & Admin only' })
 	@Put(':id')
 	async update(
 		@Param('id') id: string,
@@ -45,7 +54,8 @@ export class PartiesController {
 		return this.partiesService.update(id, updatePartyDto);
 	}
 
-	@ApiOperation({ summary: 'Delete a party by ID' })
+	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
+	@ApiOperation({ summary: 'Delete a party by ID - Super Admin & Admin only' })
 	@Delete(':id')
 	async delete(@Param('id') id: string) {
 		return this.partiesService.delete(id);
