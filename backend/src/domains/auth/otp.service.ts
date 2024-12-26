@@ -5,6 +5,7 @@ import {
 	UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { randomBytes } from 'crypto';
 import { Model } from 'mongoose';
 
 import { SendOTPDto, VerifyOTPDto } from '@/domains/auth/dto/otp.dto';
@@ -19,6 +20,10 @@ export class OtpService {
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		private readonly notifiesService: NotifiesService,
 	) {}
+
+	private generateSecureOtp(length: number): string {
+		return Array.from({ length }, () => randomBytes(1)[0] % 10).join('');
+	}
 
 	async sendOtp(sendOTPDto: SendOTPDto) {
 		const user = await this.userModel.findOne({ email: sendOTPDto.email });
@@ -46,9 +51,7 @@ export class OtpService {
 			};
 		}
 
-		const otp = Array.from({ length: 6 }, () =>
-			Math.floor(Math.random() * 10),
-		).join('');
+		const otp = this.generateSecureOtp(6);
 		const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
 		this.logger.debug(`Creating OTP for user: ${user.email}`);
@@ -60,7 +63,7 @@ export class OtpService {
 
 		await this.notifiesService.sendPartyNotification(
 			{
-				title: 'Mã OTP dùng để xác thực tài Khoản',
+				title: 'Mã OTP dùng để xác thực tài khoản',
 				message: `${otp}`,
 				users: [user._id.toString()],
 			},
@@ -80,19 +83,16 @@ export class OtpService {
 
 		if (!user) {
 			this.logger.error(`User not found with email: ${email}`);
-
 			throw new NotFoundException('User not found');
 		}
 
 		if (!user.verificationCode || user.verificationCode !== otp) {
 			this.logger.error('Invalid OTP');
-
 			throw new UnauthorizedException('Invalid OTP');
 		}
 
 		if (new Date() > user.verificationCodeExpires) {
 			this.logger.error('OTP expired');
-
 			throw new UnauthorizedException('OTP expired');
 		}
 
