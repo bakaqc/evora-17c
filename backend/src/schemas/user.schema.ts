@@ -26,7 +26,7 @@ export class User {
 	@Prop({ required: true })
 	avatar: string;
 
-	@Prop({ required: true })
+	@Prop({ required: true, default: 'user' })
 	role: 'user' | 'admin' | 'super-admin';
 
 	@Prop({ required: false, default: null })
