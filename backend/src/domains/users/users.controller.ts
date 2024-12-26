@@ -1,29 +1,15 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Post,
-	Put,
-} from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ChangePasswordDto } from '@/domains/users/dto/changePassword.dto';
-import { CreateUserDto } from '@/domains/users/dto/createUser.dto';
 import { UpdateUserDto } from '@/domains/users/dto/updateUser.dto';
 import { UsersService } from '@/domains/users/users.service';
 
 @ApiTags('Users')
+@ApiBearerAuth()
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
-
-	@ApiOperation({ summary: 'Create a new user' })
-	@Post()
-	async create(@Body() CreateUserDto: CreateUserDto) {
-		return await this.usersService.create(CreateUserDto);
-	}
 
 	@ApiOperation({ summary: 'Fetch all users' })
 	@Get()

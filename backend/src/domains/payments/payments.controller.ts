@@ -9,7 +9,7 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { CreatePaymentDto } from '@/domains/payments/dto/createPayment.dto';
 import { UpdatePaymentDto } from '@/domains/payments/dto/updatePayment.dto';
@@ -18,6 +18,7 @@ import { PaymentsService } from '@/domains/payments/payments.service';
 import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
 
 @ApiTags('Payments')
+@ApiBearerAuth()
 @Controller('payments')
 export class PaymentsController {
 	constructor(

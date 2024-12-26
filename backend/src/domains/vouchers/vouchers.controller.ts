@@ -7,13 +7,15 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { Public } from '@/domains/auth/decorators/public.decorator';
 import { CreateVoucherDto } from '@/domains/vouchers/dto/createVoucher.dto';
 import { UpdateVoucherDto } from '@/domains/vouchers/dto/updateVoucher.dto';
 import { VouchersService } from '@/domains/vouchers/vouchers.service';
 
 @ApiTags('Vouchers')
+@ApiBearerAuth()
 @Controller('vouchers')
 export class VouchersController {
 	constructor(private readonly vouchersService: VouchersService) {}
@@ -24,6 +26,7 @@ export class VouchersController {
 		return await this.vouchersService.create(CreateVoucherDto);
 	}
 
+	@Public()
 	@ApiOperation({ summary: 'Fetch all vouchers' })
 	@Get()
 	async getAll() {

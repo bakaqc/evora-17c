@@ -7,13 +7,15 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { Public } from '@/domains/auth/decorators/public.decorator';
 import { CreatePartyDto } from '@/domains/parties/dto/createParty.dto';
 import { UpdatePartyDto } from '@/domains/parties/dto/updateParty.dto';
 import { PartiesService } from '@/domains/parties/parties.service';
 
 @ApiTags('Parties')
+@ApiBearerAuth()
 @Controller('parties')
 export class PartiesController {
 	constructor(private readonly partiesService: PartiesService) {}
@@ -24,12 +26,14 @@ export class PartiesController {
 		return await this.partiesService.create(createPartyDto);
 	}
 
+	@Public()
 	@ApiOperation({ summary: 'Fetch all parties' })
 	@Get()
 	async getAll() {
 		return await this.partiesService.getAll();
 	}
 
+	@Public()
 	@ApiOperation({ summary: 'Fetch a party by ID or Category' })
 	@Get(':identifier')
 	async getOne(@Param('identifier') identifier: string) {

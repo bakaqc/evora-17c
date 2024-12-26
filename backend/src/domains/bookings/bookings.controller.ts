@@ -7,13 +7,19 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+	ApiBearerAuth,
+	ApiOperation,
+	ApiParam,
+	ApiTags,
+} from '@nestjs/swagger';
 
 import { BookingsService } from '@/domains/bookings/bookings.service';
 import { CreateBookingDto } from '@/domains/bookings/dto/createBooking.dto';
 import { UpdateBookingDto } from '@/domains/bookings/dto/updateBooking.dto';
 
 @ApiTags('Bookings')
+@ApiBearerAuth()
 @Controller('bookings')
 export class BookingsController {
 	constructor(private readonly bookingsService: BookingsService) {}
