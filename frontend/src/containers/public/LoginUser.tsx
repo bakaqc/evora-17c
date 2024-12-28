@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import logo1 from '@/assets/logo1.png';
+import { ButtonForLogin, InputField } from '@/components';
 import { path } from '@/ultils/constant';
 
 const LoginUser: React.FC = () => {
@@ -20,44 +21,14 @@ const LoginUser: React.FC = () => {
 											Login for User!
 										</h4>
 									</div>
-									{/* Username Input */}
-									<div className="relative mb-6">
-										<input
-											type="text"
-											id="username"
-											className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-										/>
-										<label
-											htmlFor="username"
-											className="absolute left-3 top-0 text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-										>
-											Email
-										</label>
-									</div>
 
-									{/* Password Input */}
-									<div className="relative mb-6">
-										<input
-											type="password"
-											id="password"
-											className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-										/>
-										<label
-											htmlFor="password"
-											className="absolute left-3 top-0 text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-										>
-											Password
-										</label>
-									</div>
+									{/* Username and Password Fields */}
+									<InputField id="username" label="Email" type="text" />
+									<InputField id="password" label="Password" type="password" />
 
 									{/* Login Button */}
 									<div className="mb-6 text-center">
-										<button
-											type="button"
-											className="w-full rounded bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-700 px-6 py-2.5 text-lg font-medium text-white shadow-lg transition duration-150 ease-in-out hover:shadow-xl"
-										>
-											Log in
-										</button>
+										<ButtonForLogin label="Log in" />
 										<a
 											href="#!"
 											className="mt-2 inline-block text-sm text-primary"
