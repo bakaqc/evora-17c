@@ -1,5 +1,4 @@
-import { createStore } from 'redux';
-import { Store } from 'redux';
+import { Store, createStore } from 'redux';
 import { persistStore } from 'redux-persist';
 import { Persistor } from 'redux-persist/es/types';
 

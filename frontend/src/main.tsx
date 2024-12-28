@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick.css';
 
 import App from '@/App';
 
+import './index.css';
 import reduxStore from './redux';
 
 const { store, persistor } = reduxStore();
