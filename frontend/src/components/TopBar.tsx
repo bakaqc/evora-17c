@@ -1,6 +1,8 @@
 import React from 'react';
-import { BiEnvelope, BiPhoneCall } from 'react-icons/bi';
-import { FaBirthdayCake } from 'react-icons/fa';
+
+import icons from '@/ultils/icons';
+
+const { FaBirthdayCake, BiPhoneCall, BiEnvelope } = icons;
 
 const TopBar: React.FC = () => {
 	return (

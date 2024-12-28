@@ -20,10 +20,10 @@ const Intro: React.FC = () => {
 				{text.description2}
 			</p>
 			<div className="flex items-center justify-around w-full">
-				{text.statistic.map((item: Statistic, index: number) => {
+				{text.statistic.map((item: Statistic) => {
 					return (
 						<div
-							key={index}
+							key={item.name}
 							className="flex flex-col justify-center items-center"
 						>
 							<h4 className="font-bold text-lg">{item.value}</h4>

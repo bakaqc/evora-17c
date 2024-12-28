@@ -17,10 +17,10 @@ const Contacts: React.FC = () => {
 			/>
 			<p className="">{text.content}</p>
 			<div className="flex items-center justify-around w-full">
-				{text.contact.map((item: Contact, index: number) => {
+				{text.contact.map((item: Contact) => {
 					return (
 						<div
-							key={index}
+							key={item.text}
 							className="flex flex-col items-center justify-center"
 						>
 							<span className="text-orange-600 text-[15px] font-bold ">

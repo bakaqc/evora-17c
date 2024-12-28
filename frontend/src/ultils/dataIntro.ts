@@ -1,4 +1,21 @@
-export const text = {
+interface Statistic {
+	value: string;
+	name: string;
+}
+
+interface Text {
+	title: string;
+	description: string;
+	description2: string;
+	statistic: Statistic[];
+	price: string;
+	comment: string;
+	author: string;
+	question: string;
+	answer: string;
+}
+
+export const text: Text = {
 	title: 'Tại sao lại chọn Evora?',
 	description:
 		'Chúng tôi biết bạn có rất nhiều lựa chọn, nhưng Evora tự hào là trang web đứng top google về các từ khóa: ',
