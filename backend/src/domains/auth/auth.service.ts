@@ -37,6 +37,15 @@ export class AuthService {
 
 	async login(user: any) {
 		const payload = { email: user.email, role: user.role, sub: user._id };
+
+		const findUser = await this.userModel.findOne({ email: user.email });
+
+		if (!findUser.isVerified) {
+			throw new UnauthorizedException(
+				'Your account is not verified. Please verify your email.',
+			);
+		}
+
 		return {
 			access_token: this.jwtService.sign(payload),
 		};
