@@ -6,7 +6,7 @@ import { cloudinary } from '@/domains/upload/config/cloudinary.config';
 export class UploadService {
 	private readonly logger = new Logger(UploadService.name);
 
-	async uploadImage(file: Express.Multer.File) {
+	async uploadImage(file: Express.Multer.File): Promise<any> {
 		try {
 			const result = await new Promise((resolve, reject) => {
 				const uploadStream = cloudinary.uploader.upload_stream(
@@ -16,7 +16,6 @@ export class UploadService {
 							const err = new Error(
 								`Error uploading image to Cloudinary: ${error.message}`,
 							);
-
 							this.logger.error(err.message, error.stack);
 							reject(err);
 						} else {
