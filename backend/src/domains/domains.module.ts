@@ -9,6 +9,7 @@ import { NotifiesModule } from '@/domains/notifies/notifies.module';
 import { PartiesModule } from '@/domains/parties/parties.module';
 import { PaymentsModule } from '@/domains/payments/payments.module';
 import { ReviewsModule } from '@/domains/reviews/reviews.module';
+import { UploadModule } from '@/domains/upload/upload.module';
 import { UsersModule } from '@/domains/users/users.module';
 import { VouchersModule } from '@/domains/vouchers/vouchers.module';
 
@@ -21,6 +22,7 @@ import { VouchersModule } from '@/domains/vouchers/vouchers.module';
 		PaymentsModule,
 		ReviewsModule,
 		UsersModule,
+		UploadModule,
 		VouchersModule,
 	],
 	providers: [

@@ -98,6 +98,9 @@ export class OtpService {
 
 		user.verificationCode = null;
 		user.verificationCodeExpires = null;
+		if (!user.isVerified) {
+			user.isVerified = true;
+		}
 
 		await user.save();
 
