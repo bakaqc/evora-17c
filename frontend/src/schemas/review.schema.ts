@@ -1,5 +1,4 @@
-import { Booking } from "@/schemas/booking.schema";
-
+import { Booking } from '@/schemas/booking.schema';
 
 export interface Review {
 	_id: string;
