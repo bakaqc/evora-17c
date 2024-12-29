@@ -23,7 +23,7 @@ export class User {
 	@Prop({ required: true })
 	gender: 'male' | 'female';
 
-	@Prop({ required: true })
+	@Prop({ required: false, default: () => process.env.AVATAR_DEFAULT })
 	avatar: string;
 
 	@Prop({ required: true, default: 'user' })

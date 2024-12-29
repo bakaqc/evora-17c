@@ -47,6 +47,9 @@ importers:
       class-validator:
         specifier: 0.14.1
         version: 0.14.1
+      cloudinary:
+        specifier: 2.5.1
+        version: 2.5.1
       date-fns:
         specifier: 4.1.0
         version: 4.1.0
@@ -59,6 +62,12 @@ importers:
       morgan:
         specifier: 1.10.0
         version: 1.10.0
+      multer:
+        specifier: 1.4.5-lts.1
+        version: 1.4.5-lts.1
+      multer-storage-cloudinary:
+        specifier: 4.0.0
+        version: 4.0.0(cloudinary@2.5.1)
       nodemailer:
         specifier: 6.9.16
         version: 6.9.16
@@ -93,6 +102,9 @@ importers:
       '@types/morgan':
         specifier: 1.9.9
         version: 1.9.9
+      '@types/multer':
+        specifier: 1.4.12
+        version: 1.4.12
       '@types/node':
         specifier: 20.16.7
         version: 20.16.7
@@ -492,6 +504,9 @@ packages:
   '@types/morgan@1.9.9':
     resolution: {integrity: sha512-iRYSDKVaC6FkGSpEVVIvrRGw0DfJMiQzIn3qr2G5B3C//AWkulhXgaBd7tS9/J79GWSYMTHGs7PfI5b3Y8m+RQ==}
 
+  '@types/multer@1.4.12':
+    resolution: {integrity: sha512-pQ2hoqvXiJt2FP9WQVLPRO+AmiIm/ZYkavPlIQnx282u4ZrVdztx0pkh3jjpQt0Kz+YI0YhSG264y08UJKoUQg==}
+
   '@types/node@20.16.7':
     resolution: {integrity: sha512-QkDQjAY3gkvJNcZOWwzy3BN34RweT0OQ9zJyvLCU0kSK22dO2QYh/NHGfbEAYylPYzRB1/iXcojS79wOg5gFSw==}
 
@@ -866,6 +881,10 @@ packages:
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  cloudinary@2.5.1:
+    resolution: {integrity: sha512-CNg6uU53Hl4FEVynkTGpt5bQEAQWDHi3H+Sm62FzKf5uQHipSN2v7qVqS8GRVqeb0T1WNV+22+75DOJeRXYeSQ==}
+    engines: {node: '>=9'}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -1654,8 +1673,17 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  multer-storage-cloudinary@4.0.0:
+    resolution: {integrity: sha512-25lm9R6o5dWrHLqLvygNX+kBOxprzpmZdnVKH4+r68WcfCt8XV6xfQaMuAg+kUE5Xmr8mJNA4gE0AcBj9FJyWA==}
+    peerDependencies:
+      cloudinary: ^1.21.0
+
   multer@1.4.4-lts.1:
     resolution: {integrity: sha512-WeSGziVj6+Z2/MwQo3GvqzgR+9Uc+qt8SwHKh3gvNPiISKfsMfG4SvCOFYlxxgkXt7yIV2i1yczehm0EOKIxIg==}
+    engines: {node: '>= 6.0.0'}
+
+  multer@1.4.5-lts.1:
+    resolution: {integrity: sha512-ywPWvcDMeH+z9gQq5qYHCCy+ethsk4goepZ45GLD63fOu0YcNecQxi64nDs3qluZB+murG3/D4dJ7+dGctcCQQ==}
     engines: {node: '>= 6.0.0'}
 
   mute-stream@0.0.8:
@@ -1856,6 +1884,14 @@ packages:
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
+
+  q@1.5.1:
+    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
+    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.13.0:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
@@ -2760,6 +2796,10 @@ snapshots:
     dependencies:
       '@types/node': 20.16.7
 
+  '@types/multer@1.4.12':
+    dependencies:
+      '@types/express': 4.17.21
+
   '@types/node@20.16.7':
     dependencies:
       undici-types: 6.19.8
@@ -3213,6 +3253,11 @@ snapshots:
   cli-width@4.1.0: {}
 
   clone@1.0.4: {}
+
+  cloudinary@2.5.1:
+    dependencies:
+      lodash: 4.17.21
+      q: 1.5.1
 
   color-convert@2.0.1:
     dependencies:
@@ -4007,7 +4052,21 @@ snapshots:
 
   ms@2.1.3: {}
 
+  multer-storage-cloudinary@4.0.0(cloudinary@2.5.1):
+    dependencies:
+      cloudinary: 2.5.1
+
   multer@1.4.4-lts.1:
+    dependencies:
+      append-field: 1.0.0
+      busboy: 1.6.0
+      concat-stream: 1.6.2
+      mkdirp: 0.5.6
+      object-assign: 4.1.1
+      type-is: 1.6.18
+      xtend: 4.0.2
+
+  multer@1.4.5-lts.1:
     dependencies:
       append-field: 1.0.0
       busboy: 1.6.0
@@ -4177,6 +4236,8 @@ snapshots:
   proxy-from-env@1.1.0: {}
 
   punycode@2.3.1: {}
+
+  q@1.5.1: {}
 
   qs@6.13.0:
     dependencies:

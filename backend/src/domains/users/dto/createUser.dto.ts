@@ -43,9 +43,4 @@ export class CreateUserDto {
 	@IsIn(['male', 'female'])
 	@IsNotEmpty()
 	gender: string;
-
-	@ApiProperty({ description: 'User avatar' })
-	@IsString()
-	@IsNotEmpty()
-	avatar: string;
 }
