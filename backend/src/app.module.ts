@@ -26,7 +26,7 @@ export class AppModule implements NestModule {
 		consumer.apply(MorganMiddleware).forRoutes('*');
 	}
 
-	constructor(private configService: ConfigService) {
+	constructor(private readonly configService: ConfigService) {
 		configureCloudinary(this.configService);
 	}
 }
