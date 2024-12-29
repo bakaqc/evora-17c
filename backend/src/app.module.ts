@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import corsConfig from '@/config/cors.config';
 import jwtConfig from '@/domains/auth/config/jwt.config';
 import { DomainsModule } from '@/domains/domains.module';
+import { configureCloudinary } from '@/domains/upload/config/cloudinary.config';
 import { MorganMiddleware } from '@/middlewares/morgan.middleware';
 
 @Module({
@@ -23,5 +24,9 @@ import { MorganMiddleware } from '@/middlewares/morgan.middleware';
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
 		consumer.apply(MorganMiddleware).forRoutes('*');
+	}
+
+	constructor(private configService: ConfigService) {
+		configureCloudinary(this.configService);
 	}
 }
