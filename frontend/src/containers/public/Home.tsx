@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Banner, Contact, Intro, TopBar } from '@/components';
-import { Navigation } from '@/containers/public';
+import { Footer, Navigation } from '@/containers/public';
 
 const Home: React.FC = () => {
 	return (
@@ -16,8 +16,9 @@ const Home: React.FC = () => {
 				</div>
 				<Intro />
 				<Contact />
-				<div className="h-[500px]"></div>
 			</div>
+			<Footer />
+			<div className="h-[500px]"></div>
 		</div>
 	);
 };

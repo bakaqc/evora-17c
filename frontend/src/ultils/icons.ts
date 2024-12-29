@@ -1,8 +1,9 @@
 import { BiEnvelope, BiPhoneCall } from 'react-icons/bi';
-import { CiLogin } from 'react-icons/ci';
+import { CiLocationOn, CiLogin, CiPhone } from 'react-icons/ci';
 import { FaBirthdayCake } from 'react-icons/fa';
-import { FaStar } from 'react-icons/fa6';
+import { FaArrowRightLong, FaStar } from 'react-icons/fa6';
 import { FiUserPlus } from 'react-icons/fi';
+import { IoMailOpenOutline } from 'react-icons/io5';
 import { RiAdminLine, RiUserLine } from 'react-icons/ri';
 
 const icons = {
@@ -14,5 +15,9 @@ const icons = {
 	BiPhoneCall,
 	FaBirthdayCake,
 	BiEnvelope,
+	CiLocationOn,
+	IoMailOpenOutline,
+	CiPhone,
+	FaArrowRightLong,
 };
 export default icons;
