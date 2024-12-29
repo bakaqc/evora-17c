@@ -6,4 +6,15 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
 	plugins: [react(), tsconfigPaths()],
 	base: '/',
+	optimizeDeps: {
+		include: ['slick-carousel'],
+	},
+	build: {
+		rollupOptions: {
+			external: [
+				'slick-carousel/slick/slick-theme.css',
+				'slick-carousel/slick/slick.css',
+			],
+		},
+	},
 });

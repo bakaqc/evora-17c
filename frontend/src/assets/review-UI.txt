@@ -1,0 +1,11 @@
+MVP: https://evora-17c.onrender.com
+Feedback UI: Nên follow vào MVP để điều chỉnh
+- Web dùng full tiếng Việt
+- Login cho User: 
+	+ Form nhỏ lại tí hoặc thêm content j đó vào phần bên phải chứ trống quá
+	+ Chữ trong button Login hơi nhỏ
+- Login cho Admin: thêm phần Quên mật khẩu
+- Homepage: 
+	+ Tích hợp phần header phía trên vào thanh nav bar cho gọn
+	+ Category trên nav bar chuyển xuống dưới thay bằng các option khác follow MVP như: Sự kiện, Đơn vị tổ chức, Giới thiệu,...
+	+ Copy banner MVP thêm vào ngay bên dưới nav bar
