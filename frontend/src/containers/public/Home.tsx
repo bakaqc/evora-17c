@@ -18,7 +18,6 @@ const Home: React.FC = () => {
 				<Contact />
 			</div>
 			<Footer />
-			<div className="h-[500px]"></div>
 		</div>
 	);
 };
