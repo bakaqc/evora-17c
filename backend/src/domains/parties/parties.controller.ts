@@ -29,9 +29,8 @@ export class PartiesController {
 		return await this.partiesService.create(createPartyDto);
 	}
 
-	@Roles(Role.SUPER_ADMIN)
 	@Public()
-	@ApiOperation({ summary: 'Fetch all parties - Super Admin only' })
+	@ApiOperation({ summary: 'Fetch all parties' })
 	@Get()
 	async getAll() {
 		return await this.partiesService.getAll();
