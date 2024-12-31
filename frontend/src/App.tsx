@@ -7,6 +7,7 @@ import {
 	LoginAdmin,
 	LoginUser,
 	RegisterUser,
+	VerifyOTP,
 } from '@/containers/public';
 import { path } from '@/ultils/constant';
 
@@ -20,6 +21,7 @@ const App: React.FC = () => {
 				<Route path={path.LOGIN_USER} element={<LoginUser />} />
 				<Route path={path.LOGIN_ADMIN} element={<LoginAdmin />} />
 				<Route path={path.REGISTER_USER} element={<RegisterUser />} />
+				<Route path={path.VERIFY_OTP} element={<VerifyOTP />} />
 			</Routes>
 		</div>
 	);
