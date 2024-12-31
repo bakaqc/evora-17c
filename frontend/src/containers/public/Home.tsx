@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Banner, Contact, Intro, TopBar } from '@/components';
+import { Banner, Intro, TopBar } from '@/components';
 import { Footer, Navigation } from '@/containers/public';
 
 const Home: React.FC = () => {
@@ -15,7 +15,6 @@ const Home: React.FC = () => {
 					<Outlet />
 				</div>
 				<Intro />
-				<Contact />
 			</div>
 			<Footer />
 		</div>
