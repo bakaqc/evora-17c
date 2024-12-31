@@ -36,20 +36,4 @@ export class UpdateUserDto {
 
 	@ApiPropertyOptional({ description: 'User avatar' })
 	avatar?: string;
-
-	@ApiPropertyOptional({ description: 'User role' })
-	@ValidateIf((o) => o.role !== undefined)
-	@IsIn(['user', 'admin', 'super-admin'], {
-		message: 'Role must be user, admin or super-admin',
-	})
-	role?: string;
-
-	@ApiPropertyOptional({ description: 'User verification code' })
-	verificationCode?: string;
-
-	@ApiPropertyOptional({ description: 'User verification code expires' })
-	verificationCodeExpires?: Date;
-
-	@ApiPropertyOptional({ description: 'User is verified' })
-	isVerified?: boolean;
 }

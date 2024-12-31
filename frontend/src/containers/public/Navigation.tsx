@@ -53,28 +53,10 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 					ĐÁM CƯỚI
 				</NavLink>
 				<NavLink
-					to={path.EVENT}
-					className={({ isActive }) => (isActive ? active : notActive)}
-				>
-					SỰ KIỆN
-				</NavLink>
-				<NavLink
-					to={path.ORGANIZE}
-					className={({ isActive }) => (isActive ? active : notActive)}
-				>
-					ĐƠN VỊ TỔ CHỨC
-				</NavLink>
-				<NavLink
 					to={path.INTRO}
 					className={({ isActive }) => (isActive ? active : notActive)}
 				>
 					GIỚI THIỆU
-				</NavLink>
-				<NavLink
-					to={path.CONTACT}
-					className={({ isActive }) => (isActive ? active : notActive)}
-				>
-					LIÊN HỆ
 				</NavLink>
 
 				{/* Dropdown Button for Login */}
