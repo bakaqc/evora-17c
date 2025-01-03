@@ -5,4 +5,7 @@ export { default as Item } from './Item';
 export { default as TopBar } from './TopBar';
 export { default as Banner } from './Banner';
 export { default as InputField } from './InputField';
+export { default as InputForLogin } from './InputForLogin';
+export { default as InputForRepass } from './InputForRepass';
 export { default as ButtonForLogin } from './ButtonForLogin';
+export { default as Select } from './Select';
