@@ -9,6 +9,8 @@ import {
 	RegisterUser,
 	VerifyOTP,
 } from '@/containers/public';
+import AdminPage from '@/containers/system/AdminPage';
+import ListUsers from '@/containers/system/ListUsers';
 import { path } from '@/ultils/constant';
 
 const App: React.FC = () => {
@@ -22,6 +24,10 @@ const App: React.FC = () => {
 				<Route path={path.LOGIN_ADMIN} element={<LoginAdmin />} />
 				<Route path={path.REGISTER_USER} element={<RegisterUser />} />
 				<Route path={path.VERIFY_OTP} element={<VerifyOTP />} />
+			</Routes>
+			<Routes>
+				<Route path={path.ADMINPAGE} element={<AdminPage />} />
+				<Route path={path.LISTUSER} element={<ListUsers />} />
 			</Routes>
 		</div>
 	);
