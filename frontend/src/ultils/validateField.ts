@@ -5,63 +5,126 @@ interface InvalidField {
 	msg: string;
 }
 
+const addError = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+	msg: string,
+) => {
+	if (!invalidFields.some((item) => item.name === key)) {
+		invalidFields.push({ name: key, msg });
+	}
+};
+
+const validateRequired = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (value === '' || value === null) {
+		addError(key, value, invalidFields, 'Trường này bắt buộc nhập.');
+	}
+};
+
+const validateFullName = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (typeof value === 'string' && value.trim() === '') {
+		addError(key, value, invalidFields, 'Họ và tên không được bỏ trống.');
+	}
+};
+
+const validateEmail = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (typeof value === 'string' && !value.includes('@')) {
+		addError(key, value, invalidFields, 'Email không hợp lệ.');
+	}
+};
+
+const validatePhone = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (typeof value === 'string') {
+		if (isNaN(+value)) {
+			addError(key, value, invalidFields, 'Số điện thoại không hợp lệ.');
+		} else if (value.length !== 10) {
+			addError(
+				key,
+				value,
+				invalidFields,
+				'Số kí tự không hợp lệ cho điện thoại.',
+			);
+		} else if (!value.startsWith('0')) {
+			addError(key, value, invalidFields, 'Số điện thoại phải bắt đầu bằng 0.');
+		}
+	}
+};
+
+const validatePassword = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (typeof value === 'string' && value.length < 6) {
+		addError(key, value, invalidFields, 'Mật khẩu cần có ít nhất là 6 kí tự.');
+	}
+};
+
+const validateDateOfBirthAddressGender = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (value === '' || value === null) {
+		addError(key, value, invalidFields, 'Trường không được bỏ trống.');
+	}
+};
+
+const validateOtp = (
+	key: string,
+	value: string | number | null,
+	invalidFields: InvalidField[],
+) => {
+	if (typeof value === 'string' && value.trim() === '') {
+		addError(key, value, invalidFields, 'OTP không được bỏ trống.');
+	}
+};
+
 const validateField = (
 	key: string,
 	value: string | number | null,
 	invalidFields: InvalidField[],
 ) => {
-	const addError = (msg: string) => {
-		if (!invalidFields.some((item) => item.name === key)) {
-			invalidFields.push({ name: key, msg });
-		}
-	};
-
-	if (value === '' || value === null) {
-		addError('Trường này bắt buộc nhập.');
-	}
-
 	switch (key) {
 		case 'fullName':
-			if (typeof value === 'string' && value.trim() === '') {
-				addError('Họ và tên không được bỏ trống.');
-			}
+			validateFullName(key, value, invalidFields);
 			break;
 		case 'email':
-			if (typeof value === 'string' && !value.includes('@')) {
-				addError('Email không hợp lệ.');
-			}
+			validateEmail(key, value, invalidFields);
 			break;
 		case 'phone':
-			if (typeof value === 'string') {
-				if (isNaN(+value)) {
-					addError('Số điện thoại không hợp lệ.');
-				}
-				if (value.length !== 10) {
-					addError('Số kí tự không hợp lệ cho điện thoại.');
-				}
-				if (!value.startsWith('0')) {
-					addError('Số điện thoại phải bắt đầu bằng 0.');
-				}
-			}
+			validatePhone(key, value, invalidFields);
 			break;
 		case 'password':
-			if (typeof value === 'string' && value.length < 6) {
-				addError('Mật khẩu cần có ít nhất là 6 kí tự.');
-			}
+			validatePassword(key, value, invalidFields);
 			break;
 		case 'dateOfBirth':
 		case 'address':
 		case 'gender':
-			if (value === '' || value === null) {
-				addError(`Trường không được bỏ trống.`);
-			}
+			validateDateOfBirthAddressGender(key, value, invalidFields);
 			break;
 		case 'otp':
-			if (typeof value === 'string' && value.trim() === '') {
-				addError('OTP không được bỏ trống.');
-			}
+			validateOtp(key, value, invalidFields);
 			break;
 		default:
+			validateRequired(key, value, invalidFields); // Check if field is required
 			break;
 	}
 };
