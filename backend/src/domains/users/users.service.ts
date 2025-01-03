@@ -113,6 +113,12 @@ export class UsersService {
 	async delete(identifier: string, isEmail = false) {
 		const user = await this.findUser(identifier, isEmail);
 
+		if (user.role === 'super-admin') {
+			this.logger.error('Cannot delete super-admin');
+
+			throw new ConflictException('Cannot delete super-admin');
+		}
+
 		await this.userModel.deleteOne({ _id: user._id });
 
 		this.logger.debug(
