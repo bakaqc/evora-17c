@@ -1,4 +1,7 @@
-type Payload = Record<string, string | number | null>;
+// Tạo alias cho kiểu dữ liệu string | number | null
+type ValueType = string | number | null;
+
+type Payload = Record<string, ValueType>;
 
 interface InvalidField {
 	name: string;
@@ -7,7 +10,7 @@ interface InvalidField {
 
 const addError = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 	msg: string,
 ) => {
@@ -18,7 +21,7 @@ const addError = (
 
 const validateRequired = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (value === '' || value === null) {
@@ -28,7 +31,7 @@ const validateRequired = (
 
 const validateFullName = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && value.trim() === '') {
@@ -38,7 +41,7 @@ const validateFullName = (
 
 const validateEmail = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && !value.includes('@')) {
@@ -48,7 +51,7 @@ const validateEmail = (
 
 const validatePhone = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string') {
@@ -69,7 +72,7 @@ const validatePhone = (
 
 const validatePassword = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && value.length < 6) {
@@ -79,7 +82,7 @@ const validatePassword = (
 
 const validateDateOfBirthAddressGender = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (value === '' || value === null) {
@@ -89,7 +92,7 @@ const validateDateOfBirthAddressGender = (
 
 const validateOtp = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && value.trim() === '') {
@@ -99,7 +102,7 @@ const validateOtp = (
 
 const validateField = (
 	key: string,
-	value: string | number | null,
+	value: ValueType,
 	invalidFields: InvalidField[],
 ) => {
 	switch (key) {
