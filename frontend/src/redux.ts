@@ -1,14 +1,18 @@
-import { Store, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { persistStore } from 'redux-persist';
-import { Persistor } from 'redux-persist/es/types';
+import { ThunkMiddleware, thunk } from 'redux-thunk';
 
 import rootReducer from '@/stores/reducers/rootReducer';
 
-const reduxStore = (): { store: Store; persistor: Persistor } => {
-	const store = createStore(rootReducer);
-	const persistor = persistStore(store);
+// Tạo store trước khi export
+const store = createStore(
+	rootReducer,
+	applyMiddleware(thunk as unknown as ThunkMiddleware),
+);
 
-	return { store, persistor };
-};
+const persistor = persistStore(store);
 
-export default reduxStore;
+// Tạo kiểu AppDispatch từ store.dispatch
+export type AppDispatch = typeof store.dispatch;
+
+export { store, persistor };

@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 
 interface ButtonProps {
-	text: string;
+	text?: string;
 	textColor?: string;
 	bgColor?: string;
 	IcAfter?: React.ElementType;

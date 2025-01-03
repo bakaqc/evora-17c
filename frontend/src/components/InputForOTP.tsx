@@ -1,18 +1,16 @@
-import { Payload } from '@/ultils/type';
+import { PayloadForOtp } from '@/ultils/type';
 
 interface InputFieldProps {
 	id: string;
 	label?: string;
 	type?: string;
 	value?: string;
-	setValue?: React.Dispatch<React.SetStateAction<Payload>>;
-	invalidField?: { name: string; msg: string }[]; // Chuyển sang dạng object để dễ kiểm tra
-	setInvalidField?: React.Dispatch<
-		React.SetStateAction<{ name: string; msg: string }[]>
-	>;
+	setValue?: React.Dispatch<React.SetStateAction<PayloadForOtp>>;
+	invalidField?: string[];
+	setInvalidField?: (value: string[]) => void;
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+const InputForOtp: React.FC<InputFieldProps> = ({
 	id,
 	label,
 	type,
@@ -23,14 +21,12 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (setValue) {
-			setValue((prev: Payload) => ({
+			setValue((prev: PayloadForOtp) => ({
 				...prev,
-				[id]: e.target.value, // Cập nhật trường tương ứng với id
+				[id]: e.target.value,
 			}));
 		}
 	};
-	const errorMsg = invalidField.find((field) => field.name === id)?.msg;
-
 	return (
 		<div className="relative mb-8">
 			<input
@@ -51,9 +47,11 @@ const InputField: React.FC<InputFieldProps> = ({
 			>
 				{label}
 			</label>
-			{errorMsg && <p className="mt-1 text-xs text-red-500">{errorMsg}</p>}
+			{invalidField && (
+				<p className="mt-1 text-xs text-red-500">{invalidField}</p>
+			)}
 		</div>
 	);
 };
 
-export default InputField;
+export default InputForOtp;

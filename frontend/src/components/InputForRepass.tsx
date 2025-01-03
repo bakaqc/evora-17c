@@ -1,11 +1,9 @@
-import { Payload } from '@/ultils/type';
-
 interface InputFieldProps {
 	id: string;
 	label?: string;
 	type?: string;
 	value?: string;
-	setValue?: React.Dispatch<React.SetStateAction<Payload>>;
+	setValue?: React.Dispatch<React.SetStateAction<string>>;
 	invalidField?: { name: string; msg: string }[]; // Chuyển sang dạng object để dễ kiểm tra
 	setInvalidField?: React.Dispatch<
 		React.SetStateAction<{ name: string; msg: string }[]>
@@ -23,16 +21,13 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (setValue) {
-			setValue((prev: Payload) => ({
-				...prev,
-				[id]: e.target.value, // Cập nhật trường tương ứng với id
-			}));
+			setValue(e.target.value);
 		}
 	};
 	const errorMsg = invalidField.find((field) => field.name === id)?.msg;
 
 	return (
-		<div className="relative mb-8">
+		<div className="relative mb-6">
 			<input
 				type={type || 'text'}
 				id={id}
