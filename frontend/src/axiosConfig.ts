@@ -17,16 +17,23 @@ instance.interceptors.request.use(
 
 		return config;
 	},
-	function (error: string): Promise<never> {
-		return Promise.reject(error);
+	function (error: unknown): Promise<never> {
+		// Đảm bảo trả về một Error
+		return Promise.reject(
+			error instanceof Error ? error : new Error(String(error)),
+		);
 	},
 );
+
 instance.interceptors.response.use(
 	function (response: AxiosResponse): AxiosResponse {
 		return response;
 	},
-	function (error: string): Promise<never> {
-		return Promise.reject(error);
+	function (error: unknown): Promise<never> {
+		// Đảm bảo trả về một Error
+		return Promise.reject(
+			error instanceof Error ? error : new Error(String(error)),
+		);
 	},
 );
 

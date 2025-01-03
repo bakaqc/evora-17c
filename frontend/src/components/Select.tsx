@@ -8,8 +8,6 @@ interface SelectProps {
 	value?: string | number;
 	setValue?: React.Dispatch<React.SetStateAction<Payload>>;
 	name?: string;
-	invalidField?: string[];
-	setInvalidField?: React.Dispatch<React.SetStateAction<string[]>>;
 	reset?: boolean;
 }
 

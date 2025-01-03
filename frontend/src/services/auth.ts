@@ -21,9 +21,9 @@ interface LoginResponseSuccess {
 
 // Kiểu phản hồi khi đăng nhập thất bại
 interface LoginResponseFailed {
-	message: string[]; // Mảng chuỗi để chứa các thông báo lỗi
-	error: string; // Mô tả lỗi
-	statusCode: number; // Mã trạng thái HTTP
+	message: string[];
+	error: string;
+	statusCode: number;
 }
 
 // Type tổng hợp cho LoginResponse
@@ -37,7 +37,7 @@ export const apiRegister = (payload: Payload): Promise<ApiResponse<Payload>> =>
 			data: payload,
 		})
 			.then((response) => resolve(response?.data))
-			.catch((err) => reject(err));
+			.catch((err) => reject(new Error(err?.message || 'Failed to register')));
 	});
 
 export const apiLogin = (payload: LoginPayload): Promise<LoginResponse> =>
@@ -51,32 +51,41 @@ export const apiLogin = (payload: LoginPayload): Promise<LoginResponse> =>
 				if (response?.data?.access_token) {
 					resolve({ access_token: response.data.access_token });
 				} else {
-					reject({
-						message: response?.data?.message || ['Login failed'],
-						error: 'Unauthorized',
-						statusCode: 401,
-					});
+					reject(
+						new Error(
+							JSON.stringify({
+								message: response?.data?.message || ['Login failed'],
+								error: 'Unauthorized',
+								statusCode: 401,
+							}),
+						),
+					);
 				}
 			})
 			.catch((err) => {
-				reject({
-					message: ['An error occurred during login'],
-					error: err?.message || 'Unknown error',
-					statusCode: 500,
-				});
+				reject(
+					new Error(
+						JSON.stringify({
+							message: ['An error occurred during login'],
+							error: err?.message || 'Unknown error',
+							statusCode: 500,
+						}),
+					),
+				);
 			});
 	});
 
-export const apiSendOTP = (email: string) =>
+export const apiSendOTP = (email: string): Promise<ApiResponse<null>> =>
 	new Promise((resolve, reject) => {
 		axiosConfig({
 			method: 'POST',
 			url: '/api/auth/send-otp',
 			data: { email },
 		})
-			.then((response) => resolve(response))
-			.catch((err) => reject(err));
+			.then((response) => resolve(response?.data))
+			.catch((err) => reject(new Error(err?.message || 'Failed to send OTP')));
 	});
+
 export const apiVerifyOTP = (
 	payload: VerifyPayload,
 ): Promise<ApiResponse<VerifyPayload>> =>
@@ -87,5 +96,7 @@ export const apiVerifyOTP = (
 			data: payload,
 		})
 			.then((response) => resolve(response?.data))
-			.catch((err) => reject(err));
+			.catch((err) =>
+				reject(new Error(err?.message || 'Failed to verify OTP')),
+			);
 	});

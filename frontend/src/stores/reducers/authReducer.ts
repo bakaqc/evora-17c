@@ -36,7 +36,7 @@ const authReducer = (
 			return {
 				...state,
 				isLogin: false,
-				data: action.data || {},
+				data: action.data ?? {}, // Dùng `??` thay cho `||`
 			};
 		case actionTypes.REGISTER_FAILED:
 			return {
@@ -48,7 +48,7 @@ const authReducer = (
 			return {
 				...state,
 				isLogin: true,
-				token: action.access_token || null,
+				token: action.access_token ?? null, // Dùng `??` thay cho `||`
 				msg: 'Login successfully',
 			};
 		case actionTypes.LOGIN_FAIL:
@@ -62,7 +62,7 @@ const authReducer = (
 			return {
 				...state,
 				msgSuccess: 'Verify successfully',
-				data: action.data || {},
+				data: action.data ?? {}, // Dùng `??` thay cho `||`
 			};
 		case actionTypes.VERIFY_FAILED:
 			return {
