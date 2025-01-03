@@ -26,6 +26,7 @@ const App: React.FC = () => {
 			</Routes>
 			<Routes>
 				<Route path={path.ADMINPAGE} element={<AdminPage />} />
+				// test
 			</Routes>
 		</div>
 	);
