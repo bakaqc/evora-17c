@@ -1,4 +1,9 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import {
+	Injectable,
+	Logger,
+	NotFoundException,
+	UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -18,21 +23,35 @@ export class AuthService {
 
 	async validateUser(loginDto: LoginDto) {
 		const user = await this.userModel.findOne({ email: loginDto.email });
-		if (user && (await verify(user.hashedPassword, loginDto.password))) {
-			if (!user.isVerified) {
-				throw new UnauthorizedException(
-					'Your account is not verified. Please verify your email.',
-				);
-			}
 
-			this.logger.log(`User with email ${user.email} authenticated`);
-
-			const result = user.toObject();
-			delete result.hashedPassword;
-
-			return result;
+		if (!user) {
+			throw new NotFoundException(
+				`Account with email: ${loginDto.email} does not exist`,
+			);
 		}
-		throw new UnauthorizedException('Invalid credentials');
+
+		const errors = [
+			{
+				condition: !(await verify(user.hashedPassword, loginDto.password)),
+				message: 'Incorrect password',
+			},
+			{
+				condition: !user.isVerified,
+				message: 'Your account is not verified. Please verify your email.',
+			},
+		];
+
+		const error = errors.find((err) => err.condition);
+		if (error) {
+			throw new UnauthorizedException(error.message);
+		}
+
+		this.logger.log(`User with email ${user.email} authenticated`);
+
+		const result = user.toObject();
+		delete result.hashedPassword;
+
+		return result;
 	}
 
 	async login(user: any) {
