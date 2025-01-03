@@ -12,6 +12,16 @@ export const path = {
 	INTRO: '/gioi-thieu',
 	CONTACT: '/lien-he',
 	VERIFY_OTP: '/otp',
+	ADMINPAGE: '/admin',
+	LISTUSER: '/users',
+	LISTBOOKING: '/bookings',
+	LISTPARTIES: '/parties',
+	LISTVOUCHERS: '/vouchers',
+	LISTPAYMENTS: '/payments',
+	NOTIFIES: '/notifies',
+	PROFILE: '/profile',
+	SETTING: '/setting',
+	LOGOUT: '/logout',
 };
 
 export const text = {
