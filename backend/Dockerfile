@@ -3,7 +3,7 @@ RUN addgroup -S backend && \
     adduser -S backend -G backend
 WORKDIR /app
 EXPOSE 3000
-RUN npm install -g pnpm --ignore-scripts
+RUN npm install -g --ignore-scripts pnpm
 
 #--------------------------------------------------
 
