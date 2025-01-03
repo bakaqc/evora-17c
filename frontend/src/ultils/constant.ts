@@ -11,6 +11,7 @@ export const path = {
 	ORGANIZE: '/don-vi-to-chuc',
 	INTRO: '/gioi-thieu',
 	CONTACT: '/lien-he',
+	VERIFY_OTP: '/otp',
 };
 
 export const text = {
