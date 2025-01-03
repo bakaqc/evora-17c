@@ -8,12 +8,7 @@ interface InvalidField {
 	msg: string;
 }
 
-const addError = (
-	key: string,
-	value: ValueType,
-	invalidFields: InvalidField[],
-	msg: string,
-) => {
+const addError = (key: string, invalidFields: InvalidField[], msg: string) => {
 	if (!invalidFields.some((item) => item.name === key)) {
 		invalidFields.push({ name: key, msg });
 	}
@@ -25,7 +20,7 @@ const validateRequired = (
 	invalidFields: InvalidField[],
 ) => {
 	if (value === '' || value === null) {
-		addError(key, value, invalidFields, 'Trường này bắt buộc nhập.');
+		addError(key, invalidFields, 'Trường này bắt buộc nhập.');
 	}
 };
 
@@ -35,7 +30,7 @@ const validateFullName = (
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && value.trim() === '') {
-		addError(key, value, invalidFields, 'Họ và tên không được bỏ trống.');
+		addError(key, invalidFields, 'Họ và tên không được bỏ trống.');
 	}
 };
 
@@ -45,7 +40,7 @@ const validateEmail = (
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && !value.includes('@')) {
-		addError(key, value, invalidFields, 'Email không hợp lệ.');
+		addError(key, invalidFields, 'Email không hợp lệ.');
 	}
 };
 
@@ -56,16 +51,11 @@ const validatePhone = (
 ) => {
 	if (typeof value === 'string') {
 		if (isNaN(+value)) {
-			addError(key, value, invalidFields, 'Số điện thoại không hợp lệ.');
+			addError(key, invalidFields, 'Số điện thoại không hợp lệ.');
 		} else if (value.length !== 10) {
-			addError(
-				key,
-				value,
-				invalidFields,
-				'Số kí tự không hợp lệ cho điện thoại.',
-			);
+			addError(key, invalidFields, 'Số kí tự không hợp lệ cho điện thoại.');
 		} else if (!value.startsWith('0')) {
-			addError(key, value, invalidFields, 'Số điện thoại phải bắt đầu bằng 0.');
+			addError(key, invalidFields, 'Số điện thoại phải bắt đầu bằng 0.');
 		}
 	}
 };
@@ -76,7 +66,7 @@ const validatePassword = (
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && value.length < 6) {
-		addError(key, value, invalidFields, 'Mật khẩu cần có ít nhất là 6 kí tự.');
+		addError(key, invalidFields, 'Mật khẩu cần có ít nhất là 6 kí tự.');
 	}
 };
 
@@ -86,7 +76,7 @@ const validateDateOfBirthAddressGender = (
 	invalidFields: InvalidField[],
 ) => {
 	if (value === '' || value === null) {
-		addError(key, value, invalidFields, 'Trường không được bỏ trống.');
+		addError(key, invalidFields, 'Trường không được bỏ trống.');
 	}
 };
 
@@ -96,7 +86,7 @@ const validateOtp = (
 	invalidFields: InvalidField[],
 ) => {
 	if (typeof value === 'string' && value.trim() === '') {
-		addError(key, value, invalidFields, 'OTP không được bỏ trống.');
+		addError(key, invalidFields, 'OTP không được bỏ trống.');
 	}
 };
 
