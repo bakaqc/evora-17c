@@ -12,6 +12,16 @@ export const path = {
 	INTRO: '/gioi-thieu',
 	CONTACT: '/lien-he',
 	VERIFY_OTP: '/otp',
+	ADMINPAGE: '/admin',
+	LISTUSER: '/nguoi-dung',
+	LISTBOOKING: '/danh-sach-dat-tiec',
+	LISTPARTIES: '/danh-sach-bua-tiec',
+	LISTVOUCHERS: '/vouchers',
+	LISTPAYMENTS: '/thanh-toan',
+	NOTIFIES: '/thong-bao',
+	PROFILE: '/trang-ca-nhan',
+	SETTING: '/cai-dat',
+	LOGOUT: '/logout',
 };
 
 export const text = {
