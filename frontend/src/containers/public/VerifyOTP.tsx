@@ -1,11 +1,31 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import logo1 from '@/assets/logo1.png';
-import { ButtonForLogin, InputField } from '@/components';
+import { ButtonForLogin } from '@/components';
+import InputForOtp from '@/components/InputForOTP';
+import { AppDispatch } from '@/redux';
+import { verifyOTP } from '@/stores/actions';
+import { RootState } from '@/stores/reducers/rootReducer';
 import { path } from '@/ultils/constant';
+import { PayloadForOtp } from '@/ultils/type';
 
 const VerifyOTP: React.FC = () => {
+	const dispatch: AppDispatch = useDispatch();
+	const navigate = useNavigate();
+	const { data } = useSelector((state: RootState) => state.auth);
+	const [payload, setPayload] = useState<PayloadForOtp>({ email: '', otp: '' });
+	const [invalidField, setInvalidField] = useState<string[]>([]);
+	const handleSubmit = async () => {
+		await dispatch(verifyOTP(payload));
+		navigate(path.LOGIN_USER);
+	};
+	useEffect(() => {
+		if (data?.email) {
+			setPayload((prev) => ({ ...prev, email: data.email || '' }));
+		}
+	}, [data]);
 	return (
 		<section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
 			<div className="container max-w-5xl p-6">
@@ -21,17 +41,19 @@ const VerifyOTP: React.FC = () => {
 											Verify Your OTP
 										</h4>
 									</div>
-									<InputField id="otp" label="OTP" type="text" />
+									<InputForOtp
+										id="otp"
+										label="OTP"
+										type="text"
+										invalidField={invalidField}
+										value={payload.otp}
+										setValue={setPayload}
+										setInvalidField={setInvalidField}
+									/>
 
 									{/* Verify Button */}
 									<div className="mb-6 text-center">
-										<ButtonForLogin label="Verify OTP" />
-										<a
-											href="#!"
-											className="mt-2 inline-block text-sm text-primary"
-										>
-											Resend OTP
-										</a>
+										<ButtonForLogin label="Verify OTP" onClick={handleSubmit} />
 									</div>
 
 									{/* Login Section */}
