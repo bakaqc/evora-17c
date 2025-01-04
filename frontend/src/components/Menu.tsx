@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 import booking from '@/assets/booking.png';
 import homeIcon from '@/assets/home.png';
-import notify from '@/assets/notify.png';
 import logout from '@/assets/logout.png';
+import notify from '@/assets/notify.png';
 import party from '@/assets/party.png';
 import payment from '@/assets/payment.png';
 import profile from '@/assets/profile.png';
