@@ -15,11 +15,8 @@ const App: React.FC = () => {
 
 	return (
 		<div className="overflow-hidden">
-			{/* User and Admin Routes */}
 			<UserRoutes />
 			<AdminRoutes />
-
-			{/* Toast Notification */}
 			<ToastContainer position="top-center" />
 		</div>
 	);
