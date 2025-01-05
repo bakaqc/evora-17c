@@ -12,10 +12,10 @@ import {
 	ApiBearerAuth,
 	ApiOperation,
 	ApiParam,
-	ApiQuery,
 	ApiTags,
 } from '@nestjs/swagger';
 
+import { ApiPagination } from '@/domains/auth/decorators/pagination.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
 import { Role } from '@/domains/auth/enums/role.enum';
 import { BookingsService } from '@/domains/bookings/bookings.service';
@@ -38,20 +38,7 @@ export class BookingsController {
 	@ApiOperation({
 		summary: 'Fetch all bookings with pagination - Super Admin only',
 	})
-	@ApiQuery({
-		name: 'page',
-		required: false,
-		type: Number,
-		example: 1,
-		description: 'Page number, starts from 1',
-	})
-	@ApiQuery({
-		name: 'limit',
-		required: false,
-		type: Number,
-		example: 10,
-		description: 'Number of items per page',
-	})
+	@ApiPagination()
 	@Get()
 	async getAll(
 		@Query('page') page: number = 1,

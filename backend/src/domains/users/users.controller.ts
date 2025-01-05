@@ -7,13 +7,9 @@ import {
 	Put,
 	Query,
 } from '@nestjs/common';
-import {
-	ApiBearerAuth,
-	ApiOperation,
-	ApiQuery,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { ApiPagination } from '@/domains/auth/decorators/pagination.decorator';
 import { Public } from '@/domains/auth/decorators/public.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
 import { Role } from '@/domains/auth/enums/role.enum';
@@ -31,20 +27,7 @@ export class UsersController {
 	@ApiOperation({
 		summary: 'Fetch all users with pagination - Super Admin only',
 	})
-	@ApiQuery({
-		name: 'page',
-		required: false,
-		type: Number,
-		example: 1,
-		description: 'Page number, starts from 1',
-	})
-	@ApiQuery({
-		name: 'limit',
-		required: false,
-		type: Number,
-		example: 10,
-		description: 'Number of items per page',
-	})
+	@ApiPagination()
 	@Get()
 	async getAll(
 		@Query('page') page: number = 1,
