@@ -1,10 +1,56 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import logo1 from '@/assets/logo1.png';
+import {
+	ButtonForLogin,
+	InputField,
+	InputForRepass,
+	Select,
+} from '@/components';
+import { AppDispatch } from '@/redux';
+import * as actions from '@/stores/actions';
 import { path } from '@/ultils/constant';
+import { Payload } from '@/ultils/type';
+import validate from '@/ultils/validateField';
 
 const RegisterUser: React.FC = () => {
+	interface InvalidField {
+		name: string;
+		msg: string;
+	}
+	const navigate = useNavigate();
+	const dispatch: AppDispatch = useDispatch();
+	const [payload, setPayload] = useState<Payload>({
+		fullName: '',
+		email: '',
+		phoneNumber: '',
+		dateOfBirth: '',
+		address: '',
+		gender: '',
+		password: '',
+	});
+	const [invalidField, setInvalidField] = useState<InvalidField[]>([]);
+	const [rePassword, setRePassword] = useState<string>('');
+	const gender = [
+		{ code: 'Nam', value: 'male' },
+		{ code: 'Nữ', value: 'female' },
+	];
+	const handleSubmit = async () => {
+		if (payload.password !== rePassword) {
+			setInvalidField((prev) => [
+				...prev,
+				{ name: 'rePassword', msg: 'Mật khẩu nhập lại không khớp.' },
+			]);
+			return;
+		}
+		const invalid = validate(payload, setInvalidField);
+		if (invalid === 0) {
+			await dispatch(actions.register(payload));
+			navigate(path.VERIFY_OTP);
+		}
+	};
 	return (
 		<section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
 			<div className="container max-w-5xl p-6">
@@ -20,142 +66,95 @@ const RegisterUser: React.FC = () => {
 						{/* Left Column */}
 						<div className="lg:w-6/12 lg:pr-3">
 							{/* Full Name Input */}
-							<div className="relative mb-6">
-								<input
-									type="text"
-									id="fullName"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="fullName"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Full Name
-								</label>
-							</div>
+							<InputField
+								id="fullName"
+								label="Full Name"
+								type="text"
+								invalidField={invalidField}
+								value={payload.fullName}
+								setValue={setPayload}
+								setInvalidField={setInvalidField}
+							/>
 
 							{/* Email Input */}
-							<div className="relative mb-6">
-								<input
-									type="email"
-									id="email"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="email"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Email
-								</label>
-							</div>
+							<InputField
+								id="email"
+								label="Email"
+								type="text"
+								invalidField={invalidField}
+								value={payload.email}
+								setValue={setPayload}
+								setInvalidField={setInvalidField}
+							/>
 
 							{/* Phone Number Input */}
-							<div className="relative mb-6">
-								<input
-									type="tel"
-									id="phoneNumber"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="phoneNumber"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Phone Number
-								</label>
-							</div>
+							<InputField
+								id="phoneNumber"
+								label="Phone"
+								type="text"
+								invalidField={invalidField}
+								value={payload.phoneNumber}
+								setValue={setPayload}
+								setInvalidField={setInvalidField}
+							/>
 
 							{/* Date of Birth Input */}
-							<div className="relative mb-6">
-								<input
-									type="date"
-									id="dateOfBirth"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="dateOfBirth"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Date of Birth
-								</label>
-							</div>
+							<InputField
+								id="dateOfBirth"
+								label="Day of Birth"
+								type="date"
+								invalidField={invalidField}
+								value={payload.dateOfBirth ? payload.dateOfBirth : ''}
+								setValue={setPayload}
+								setInvalidField={setInvalidField}
+							/>
 						</div>
 
 						{/* Right Column */}
 						<div className="lg:w-6/12 lg:pl-3">
 							{/* Address Input */}
-							<div className="relative mb-6">
-								<input
-									type="text"
-									id="address"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="address"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Address
-								</label>
-							</div>
-
-							{/* Gender Dropdown */}
-							<div className="relative mb-6">
-								<select
-									id="gender"
-									className="peer block w-full appearance-none rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:bg-neutral-800 dark:placeholder:text-neutral-300"
-								>
-									<option value="" disabled hidden>
-										Select Gender
-									</option>
-									<option value="male">Nam</option>
-									<option value="female">Nữ</option>
-								</select>
-								<label
-									htmlFor="gender"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Gender
-								</label>
-							</div>
-
+							<InputField
+								id="address"
+								label="Address"
+								type="text"
+								invalidField={invalidField}
+								value={payload.address}
+								setValue={setPayload}
+								setInvalidField={setInvalidField}
+							/>
+							{/* Gender Select */}
+							<Select
+								label="Gender"
+								options={gender}
+								value={payload.gender}
+								setValue={setPayload}
+								name="gender"
+							/>
 							{/* Password Input */}
-							<div className="relative mb-6">
-								<input
-									type="password"
-									id="password"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="password"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-4 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Password
-								</label>
-							</div>
-
-							{/* Confirm Password Input */}
-							<div className="relative mb-6">
-								<input
-									type="password"
-									id="confirmPassword"
-									className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
-								/>
-								<label
-									htmlFor="confirmPassword"
-									className="absolute left-3 top-[-10px] text-neutral-500 transition-all duration-200 dark:text-neutral-400 peer-placeholder-shown:translate-y-2 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary"
-								>
-									Confirm Password
-								</label>
-							</div>
+							<InputField
+								id="password"
+								label="Password"
+								type="password"
+								invalidField={invalidField}
+								value={payload.password}
+								setValue={setPayload}
+								setInvalidField={setInvalidField}
+							/>
+							{/* Re-Password Input */}
+							<InputForRepass
+								id="re-password"
+								label="Nhập lại Mật khẩu"
+								type="password"
+								value={rePassword}
+								setValue={setRePassword}
+								invalidField={invalidField}
+								setInvalidField={setInvalidField}
+							/>
 						</div>
 					</div>
 
 					<div className="text-center py-6">
-						<button
-							type="button"
-							className="w-[50%] rounded bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-700 px-6 py-2.5 text-lg font-medium text-white shadow-lg transition duration-150 ease-in-out hover:shadow-xl"
-						>
-							Register
-						</button>
+						<ButtonForLogin label="Register" onClick={handleSubmit} />
 
 						<div className="mt-4 flex items-center justify-center gap-2">
 							<p className="text-sm">Already have an account?</p>

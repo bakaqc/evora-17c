@@ -6,6 +6,7 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -14,6 +15,7 @@ import {
 	ApiTags,
 } from '@nestjs/swagger';
 
+import { ApiPagination } from '@/domains/auth/decorators/pagination.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
 import { Role } from '@/domains/auth/enums/role.enum';
 import { BookingsService } from '@/domains/bookings/bookings.service';
@@ -33,10 +35,16 @@ export class BookingsController {
 	}
 
 	@Roles(Role.SUPER_ADMIN)
-	@ApiOperation({ summary: 'Fetch all bookings - Super Amin only' })
+	@ApiOperation({
+		summary: 'Fetch all bookings with pagination - Super Admin only',
+	})
+	@ApiPagination()
 	@Get()
-	async getAll() {
-		return this.bookingsService.getAll();
+	async getAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return this.bookingsService.getAllWithPagination(page, limit);
 	}
 
 	@ApiOperation({ summary: 'Fetch a booking by ID' })
