@@ -57,6 +57,38 @@ export class BookingsService {
 		};
 	}
 
+	async getAllWithPagination(page: number, limit: number) {
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
+
+		const skip = (page - 1) * limit;
+
+		const [bookings, total] = await Promise.all([
+			this.bookingModel.find().skip(skip).limit(limit).exec(),
+			this.bookingModel.countDocuments().exec(),
+		]);
+
+		const totalPages = Math.ceil(total / limit);
+
+		this.logger.debug(
+			`Fetched bookings with pagination: page ${page}, limit ${limit}`,
+		);
+
+		return {
+			success: true,
+			message: 'Bookings fetched successfully.',
+			data: {
+				bookings,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
+			},
+		};
+	}
+
 	async getById(id: string) {
 		const booking = await this.bookingModel.findById(id).select('-__v');
 

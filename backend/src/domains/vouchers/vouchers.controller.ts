@@ -6,8 +6,14 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+	ApiBearerAuth,
+	ApiOperation,
+	ApiQuery,
+	ApiTags,
+} from '@nestjs/swagger';
 
 import { Public } from '@/domains/auth/decorators/public.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
@@ -30,10 +36,27 @@ export class VouchersController {
 	}
 
 	@Public()
-	@ApiOperation({ summary: 'Fetch all vouchers' })
+	@ApiOperation({ summary: 'Fetch all vouchers with pagination' })
+	@ApiQuery({
+		name: 'page',
+		required: false,
+		type: Number,
+		example: 1,
+		description: 'Page number, starts from 1',
+	})
+	@ApiQuery({
+		name: 'limit',
+		required: false,
+		type: Number,
+		example: 10,
+		description: 'Number of items per page',
+	})
 	@Get()
-	async getAll() {
-		return await this.vouchersService.getAll();
+	async getAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return await this.vouchersService.getAllWithPagination(page, limit);
 	}
 
 	@Public()

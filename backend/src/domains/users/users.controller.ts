@@ -1,5 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Put,
+	Query,
+} from '@nestjs/common';
+import {
+	ApiBearerAuth,
+	ApiOperation,
+	ApiQuery,
+	ApiTags,
+} from '@nestjs/swagger';
 
 import { Public } from '@/domains/auth/decorators/public.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
@@ -14,11 +27,30 @@ import { UsersService } from '@/domains/users/users.service';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
-	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
-	@ApiOperation({ summary: 'Fetch all users - Super Admin & Admin only' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({
+		summary: 'Fetch all users with pagination - Super Admin only',
+	})
+	@ApiQuery({
+		name: 'page',
+		required: false,
+		type: Number,
+		example: 1,
+		description: 'Page number, starts from 1',
+	})
+	@ApiQuery({
+		name: 'limit',
+		required: false,
+		type: Number,
+		example: 10,
+		description: 'Number of items per page',
+	})
 	@Get()
-	async getAll() {
-		return await this.usersService.getAll();
+	async getAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return await this.usersService.getAllWithPagination(page, limit);
 	}
 
 	@Public()

@@ -6,11 +6,13 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 } from '@nestjs/common';
 import {
 	ApiBearerAuth,
 	ApiOperation,
 	ApiParam,
+	ApiQuery,
 	ApiTags,
 } from '@nestjs/swagger';
 
@@ -33,10 +35,29 @@ export class BookingsController {
 	}
 
 	@Roles(Role.SUPER_ADMIN)
-	@ApiOperation({ summary: 'Fetch all bookings - Super Amin only' })
+	@ApiOperation({
+		summary: 'Fetch all bookings with pagination - Super Admin only',
+	})
+	@ApiQuery({
+		name: 'page',
+		required: false,
+		type: Number,
+		example: 1,
+		description: 'Page number, starts from 1',
+	})
+	@ApiQuery({
+		name: 'limit',
+		required: false,
+		type: Number,
+		example: 10,
+		description: 'Number of items per page',
+	})
 	@Get()
-	async getAll() {
-		return this.bookingsService.getAll();
+	async getAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return this.bookingsService.getAllWithPagination(page, limit);
 	}
 
 	@ApiOperation({ summary: 'Fetch a booking by ID' })

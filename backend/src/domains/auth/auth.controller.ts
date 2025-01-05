@@ -35,6 +35,13 @@ export class AuthController {
 
 	@Public()
 	@HttpCode(HttpStatus.OK)
+	@Post('forgot-password')
+	async forgotPassword(@Body() loginDto: LoginDto) {
+		return this.authService.forgotPassword(loginDto);
+	}
+
+	@Public()
+	@HttpCode(HttpStatus.OK)
 	@ApiOperation({
 		summary:
 			'Send OTP to verify email when register new user or change password',
