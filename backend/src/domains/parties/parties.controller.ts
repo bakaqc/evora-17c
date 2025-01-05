@@ -6,9 +6,11 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { ApiPagination } from '@/domains/auth/decorators/pagination.decorator';
 import { Public } from '@/domains/auth/decorators/public.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
 import { Role } from '@/domains/auth/enums/role.enum';
@@ -30,10 +32,14 @@ export class PartiesController {
 	}
 
 	@Public()
-	@ApiOperation({ summary: 'Fetch all parties' })
+	@ApiOperation({ summary: 'Fetch all parties with pagination' })
+	@ApiPagination()
 	@Get()
-	async getAll() {
-		return await this.partiesService.getAll();
+	async getAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return await this.partiesService.getAllWithPagination(page, limit);
 	}
 
 	@Public()

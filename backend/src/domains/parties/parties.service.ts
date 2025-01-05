@@ -90,6 +90,36 @@ export class PartiesService {
 		};
 	}
 
+	async getAllWithPagination(page: number, limit: number) {
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
+
+		const skip = (page - 1) * limit;
+
+		const [parties, total] = await Promise.all([
+			this.partyModel.find().skip(skip).limit(limit).exec(),
+			this.partyModel.countDocuments().exec(),
+		]);
+
+		this.logger.debug('Fetching all parties with pagination', parties);
+
+		const totalPages = Math.ceil(total / limit);
+
+		return {
+			success: true,
+			message: 'Parties fetched successfully.',
+			data: {
+				parties,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
+			},
+		};
+	}
+
 	async getOne(identifier: string) {
 		const party = await this.findPartyByIdentifier(identifier);
 
