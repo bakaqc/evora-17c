@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import AdminRoutes from '@/routes/admin/AdminRoutes';
@@ -15,8 +16,10 @@ const App: React.FC = () => {
 
 	return (
 		<div className="overflow-hidden">
-			<UserRoutes />
-			<AdminRoutes />
+			<Routes>
+				<Route path="/*" element={<UserRoutes />} />
+				<Route path="/admin/*" element={<AdminRoutes />} />
+			</Routes>
 			<ToastContainer position="top-center" />
 		</div>
 	);
