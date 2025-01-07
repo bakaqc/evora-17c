@@ -9,7 +9,7 @@ import {
 	RegisterUser,
 	VerifyOTP,
 } from '@/containers/public';
-import { path } from '@/ultils/constant';
+import { path } from '@/utils/constant';
 
 const UserRoutes: React.FC = () => {
 	return (

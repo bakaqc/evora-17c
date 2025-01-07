@@ -1,6 +1,6 @@
 import React from 'react';
 
-import icons from '@/ultils/icons';
+import icons from '@/utils/icons';
 
 const { FaBirthdayCake, BiPhoneCall, BiEnvelope } = icons;
 

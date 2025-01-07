@@ -1,4 +1,4 @@
-import { PayloadForOtp } from '@/ultils/type';
+import { PayloadForOtp } from '@/utils/type';
 
 interface InputFieldProps {
 	id: string;

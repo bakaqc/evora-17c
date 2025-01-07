@@ -7,9 +7,9 @@ import { ButtonForLogin, InputForLogin } from '@/components';
 import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/ultils/constant';
-import { PayloadForLogin } from '@/ultils/type';
-import validate from '@/ultils/validateField';
+import { path } from '@/utils/constant';
+import { PayloadForLogin } from '@/utils/type';
+import validate from '@/utils/validateField';
 
 interface InvalidField {
 	name: string;
