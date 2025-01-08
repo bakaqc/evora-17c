@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/ultils/constant';
-import icons from '@/ultils/icons';
+import { path } from '@/utils/constant';
+import icons from '@/utils/icons';
 
 const { RiAdminLine, RiUserLine, IoIosLogOut } = icons;
 
