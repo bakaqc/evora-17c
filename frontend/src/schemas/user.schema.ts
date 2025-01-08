@@ -15,3 +15,11 @@ export interface User {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+export interface TableUser {
+	key: string;
+	fullName: string;
+	email: string;
+	phoneNumber: string;
+	role: string;
+}
