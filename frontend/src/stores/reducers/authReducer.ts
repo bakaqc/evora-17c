@@ -4,6 +4,7 @@ import { Payload } from '@/utils/type';
 
 type AuthState = {
 	isLogin: boolean;
+	isLoginAdmin: boolean;
 	token: string | null;
 	msg: string;
 	update: boolean;
@@ -20,6 +21,7 @@ type Action = {
 
 const initState: AuthState = {
 	isLogin: false,
+	isLoginAdmin: false,
 	token: null,
 	msg: '',
 	update: false,
@@ -51,10 +53,24 @@ const authReducer = (
 				token: action.access_token ?? null, // Dùng `??` thay cho `||`
 				msg: 'Login successfully',
 			};
+		case actionTypes.LOGIN_ADMIN_SUCCESS:
+			return {
+				...state,
+				isLoginAdmin: true,
+				token: action.access_token ?? null, // Dùng `??` thay cho `||`
+				msg: 'Login successfully',
+			};
 		case actionTypes.LOGIN_FAIL:
 			return {
 				...state,
 				isLogin: false,
+				token: null,
+				msg: 'Mật khẩu không chính xác',
+			};
+		case actionTypes.LOGIN_ADMIN_FAIL:
+			return {
+				...state,
+				isLoginAdmin: false,
 				token: null,
 				msg: 'Mật khẩu không chính xác',
 			};

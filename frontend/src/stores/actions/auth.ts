@@ -130,7 +130,48 @@ export const login =
 			};
 		}
 	};
+export const loginAdmin =
+	(payload: PayloadForLogin) =>
+	async (dispatch: Dispatch<LoginActions>): Promise<LoginResponse> => {
+		try {
+			const response = await apiLogin(payload);
 
+			if ('access_token' in response) {
+				dispatch({
+					type: actionTypes.LOGIN_ADMIN_SUCCESS,
+					msg: ['Login successfully'],
+					isLoginAdmin: true,
+					token: response.access_token,
+				});
+				toast.success('Login successfully');
+				return { access_token: response.access_token };
+			} else {
+				dispatch({
+					type: actionTypes.LOGIN_ADMIN_FAIL,
+					msg: ['Login failed'],
+					data: null,
+				});
+				toast.error('Login failed');
+				return {
+					message: response.message || ['Login failed'],
+					error: 'Unauthorized',
+					statusCode: 401,
+				};
+			}
+		} catch {
+			dispatch({
+				type: actionTypes.LOGIN_ADMIN_FAIL,
+				msg: ['Login failed'],
+				data: null,
+			});
+			toast.error('Email hoặc mật khẩu không chính xác');
+			return {
+				message: ['An error occurred'],
+				error: 'Unknown error',
+				statusCode: 500,
+			};
+		}
+	};
 export const verifyOTP =
 	(payload: VerifyPayload) => async (dispatch: Dispatch<VerifyActions>) => {
 		try {
