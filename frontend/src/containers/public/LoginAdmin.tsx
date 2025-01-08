@@ -1,124 +1,125 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
-import logo1 from '@/assets/logo1.png';
-import { ButtonForLogin, InputForLogin } from '@/components';
-import { AppDispatch } from '@/redux';
-import * as actions from '@/stores/actions';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { User } from '@/schemas/user.schema';
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/utils/constant';
-import { PayloadForLogin } from '@/utils/type';
-import validate from '@/utils/validateField';
+import { apiBaseUrl } from '@/utils/apiBase';
 
-interface InvalidField {
-  name: string;
-  msg: string;
+interface UserType {
+  key: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  role: string;
 }
 
-const LoginAdmin: React.FC = () => {
-  const { isLoginAdmin } = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate();
-  const dispatch: AppDispatch = useDispatch();
-  const [payload, setPayload] = useState<PayloadForLogin>({
-    email: '',
-    password: '',
-  });
-  const [invalidField, setInvalidField] = useState<InvalidField[]>([]);
+const ManageUser: React.FC = () => {
+  const [users, setUsers] = useState<UserType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchText, setSearchText] = useState<string>('');
+  const { token } = useSelector((state: RootState) => state.auth);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get<User[]>(
+        `${apiBaseUrl}/api/users?page=1&limit=10`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const tableData = response.data.map((user, index) => ({
+        key: (index + 1).toString(),
+        fullName: user.fullName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        role: user.role,
+      }));
+      setUsers(tableData);
+    } catch {
+      setError('Không thể tải danh sách người dùng');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (isLoginAdmin) {
-      navigate('/quan-tri-vien');
+    if (!token) {
+      window.location.href = '/quan-tri-vien';
+    } else {
+      fetchUsers();
     }
-  }, [isLoginAdmin, navigate]);
+  }, [token]);
 
-  const handleSubmit = async () => {
-    const invalid = validate(payload, setInvalidField);
-    if (invalid === 0) dispatch(actions.loginAdmin(payload));
+  const filteredUsers = users.filter(
+    (user) =>
+      user.fullName.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.phoneNumber.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.role.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
+  const renderContent = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center">
+          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12"></div>
+        </div>
+      );
+    }
+    if (error) {
+      return (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+          {error}
+        </div>
+      );
+    }
+    return (
+      <table className="min-w-full border-collapse border border-gray-200">
+        <thead>
+          <tr>
+            <th className="border border-gray-300 px-4 py-2 text-left">STT</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Họ và tên</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Email</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Số điện thoại</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Vai trò</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredUsers.map((user, index) => (
+            <tr
+              key={user.key}
+              className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
+            >
+              <td className="border border-gray-300 px-4 py-2">{user.key}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.fullName}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.email}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.phoneNumber}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.role}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   };
 
   return (
-    <section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
-      <div className="container max-w-5xl p-6">
-        <div className="flex flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
-          <div className="w-full">
-            <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
-              <div className="g-0 lg:flex lg:flex-wrap">
-                <LeftColumn
-                  logo={logo1}
-                  payload={payload}
-                  setPayload={setPayload}
-                  invalidField={invalidField}
-                  setInvalidField={setInvalidField}
-                  handleSubmit={handleSubmit}
-                />
-                <RightColumn />
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="p-5">
+      <h2 className="text-2xl font-bold mb-4">Danh sách người dùng</h2>
+      <div className="flex justify-between items-center mb-4">
+        <input
+          type="text"
+          placeholder="Tìm kiếm người dùng"
+          className="border border-gray-300 rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={(e) => setSearchText(e.target.value)}
+        />
       </div>
-    </section>
+      {renderContent()}
+    </div>
   );
 };
 
-const LeftColumn: React.FC<{
-  logo: string;
-  payload: PayloadForLogin;
-  setPayload: React.Dispatch<React.SetStateAction<PayloadForLogin>>;
-  invalidField: InvalidField[];
-  setInvalidField: React.Dispatch<React.SetStateAction<InvalidField[]>>;
-  handleSubmit: () => void;
-}> = ({ logo, payload, setPayload, invalidField, setInvalidField, handleSubmit }) => (
-  <div className="px-6 py-8 md:px-8 lg:w-6/12">
-    <div className="text-center">
-      <img className="mx-auto w-36" src={logo} alt="logo" />
-      <h4 className="mb-6 mt-4 text-xl font-semibold">Login for Admin!</h4>
-    </div>
-    <InputForLogin
-      id="email"
-      label="Email"
-      type="text"
-      invalidField={invalidField}
-      value={payload.email}
-      setValue={setPayload}
-      setInvalidField={setInvalidField}
-    />
-    <InputForLogin
-      id="password"
-      label="Password"
-      type="password"
-      invalidField={invalidField}
-      value={payload.password}
-      setValue={setPayload}
-      setInvalidField={setInvalidField}
-    />
-    <div className="mb-6 text-center">
-      <ButtonForLogin label="Log in" onClick={handleSubmit} />
-      <a href="#" className="mt-2 inline-block text-sm text-primary">
-        Forgot password?
-      </a>
-    </div>
-    <div className="flex items-center justify-between">
-      <p className="text-sm">Don't have an account?</p>
-      <NavLink
-        to={path.REGISTER_USER}
-        className="rounded border border-red-500 px-4 py-2 text-sm text-red-500 hover:bg-red-50"
-      >
-        Register
-      </NavLink>
-    </div>
-  </div>
-);
-
-const RightColumn: React.FC = () => (
-  <div className="flex items-center justify-center rounded-b-lg bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-700 lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none">
-    <div className="px-6 py-8 text-white md:px-8">
-      <h4 className="mb-6 text-xl font-semibold">We are more than just a company</h4>
-      <p className="text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </p>
-    </div>
-  </div>
-);
-
-export default LoginAdmin;
+export default ManageUser;
