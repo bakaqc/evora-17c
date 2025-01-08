@@ -1,4 +1,3 @@
-// components/ManageUser.tsx
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -41,6 +40,64 @@ const ManageUser: React.FC = () => {
 
 	const filteredUsers = filterUsers(users, searchText);
 
+	const renderContent = () => {
+		if (loading) {
+			return (
+				<div className="flex justify-center items-center">
+					<div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12"></div>
+				</div>
+			);
+		}
+
+		if (error) {
+			return (
+				<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+					{error}
+				</div>
+			);
+		}
+
+		return (
+			<table className="min-w-full border-collapse border border-gray-200">
+				<thead>
+					<tr>
+						<th className="border border-gray-300 px-4 py-2 text-left">STT</th>
+						<th className="border border-gray-300 px-4 py-2 text-left">
+							Họ và tên
+						</th>
+						<th className="border border-gray-300 px-4 py-2 text-left">
+							Email
+						</th>
+						<th className="border border-gray-300 px-4 py-2 text-left">
+							Số điện thoại
+						</th>
+						<th className="border border-gray-300 px-4 py-2 text-left">
+							Vai trò
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{filteredUsers.map((user, index) => (
+						<tr
+							key={user.key}
+							className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
+						>
+							<td className="border border-gray-300 px-4 py-2">{user.key}</td>
+							<td className="border border-gray-300 px-4 py-2">
+								{user.fullName}
+							</td>
+							<td className="border border-gray-300 px-4 py-2">{user.email}</td>
+							<td className="border border-gray-300 px-4 py-2">
+								{user.phoneNumber}
+							</td>
+							<td className="border border-gray-300 px-4 py-2">{user.role}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		);
+	};
+
 	return (
 		<div className="p-5">
 			<h2 className="text-2xl font-bold mb-4">Danh sách người dùng</h2>
@@ -52,59 +109,7 @@ const ManageUser: React.FC = () => {
 					onChange={(e) => setSearchText(e.target.value)}
 				/>
 			</div>
-			{loading ? (
-				<div className="flex justify-center items-center">
-					<div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12"></div>
-				</div>
-			) : error ? (
-				<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-					{error}
-				</div>
-			) : (
-				<table className="min-w-full border-collapse border border-gray-200">
-					<thead>
-						<tr>
-							<th className="border border-gray-300 px-4 py-2 text-left">
-								STT
-							</th>
-							<th className="border border-gray-300 px-4 py-2 text-left">
-								Họ và tên
-							</th>
-							<th className="border border-gray-300 px-4 py-2 text-left">
-								Email
-							</th>
-							<th className="border border-gray-300 px-4 py-2 text-left">
-								Số điện thoại
-							</th>
-							<th className="border border-gray-300 px-4 py-2 text-left">
-								Vai trò
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{filteredUsers.map((user, index) => (
-							<tr
-								key={user.key}
-								className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
-							>
-								<td className="border border-gray-300 px-4 py-2">{user.key}</td>
-								<td className="border border-gray-300 px-4 py-2">
-									{user.fullName}
-								</td>
-								<td className="border border-gray-300 px-4 py-2">
-									{user.email}
-								</td>
-								<td className="border border-gray-300 px-4 py-2">
-									{user.phoneNumber}
-								</td>
-								<td className="border border-gray-300 px-4 py-2">
-									{user.role}
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			)}
+			{renderContent()}
 		</div>
 	);
 };
