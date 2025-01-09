@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { LoginAdmin } from '@/containers/public';
-import { AdminPage, ManageUser } from '@/containers/system';
+import { AdminPage, LoginAdmin, ManageUser } from '@/containers/system';
 import { path } from '@/utils/constant';
 
 const AdminRoutes: React.FC = () => {
