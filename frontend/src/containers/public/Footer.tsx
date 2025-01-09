@@ -2,7 +2,7 @@ import React from 'react';
 
 import bg from '@/assets/bg.jpg';
 // Đảm bảo đường dẫn chính xác
-import icons from '@/ultils/icons';
+import icons from '@/utils/icons';
 
 const {
 	FaBirthdayCake,

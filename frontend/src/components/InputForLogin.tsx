@@ -1,4 +1,4 @@
-import { PayloadForLogin } from '@/ultils/type';
+import { PayloadForLogin } from '@/utils/type';
 
 interface InputFieldProps {
 	id: string;

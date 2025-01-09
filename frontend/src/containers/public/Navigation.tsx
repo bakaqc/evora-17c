@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/ultils/constant';
-import icons from '@/ultils/icons';
+import { path } from '@/utils/constant';
+import icons from '@/utils/icons';
 
 const { RiAdminLine, RiUserLine, IoIosLogOut } = icons;
 
@@ -73,14 +73,14 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 							<div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md p-4 w-[300px] flex flex-col z-50">
 								<Link
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
-									to={'/user/login'}
+									to={'/dang-nhap'}
 								>
 									<RiUserLine />
 									Đăng nhập cho người dùng
 								</Link>
 								<Link
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
-									to={'/admin/login'}
+									to={'/quan-tri-vien/dang-nhap'}
 								>
 									<RiAdminLine />
 									Đăng nhập cho admin

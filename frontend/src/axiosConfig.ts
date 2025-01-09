@@ -1,7 +1,9 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+import { apiBaseUrl } from '@/utils/apiBase';
+
 const instance = axios.create({
-	baseURL: import.meta.env.VITE_BACKEND_URL,
+	baseURL: apiBaseUrl,
 });
 
 // Add a request interceptor

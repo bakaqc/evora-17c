@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import logo1 from '@/assets/logo1.png';
 import { Button } from '@/components';
-import icons from '@/ultils/icons';
+import icons from '@/utils/icons';
 
 const { CiLogin, RiAdminLine, RiUserLine } = icons;
 

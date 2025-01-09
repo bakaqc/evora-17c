@@ -5,10 +5,11 @@ import storage from 'redux-persist/lib/storage';
 
 import authReducer from '@/stores/reducers/authReducer';
 import userReducer from '@/stores/reducers/userReducer';
-import { Payload } from '@/ultils/type';
+import { Payload } from '@/utils/type';
 
 type AuthState = {
 	isLogin: boolean;
+	isLoginAdmin: boolean;
 	token: string | null;
 	msg: string;
 	update: boolean;

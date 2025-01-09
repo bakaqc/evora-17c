@@ -12,7 +12,7 @@ import profile from '@/assets/profile.png';
 import setting from '@/assets/setting.png';
 import userIcon from '@/assets/user.png';
 import voucher from '@/assets/voucher.png';
-import { path } from '@/ultils/constant';
+import { path } from '@/utils/constant';
 
 const menuItems = [
 	{

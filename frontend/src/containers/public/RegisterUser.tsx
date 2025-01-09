@@ -11,9 +11,9 @@ import {
 } from '@/components';
 import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
-import { path } from '@/ultils/constant';
-import { Payload } from '@/ultils/type';
-import validate from '@/ultils/validateField';
+import { path } from '@/utils/constant';
+import { Payload } from '@/utils/type';
+import validate from '@/utils/validateField';
 
 const RegisterUser: React.FC = () => {
 	interface InvalidField {

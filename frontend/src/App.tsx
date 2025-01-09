@@ -18,7 +18,7 @@ const App: React.FC = () => {
 		<div className="overflow-hidden">
 			<Routes>
 				<Route path="/*" element={<UserRoutes />} />
-				<Route path="/admin/*" element={<AdminRoutes />} />
+				<Route path="/quan-tri-vien/*" element={<AdminRoutes />} />
 			</Routes>
 			<ToastContainer position="top-center" />
 		</div>

@@ -1,5 +1,5 @@
-import { text } from '../ultils/dataIntro';
-import icons from '../ultils/icons';
+import { text } from '../utils/dataIntro';
+import icons from '../utils/icons';
 import React, { memo } from 'react';
 
 const { FaStar } = icons;
