@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import logo1 from '@/assets/logo1.png';
-import { ButtonForLogin, InputForLogin } from '@/components';
+import { ButtonForLogin } from '@/components';
+import LoginInputField from '@/components/commons/LoginInputField';
 import RegisterSection from '@/components/commons/RegisterSection';
 import RightColumn from '@/components/commons/RightColumn';
 import { AppDispatch } from '@/redux';
@@ -53,23 +54,27 @@ const LoginAdmin: React.FC = () => {
 									</div>
 
 									{/* Username and Password Fields */}
-									<InputForLogin
+									<LoginInputField
 										id="email"
 										label="Email"
 										type="text"
 										invalidField={invalidField}
 										value={payload.email}
-										setValue={setPayload}
+										setValue={(value) =>
+											setPayload({ ...payload, email: value })
+										}
 										setInvalidField={setInvalidField}
 									/>
 
-									<InputForLogin
+									<LoginInputField
 										id="password"
 										label="Password"
 										type="password"
 										invalidField={invalidField}
 										value={payload.password}
-										setValue={setPayload}
+										setValue={(value) =>
+											setPayload({ ...payload, password: value })
+										}
 										setInvalidField={setInvalidField}
 									/>
 									{/* Login Button */}
