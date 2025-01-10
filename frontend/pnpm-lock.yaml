@@ -52,7 +52,7 @@ importers:
         specifier: 9.17.0
         version: 9.17.0
       '@types/node':
-        specifier: ^22.10.2
+        specifier: 22.10.2
         version: 22.10.2
       '@types/react':
         specifier: 18.3.17
