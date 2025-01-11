@@ -125,45 +125,61 @@ export class PartiesService {
 		page: number,
 		limit: number,
 	) {
-		const skip = (page - 1) * limit;
-		const parties = await this.partyModel
-			.find({ category })
-			.skip(skip)
-			.limit(limit)
-			.exec();
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
 
-		const total = await this.partyModel.countDocuments({ category });
+		const skip = (page - 1) * limit;
+
+		const [parties, total] = await Promise.all([
+			this.partyModel.find({ category }).skip(skip).limit(limit).exec(),
+			this.partyModel.countDocuments({ category }).exec(),
+		]);
+
+		this.logger.debug('Fetching parties by category with pagination', parties);
+
+		const totalPages = Math.ceil(total / limit);
 
 		return {
 			success: true,
 			message: 'Parties fetched successfully.',
-			data: parties,
-			pagination: {
-				total,
-				page,
-				limit,
+			data: {
+				parties,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
 			},
 		};
 	}
 
 	async getByUserIdWithPagination(userId: string, page: number, limit: number) {
-		const skip = (page - 1) * limit;
-		const parties = await this.partyModel
-			.find({ user: userId })
-			.skip(skip)
-			.limit(limit)
-			.exec();
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
 
-		const total = await this.partyModel.countDocuments({ user: userId });
+		const skip = (page - 1) * limit;
+
+		const [parties, total] = await Promise.all([
+			this.partyModel.find({ user: userId }).skip(skip).limit(limit).exec(),
+			this.partyModel.countDocuments({ user: userId }).exec(),
+		]);
+
+		this.logger.debug('Fetching parties by user ID with pagination', parties);
+
+		const totalPages = Math.ceil(total / limit);
 
 		return {
 			success: true,
 			message: 'Parties fetched successfully.',
-			data: parties,
-			pagination: {
-				total,
-				page,
-				limit,
+			data: {
+				parties,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
 			},
 		};
 	}
