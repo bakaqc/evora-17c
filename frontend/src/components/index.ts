@@ -9,4 +9,3 @@ export { default as InputForLogin } from '@/components/InputForLogin';
 export { default as InputForRepass } from '@/components/InputForRepass';
 export { default as ButtonForLogin } from '@/components/ButtonForLogin';
 export { default as Select } from '@/components/Select';
-export { default as Slider } from '@/components/Slider';
