@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useSearchParams } from 'react-router-dom';
 
+import { AppDispatch } from '@/redux';
+import * as actions from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
 import { path } from '@/utils/constant';
 import icons from '@/utils/icons';
@@ -17,12 +19,41 @@ const notActive =
 const active = 'hover:bg-amber-600 px-4 h-full flex items-center bg-[#2B2825]';
 
 const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
+	const dispatch: AppDispatch = useDispatch();
 	const [isShowMenu, setIsShowMenu] = useState(false);
 	const [isShowUserDropdown, setIsShowUserDropdown] = useState(false);
 	const { isLogin } = useSelector((state: RootState) => state.auth);
+	const [searchParams] = useSearchParams();
+
+	// Hàm xử lý khi click vào category
+	const handleCategoryClick = (category: string) => {
+		const params: [string, string][] = Array.from(searchParams.entries());
+		const searchParamsObject: { [key: string]: string[] } = {};
+
+		params.forEach(([key, value]) => {
+			if (Object.keys(searchParamsObject).includes(key)) {
+				searchParamsObject[key] = [...searchParamsObject[key], value];
+			} else {
+				searchParamsObject[key] = [value];
+			}
+		});
+
+		const payload = {
+			query: {
+				...searchParamsObject,
+				limit: 8,
+			},
+			category,
+		};
+
+		dispatch(actions.getPartiesByCategory(payload));
+	};
+
 	return (
 		<div
-			className={`w-full flex ${isAdmin ? 'justify-start' : 'justify-center'} items-center h-[60px] bg-[#2B2825] text-white`}
+			className={`w-full flex ${
+				isAdmin ? 'justify-start' : 'justify-center'
+			} items-center h-[60px] bg-[#2B2825] text-white`}
 		>
 			<div className="w-full flex h-full justify-center items-center text-sm font-bold space-x-4 flex-nowrap">
 				<NavLink
@@ -34,24 +65,28 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 				<NavLink
 					to={path.BIRTHDAY}
 					className={({ isActive }) => (isActive ? active : notActive)}
+					onClick={() => handleCategoryClick('Sinh nhật')}
 				>
 					SINH NHẬT
 				</NavLink>
 				<NavLink
 					to={path.F_BIRTHDAY}
 					className={({ isActive }) => (isActive ? active : notActive)}
+					onClick={() => handleCategoryClick('Thôi nôi')}
 				>
 					THÔI NÔI
 				</NavLink>
 				<NavLink
 					to={path.OPENING}
 					className={({ isActive }) => (isActive ? active : notActive)}
+					onClick={() => handleCategoryClick('Khai trương')}
 				>
 					KHAI TRƯƠNG
 				</NavLink>
 				<NavLink
 					to={path.WEDDING}
 					className={({ isActive }) => (isActive ? active : notActive)}
+					onClick={() => handleCategoryClick('Đám cưới')}
 				>
 					ĐÁM CƯỚI
 				</NavLink>
@@ -61,6 +96,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 				>
 					GIỚI THIỆU
 				</NavLink>
+				{/* Xử lý phần login/logout */}
 				{!isLogin && (
 					<div className="relative h-full">
 						<button
@@ -71,20 +107,20 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 						</button>
 						{isShowMenu && (
 							<div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md p-4 w-[300px] flex flex-col z-50">
-								<Link
+								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
 									to={path.LOGIN_USER}
 								>
 									<RiUserLine />
 									Đăng nhập cho người dùng
-								</Link>
-								<Link
+								</NavLink>
+								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
 									to={'admin/login'}
 								>
 									<RiAdminLine />
 									Đăng nhập cho admin
-								</Link>
+								</NavLink>
 							</div>
 						)}
 					</div>
@@ -99,13 +135,13 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 						</button>
 						{isShowUserDropdown && (
 							<div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md p-4 w-[300px] flex flex-col z-50">
-								<Link
+								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
 									to={'/user/login'}
 								>
 									<IoIosLogOut />
 									Đăng xuất
-								</Link>
+								</NavLink>
 							</div>
 						)}
 					</div>
