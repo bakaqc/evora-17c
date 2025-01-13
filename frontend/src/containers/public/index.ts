@@ -7,3 +7,4 @@ export { default as VerifyOTP } from '@/containers/public/VerifyOTP';
 export { default as Home } from '@/containers/public/Home';
 export { default as Navigation } from '@/containers/public/Navigation';
 export { default as HomePage } from '@/containers/public/HomePage';
+export { default as Pagination } from '@/containers/public/Pagination';
