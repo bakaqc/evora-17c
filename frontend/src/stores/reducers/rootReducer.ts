@@ -5,7 +5,6 @@ import storage from 'redux-persist/lib/storage';
 
 import authReducer from '@/stores/reducers/authReducer';
 import partyReducer from '@/stores/reducers/partyReducer';
-import userReducer from '@/stores/reducers/userReducer';
 import { Payload } from '@/utils/type';
 
 type AuthState = {
@@ -29,7 +28,6 @@ const authConfig = {
 
 const rootReducer = combineReducers({
 	auth: persistReducer<AuthState>(authConfig, authReducer),
-	user: userReducer,
 	party: partyReducer,
 });
 
