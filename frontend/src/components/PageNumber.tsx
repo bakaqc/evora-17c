@@ -12,10 +12,12 @@ interface PageNumberProps {
 	icon?: ReactNode;
 	setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
 }
+
 const notActive =
 	'w-[46px] h-[48px] flex justify-center items-center px-5 py-3 bg-white hover:bg-gray-300 rounded-md';
 const active =
 	'w-[46px] h-[48px] flex justify-center items-center px-5 py-3 bg-[#E88F2A] text-white rounded-md cursor-pointer';
+
 const PageNumber: React.FC<PageNumberProps> = ({
 	text = '1',
 	currentPage = 1,
@@ -37,7 +39,7 @@ const PageNumber: React.FC<PageNumberProps> = ({
 
 		params?.forEach((i) => {
 			if (
-				Object.keys(searchParamsObject)?.some(
+				Object.keys(searchParamsObject).some(
 					(item) => item === i[0] && item !== 'page',
 				)
 			) {
@@ -59,7 +61,7 @@ const PageNumber: React.FC<PageNumberProps> = ({
 	const handleChangePage = () => {
 		if (!(text === '...')) {
 			if (setCurrentPage) {
-				setCurrentPage(+text!);
+				setCurrentPage(+text);
 			}
 			navigate({
 				pathname: location?.pathname,
@@ -67,17 +69,20 @@ const PageNumber: React.FC<PageNumberProps> = ({
 			});
 		}
 	};
+
+	const buttonClass =
+		+text === +currentPage
+			? active
+			: `${notActive} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}`;
+
 	return (
-		<div
-			className={
-				+text === +currentPage
-					? active
-					: `${notActive} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}`
-			}
+		<button
+			className={buttonClass}
 			onClick={handleChangePage}
+			aria-label={`Page number ${text}`}
 		>
 			{icon || text}
-		</div>
+		</button>
 	);
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface ItemProps {
-	key: string;
 	description: string;
 	image: string;
 	title: string;
@@ -9,6 +8,7 @@ interface ItemProps {
 	ratingTotal: number;
 	category: string;
 }
+
 const Item: React.FC<ItemProps> = ({
 	image,
 	description,

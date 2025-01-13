@@ -64,9 +64,9 @@ const partyReducer = (
 		case actionTypes.GET_PARTIES_BY_CATEGORY:
 			return {
 				...state,
-				parties: action.parties || [],
-				msg: action.msg || '',
-				pagination: action.pagination || state.pagination,
+				parties: action.parties ?? [],
+				msg: action.msg ?? '',
+				pagination: action.pagination ?? state.pagination,
 			};
 		default:
 			return state;
