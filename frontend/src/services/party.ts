@@ -46,9 +46,10 @@ export const apiGetParties = (query: PartyQuery): Promise<ApiResponse> => {
 			params: query,
 		})
 			.then((response) => resolve(response.data as ApiResponse))
-			.catch((err) => reject(err));
+			.catch((err) => reject(new Error(err)));
 	});
 };
+
 export const apiGetPartiesByCategory = ({
 	category,
 	...query
@@ -63,6 +64,6 @@ export const apiGetPartiesByCategory = ({
 			params: query,
 		})
 			.then((response) => resolve(response.data as ApiResponse))
-			.catch((err) => reject(err));
+			.catch((err) => reject(new Error(err)));
 	});
 };
