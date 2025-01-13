@@ -17,7 +17,7 @@ interface InvalidField {
 }
 
 const LoginUser: React.FC = () => {
-	const { isLogin } = useSelector((state: RootState) => state.auth);
+	const { isLogin, token } = useSelector((state: RootState) => state.auth);
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 	const [payload, setPayload] = useState<PayloadForLogin>({
@@ -30,6 +30,9 @@ const LoginUser: React.FC = () => {
 			navigate('/');
 		}
 	}, [isLogin]);
+	useEffect(() => {
+		console.log(token);
+	}, [token]);
 	const handleSubmit = async () => {
 		const invalid = validate(payload, setInvalidField);
 		if (invalid === 0) dispatch(actions.login(payload));

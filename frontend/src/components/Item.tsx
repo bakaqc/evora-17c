@@ -1,20 +1,34 @@
 import React from 'react';
 
-const Item: React.FC = () => {
+interface ItemProps {
+	key: string;
+	description: string;
+	image: string;
+	title: string;
+	ratingCount: number;
+	ratingTotal: number;
+	category: string;
+}
+const Item: React.FC<ItemProps> = ({
+	image,
+	description,
+	title,
+	ratingTotal,
+	ratingCount,
+	category,
+}) => {
 	return (
-		<div className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
+		<div className="w-[275px] max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
 			<div className="relative w-full h-64">
-				<img
-					src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-					alt="House"
-					className="w-full h-full object-cover"
-				/>
+				<img src={image} alt="House" className="w-full h-full object-cover" />
 				<div className="absolute inset-0 bg-black opacity-40"></div>
 			</div>
 			<div className="p-4">
 				<div className="flex justify-between items-center mb-3">
 					<h3 className="text-xl font-semibold text-gray-800">
-						Wooden House, Florida
+						{title.trim().length > 15
+							? `${title.trim().slice(0, 15)}...`
+							: title}
 					</h3>
 					<div className="flex items-center text-yellow-500">
 						<svg
@@ -29,21 +43,14 @@ const Item: React.FC = () => {
 								clipRule="evenodd"
 							/>
 						</svg>
-						<span className="ml-1">5.0</span>
+						<span className="ml-1">{ratingTotal / ratingCount}</span>
 					</div>
 				</div>
-				<p className="text-gray-600 text-sm mb-4">
-					Enter a freshly updated and thoughtfully furnished peaceful home
-					surrounded by ancient trees, stone walls, and open meadows.
-				</p>
+				<p className="text-gray-600 text-sm mb-4">{description}</p>
 				<div className="flex space-x-4 text-sm">
 					<div className="flex items-center">
-						<span className="text-gray-900">💲</span>
-						<span className="ml-1 text-gray-800">$129 per night</span>
-					</div>
-					<div className="flex items-center">
-						<span className="text-gray-900">📶</span>
-						<span className="ml-1 text-gray-800">Free wifi</span>
+						<span className="text-gray-900">🎉</span>
+						<span className="ml-1 text-gray-800">{category}</span>
 					</div>
 				</div>
 			</div>
