@@ -1,6 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Put,
+	Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { ApiPagination } from '@/domains/auth/decorators/pagination.decorator';
 import { Public } from '@/domains/auth/decorators/public.decorator';
 import { Roles } from '@/domains/auth/decorators/roles.decorator';
 import { Role } from '@/domains/auth/enums/role.enum';
@@ -14,11 +23,17 @@ import { UsersService } from '@/domains/users/users.service';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
-	@Roles(Role.SUPER_ADMIN, Role.ADMIN)
-	@ApiOperation({ summary: 'Fetch all users - Super Admin & Admin only' })
+	@Roles(Role.SUPER_ADMIN)
+	@ApiOperation({
+		summary: 'Fetch all users with pagination - Super Admin only',
+	})
+	@ApiPagination()
 	@Get()
-	async getAll() {
-		return await this.usersService.getAll();
+	async getAll(
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return await this.usersService.getAllWithPagination(page, limit);
 	}
 
 	@Public()

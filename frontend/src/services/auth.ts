@@ -1,5 +1,5 @@
 import axiosConfig from '@/axiosConfig';
-import { Payload } from '@/ultils/type';
+import { Payload } from '@/utils/type';
 
 interface LoginPayload {
 	email: string;

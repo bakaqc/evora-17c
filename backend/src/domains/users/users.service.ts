@@ -68,6 +68,38 @@ export class UsersService {
 		};
 	}
 
+	async getAllWithPagination(page: number, limit: number) {
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
+
+		const skip = (page - 1) * limit;
+
+		const [users, total] = await Promise.all([
+			this.userModel.find().skip(skip).limit(limit).exec(),
+			this.userModel.countDocuments().exec(),
+		]);
+
+		const totalPages = Math.ceil(total / limit);
+
+		this.logger.debug(
+			`Fetched users with pagination: page ${page}, limit ${limit}`,
+		);
+
+		return {
+			success: true,
+			message: 'Users fetched successfully.',
+			data: {
+				users,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
+			},
+		};
+	}
+
 	async getOne(identifier: string, isEmail = false) {
 		const user = await this.findUser(identifier, isEmail);
 

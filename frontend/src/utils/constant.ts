@@ -1,8 +1,8 @@
 export const path = {
+	// Path for user
 	HOME: '/*',
-	LOGIN_USER: '/user/login',
-	REGISTER_USER: '/user/register',
-	LOGIN_ADMIN: '/login',
+	LOGIN_USER: '/dang-nhap',
+	REGISTER_USER: '/dang-ki',
 	BIRTHDAY: '/sinh-nhat',
 	EVENT: '/su-kien',
 	WEDDING: '/dam-cuoi',
@@ -12,16 +12,19 @@ export const path = {
 	INTRO: '/gioi-thieu',
 	CONTACT: '/lien-he',
 	VERIFY_OTP: '/otp',
+
+	// Path for admin
 	ADMINPAGE: '/',
-	LISTUSER: '/nguoi-dung',
+	LOGIN_ADMIN: '/dang-nhap',
+	LISTUSER: '/danh-sach-nguoi-dung',
 	LISTBOOKING: '/danh-sach-dat-tiec',
 	LISTPARTIES: '/danh-sach-bua-tiec',
-	LISTVOUCHERS: '/vouchers',
-	LISTPAYMENTS: '/thanh-toan',
+	LISTVOUCHERS: '/danh-sach-ma-giam-gia',
+	LISTPAYMENTS: '/danh-sach-thanh-toan',
 	NOTIFIES: '/thong-bao',
 	PROFILE: '/trang-ca-nhan',
 	SETTING: '/cai-dat',
-	LOGOUT: '/logout',
+	LOGOUT: '/',
 };
 
 export const text = {

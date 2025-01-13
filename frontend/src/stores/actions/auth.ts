@@ -9,7 +9,7 @@ import {
 	apiVerifyOTP,
 } from '@/services/auth';
 import { actionTypes } from '@/stores/actions/actionTypes';
-import { Payload, PayloadForLogin } from '@/ultils/type';
+import { Payload, PayloadForLogin } from '@/utils/type';
 
 interface RegisterSuccessAction {
 	type: typeof actionTypes.REGISTER_SUCCES;

@@ -15,3 +15,10 @@ export type PayloadForLogin = {
 	email: string;
 	password: string;
 };
+export interface PartyQuery {
+	id?: string;
+	category?: string;
+	userId?: string;
+	page?: number;
+	limit?: number;
+}

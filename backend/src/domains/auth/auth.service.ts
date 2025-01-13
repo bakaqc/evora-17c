@@ -10,6 +10,7 @@ import { Model } from 'mongoose';
 
 import { LoginDto } from '@/domains/auth/dto/login.dto';
 import { User } from '@/schemas/user.schema';
+import { hash } from '@/utils/hash.util';
 import { verify } from '@/utils/verify.util';
 
 @Injectable()
@@ -67,6 +68,23 @@ export class AuthService {
 
 		return {
 			access_token: this.jwtService.sign(payload),
+		};
+	}
+
+	async forgotPassword(loginDto: LoginDto) {
+		const user = await this.userModel.findOne({ email: loginDto.email });
+
+		if (!user) {
+			throw new NotFoundException(
+				`Account with email: ${loginDto.email} does not exist`,
+			);
+		}
+
+		user.hashedPassword = await hash(loginDto.password);
+		await user.save();
+
+		return {
+			message: 'Password has been reset',
 		};
 	}
 

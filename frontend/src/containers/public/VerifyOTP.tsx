@@ -8,8 +8,8 @@ import InputForOtp from '@/components/InputForOTP';
 import { AppDispatch } from '@/redux';
 import { verifyOTP } from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/ultils/constant';
-import { PayloadForOtp } from '@/ultils/type';
+import { path } from '@/utils/constant';
+import { PayloadForOtp } from '@/utils/type';
 
 const VerifyOTP: React.FC = () => {
 	const dispatch: AppDispatch = useDispatch();

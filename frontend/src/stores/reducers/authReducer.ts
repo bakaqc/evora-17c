@@ -1,6 +1,6 @@
 import { actionTypes } from '../actions/actionTypes';
 
-import { Payload } from '@/ultils/type';
+import { Payload } from '@/utils/type';
 
 type AuthState = {
 	isLogin: boolean;

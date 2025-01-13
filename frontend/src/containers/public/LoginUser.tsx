@@ -7,9 +7,9 @@ import { ButtonForLogin, InputForLogin } from '@/components';
 import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/ultils/constant';
-import { PayloadForLogin } from '@/ultils/type';
-import validate from '@/ultils/validateField';
+import { path } from '@/utils/constant';
+import { PayloadForLogin } from '@/utils/type';
+import validate from '@/utils/validateField';
 
 interface InvalidField {
 	name: string;
@@ -17,7 +17,7 @@ interface InvalidField {
 }
 
 const LoginUser: React.FC = () => {
-	const { isLogin } = useSelector((state: RootState) => state.auth);
+	const { isLogin, token } = useSelector((state: RootState) => state.auth);
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 	const [payload, setPayload] = useState<PayloadForLogin>({
@@ -30,6 +30,9 @@ const LoginUser: React.FC = () => {
 			navigate('/');
 		}
 	}, [isLogin]);
+	useEffect(() => {
+		console.log(token);
+	}, [token]);
 	const handleSubmit = async () => {
 		const invalid = validate(payload, setInvalidField);
 		if (invalid === 0) dispatch(actions.login(payload));
