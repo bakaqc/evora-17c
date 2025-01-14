@@ -16,7 +16,7 @@ interface NavigationProps {
 
 const notActive =
 	'hover:bg-amber-600 px-4 h-full flex items-center bg-[#2B2825]';
-const active = 'hover:bg-amber-600 px-4 h-full flex items-center bg-[#2B2825]';
+const active = 'hover:bg-amber-600 px-4 h-full flex items-center bg-amber-600';
 
 const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 	const dispatch: AppDispatch = useDispatch();
@@ -55,7 +55,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 				isAdmin ? 'justify-start' : 'justify-center'
 			} items-center h-[60px] bg-[#2B2825] text-white`}
 		>
-			<div className="w-full flex h-full justify-center items-center text-sm font-bold space-x-4 flex-nowrap">
+			<div className="w-full flex h-full justify-center items-center text-sm font-bold">
 				<NavLink
 					to={`/`}
 					className={({ isActive }) => (isActive ? active : notActive)}
