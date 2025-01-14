@@ -109,6 +109,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 							<div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md p-4 w-[300px] flex flex-col z-50">
 								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
+									to={path.LOGIN_USER}
 									to={'/dang-nhap'}
 								>
 									<RiUserLine />
@@ -116,6 +117,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 								</NavLink>
 								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
+									to={'admin/login'}
 									to={'/quan-tri-vien/dang-nhap'}
 								>
 									<RiAdminLine />
