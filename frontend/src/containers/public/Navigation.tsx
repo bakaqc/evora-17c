@@ -110,6 +110,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
 									to={path.LOGIN_USER}
+									to={'/dang-nhap'}
 								>
 									<RiUserLine />
 									Đăng nhập cho người dùng
@@ -117,6 +118,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 								<NavLink
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
 									to={'admin/login'}
+									to={'/quan-tri-vien/dang-nhap'}
 								>
 									<RiAdminLine />
 									Đăng nhập cho admin

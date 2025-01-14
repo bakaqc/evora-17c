@@ -4,6 +4,7 @@ import { Payload } from '@/utils/type';
 
 type AuthState = {
 	isLogin: boolean;
+	isLoginAdmin: boolean;
 	token: string | null;
 	msg: string;
 	update: boolean;
@@ -14,12 +15,13 @@ type AuthState = {
 type Action = {
 	type: string;
 	data?: Payload;
-	access_token?: string;
+	token?: string;
 	msg?: string;
 };
 
 const initState: AuthState = {
 	isLogin: false,
+	isLoginAdmin: false,
 	token: null,
 	msg: '',
 	update: false,
@@ -36,7 +38,7 @@ const authReducer = (
 			return {
 				...state,
 				isLogin: false,
-				data: action.data ?? {}, // Dùng `??` thay cho `||`
+				data: action.data ?? {},
 			};
 		case actionTypes.REGISTER_FAILED:
 			return {
@@ -48,7 +50,14 @@ const authReducer = (
 			return {
 				...state,
 				isLogin: true,
-				token: action.access_token ?? null, // Dùng `??` thay cho `||`
+				token: action.token ?? null,
+				msg: 'Login successfully',
+			};
+		case actionTypes.LOGIN_ADMIN_SUCCESS:
+			return {
+				...state,
+				isLoginAdmin: true,
+				token: action.token ?? null,
 				msg: 'Login successfully',
 			};
 		case actionTypes.LOGIN_FAIL:
@@ -58,11 +67,18 @@ const authReducer = (
 				token: null,
 				msg: 'Mật khẩu không chính xác',
 			};
+		case actionTypes.LOGIN_ADMIN_FAIL:
+			return {
+				...state,
+				isLoginAdmin: false,
+				token: null,
+				msg: 'Mật khẩu không chính xác',
+			};
 		case actionTypes.VERIFY_SUCCESS:
 			return {
 				...state,
 				msgSuccess: 'Verify successfully',
-				data: action.data ?? {}, // Dùng `??` thay cho `||`
+				data: action.data ?? {},
 			};
 		case actionTypes.VERIFY_FAILED:
 			return {

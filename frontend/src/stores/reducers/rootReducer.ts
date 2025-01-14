@@ -9,6 +9,7 @@ import { Payload } from '@/utils/type';
 
 type AuthState = {
 	isLogin: boolean;
+	isLoginAdmin: boolean;
 	token: string | null;
 	msg: string;
 	update: boolean;
