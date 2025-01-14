@@ -59,7 +59,7 @@ const PageNumber: React.FC<PageNumberProps> = ({
 	};
 
 	const handleChangePage = () => {
-		if (!(text === '...')) {
+		if (text !== '...') {
 			if (setCurrentPage) {
 				setCurrentPage(+text);
 			}
@@ -69,11 +69,14 @@ const PageNumber: React.FC<PageNumberProps> = ({
 			});
 		}
 	};
-
-	const buttonClass =
-		+text === +currentPage
-			? active
-			: `${notActive} ${text === '...' ? 'cursor-text' : 'cursor-pointer'}`;
+	let buttonClass = notActive;
+	if (+text === +currentPage) {
+		buttonClass = active;
+	} else if (text !== '...') {
+		buttonClass = `${notActive} cursor-pointer`;
+	} else {
+		buttonClass = `${notActive} cursor-text`;
+	}
 
 	return (
 		<button
