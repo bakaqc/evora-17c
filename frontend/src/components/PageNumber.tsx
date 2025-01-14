@@ -69,24 +69,38 @@ const PageNumber: React.FC<PageNumberProps> = ({
 			});
 		}
 	};
-	let buttonClass = notActive;
-	if (+text === +currentPage) {
-		buttonClass = active;
-	} else if (text !== '...') {
-		buttonClass = `${notActive} cursor-pointer`;
-	} else {
-		buttonClass = `${notActive} cursor-text`;
-	}
 
-	return (
-		<button
-			className={buttonClass}
-			onClick={handleChangePage}
-			aria-label={`Page number ${text}`}
-		>
-			{icon || text}
-		</button>
-	);
+	if (+text === +currentPage) {
+		return (
+			<button
+				className={active}
+				onClick={handleChangePage}
+				aria-label={`Page number ${text}`}
+			>
+				{icon || text}
+			</button>
+		);
+	} else if (text !== '...') {
+		return (
+			<button
+				className={`${notActive} cursor-pointer`}
+				onClick={handleChangePage}
+				aria-label={`Page number ${text}`}
+			>
+				{icon || text}
+			</button>
+		);
+	} else {
+		return (
+			<button
+				className={`${notActive} cursor-text`}
+				onClick={handleChangePage}
+				aria-label={`Page number ${text}`}
+			>
+				{icon || text}
+			</button>
+		);
+	}
 };
 
 export default memo(PageNumber);
