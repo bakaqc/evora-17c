@@ -17,7 +17,8 @@ interface NavigationProps {
 const notActive =
 	'hover:bg-amber-600 px-4 h-full flex items-center bg-[#2B2825]';
 const active = 'hover:bg-amber-600 px-4 h-full flex items-center bg-amber-600';
-
+const login =
+	'hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950';
 const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 	const dispatch: AppDispatch = useDispatch();
 	const [isShowMenu, setIsShowMenu] = useState(false);
@@ -107,19 +108,11 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 						</button>
 						{isShowMenu && (
 							<div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md p-4 w-[300px] flex flex-col z-50">
-								<NavLink
-									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
-									to={path.LOGIN_USER}
-									to={'/dang-nhap'}
-								>
+								<NavLink className={login} to="/dang-nhap">
 									<RiUserLine />
 									Đăng nhập cho người dùng
 								</NavLink>
-								<NavLink
-									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
-									to={'admin/login'}
-									to={'/quan-tri-vien/dang-nhap'}
-								>
+								<NavLink className={login} to="/quan-tri-vien/dang-nhap">
 									<RiAdminLine />
 									Đăng nhập cho admin
 								</NavLink>
