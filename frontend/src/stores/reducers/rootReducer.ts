@@ -4,7 +4,7 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from '@/stores/reducers/authReducer';
-import userReducer from '@/stores/reducers/userReducer';
+import partyReducer from '@/stores/reducers/partyReducer';
 import { Payload } from '@/utils/type';
 
 type AuthState = {
@@ -29,7 +29,7 @@ const authConfig = {
 
 const rootReducer = combineReducers({
 	auth: persistReducer<AuthState>(authConfig, authReducer),
-	user: userReducer,
+	party: partyReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

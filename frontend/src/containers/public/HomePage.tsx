@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { List } from '@/components';
+import { Pagination } from '@/containers/public';
 
 const HomePage: React.FC = () => {
 	return (
@@ -16,6 +17,7 @@ const HomePage: React.FC = () => {
 			<div className="w-full flex gap-4">
 				<div className="w-full">
 					<List />
+					<Pagination />
 				</div>
 			</div>
 		</div>
