@@ -38,9 +38,6 @@ const List: React.FC<ListProps> = () => {
 	console.log(parties);
 	return (
 		<div className="w-full p-2 bg-[#FAF3EB] shadow-md rounded-md px-6">
-			<div className="flex items-center justify-between my-3">
-				<h4 className="text-md font-semibold">Danh sách tin đăng</h4>
-			</div>
 			<div className="flex items-center gap-2 my-2"></div>
 			<div className="flex gap-4 overflow-x-auto">
 				{parties?.length > 0 &&
@@ -48,6 +45,7 @@ const List: React.FC<ListProps> = () => {
 						return (
 							<Item
 								key={item._id}
+								id={item._id}
 								description={item?.description}
 								image={item?.photos[0]}
 								title={item?.title}
