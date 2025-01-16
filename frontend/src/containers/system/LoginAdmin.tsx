@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import logo1 from '@/assets/logo1.png';
-import { ButtonForLogin, InputForLogin } from '@/components';
+import { ButtonForLogin } from '@/components';
+import LoginInputField from '@/components/commons/LoginInputField';
+import RegisterSection from '@/components/commons/RegisterSection';
+import RightColumn from '@/components/commons/RightColumn';
 import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
-import { path } from '@/utils/constant';
 import { PayloadForLogin } from '@/utils/type';
 import validate from '@/utils/validateField';
 
@@ -16,8 +18,8 @@ interface InvalidField {
 	msg: string;
 }
 
-const LoginUser: React.FC = () => {
-	const { isLogin, token } = useSelector((state: RootState) => state.auth);
+const LoginAdmin: React.FC = () => {
+	const { isLoginAdmin } = useSelector((state: RootState) => state.auth);
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 	const [payload, setPayload] = useState<PayloadForLogin>({
@@ -26,16 +28,13 @@ const LoginUser: React.FC = () => {
 	});
 	const [invalidField, setInvalidField] = useState<InvalidField[]>([]);
 	useEffect(() => {
-		if (isLogin) {
-			navigate('/');
+		if (isLoginAdmin) {
+			navigate('/quan-tri-vien');
 		}
-	}, [isLogin]);
-	useEffect(() => {
-		console.log(token);
-	}, [token]);
+	}, [isLoginAdmin]);
 	const handleSubmit = async () => {
 		const invalid = validate(payload, setInvalidField);
-		if (invalid === 0) dispatch(actions.login(payload));
+		if (invalid === 0) dispatch(actions.loginAdmin(payload));
 	};
 
 	return (
@@ -50,28 +49,32 @@ const LoginUser: React.FC = () => {
 									<div className="text-center">
 										<img className="mx-auto w-36" src={logo1} alt="logo" />
 										<h4 className="mb-6 mt-4 text-xl font-semibold">
-											Login for User!
+											Login for Admin!
 										</h4>
 									</div>
 
 									{/* Username and Password Fields */}
-									<InputForLogin
+									<LoginInputField
 										id="email"
 										label="Email"
 										type="text"
 										invalidField={invalidField}
 										value={payload.email}
-										setValue={setPayload}
+										setValue={(value) =>
+											setPayload({ ...payload, email: value })
+										}
 										setInvalidField={setInvalidField}
 									/>
 
-									<InputForLogin
+									<LoginInputField
 										id="password"
 										label="Password"
 										type="password"
 										invalidField={invalidField}
 										value={payload.password}
-										setValue={setPayload}
+										setValue={(value) =>
+											setPayload({ ...payload, password: value })
+										}
 										setInvalidField={setInvalidField}
 									/>
 									{/* Login Button */}
@@ -86,31 +89,11 @@ const LoginUser: React.FC = () => {
 									</div>
 
 									{/* Register Section */}
-									<div className="flex items-center justify-between">
-										<p className="text-sm">Don't have an account?</p>
-										<NavLink
-											to={path.REGISTER_USER}
-											className="rounded border border-red-500 px-4 py-2 text-sm text-red-500 hover:bg-red-50"
-										>
-											Register
-										</NavLink>
-									</div>
+									<RegisterSection />
 								</div>
 
 								{/* Right Column */}
-								<div className="flex items-center justify-center rounded-b-lg bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-700 lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none">
-									<div className="px-6 py-8 text-white md:px-8">
-										<h4 className="mb-6 text-xl font-semibold">
-											We are more than just a company
-										</h4>
-										<p className="text-sm">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-											sed do eiusmod tempor incididunt ut labore et dolore magna
-											aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-											ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</p>
-									</div>
-								</div>
+								<RightColumn />
 							</div>
 						</div>
 					</div>
@@ -120,4 +103,4 @@ const LoginUser: React.FC = () => {
 	);
 };
 
-export default LoginUser;
+export default LoginAdmin;

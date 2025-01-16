@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import hero from '@/assets/hero.jpg';
-import { path } from '@/ultils/constant';
+import { path } from '@/utils/constant';
 
 const Banner: React.FC = () => {
 	return (

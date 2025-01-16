@@ -4,11 +4,12 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from '@/stores/reducers/authReducer';
-import userReducer from '@/stores/reducers/userReducer';
-import { Payload } from '@/ultils/type';
+import partyReducer from '@/stores/reducers/partyReducer';
+import { Payload } from '@/utils/type';
 
 type AuthState = {
 	isLogin: boolean;
+	isLoginAdmin: boolean;
 	token: string | null;
 	msg: string;
 	update: boolean;
@@ -28,7 +29,7 @@ const authConfig = {
 
 const rootReducer = combineReducers({
 	auth: persistReducer<AuthState>(authConfig, authReducer),
-	user: userReducer,
+	party: partyReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

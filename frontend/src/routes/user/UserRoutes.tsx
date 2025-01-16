@@ -9,7 +9,8 @@ import {
 	RegisterUser,
 	VerifyOTP,
 } from '@/containers/public';
-import { path } from '@/ultils/constant';
+import PartyDetailPage from '@/containers/public/PartyDetailPage';
+import { path } from '@/utils/constant';
 
 const UserRoutes: React.FC = () => {
 	return (
@@ -20,6 +21,7 @@ const UserRoutes: React.FC = () => {
 			<Route path={path.LOGIN_USER} element={<LoginUser />} />
 			<Route path={path.REGISTER_USER} element={<RegisterUser />} />
 			<Route path={path.VERIFY_OTP} element={<VerifyOTP />} />
+			<Route path={path.PARTY_DETAIL} element={<PartyDetailPage />} />
 		</Routes>
 	);
 };

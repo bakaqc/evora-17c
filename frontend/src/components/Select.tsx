@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { Payload } from '@/ultils/type';
+import { Payload } from '@/utils/type';
 
 interface SelectProps {
 	label?: string;
