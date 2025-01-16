@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface ItemProps {
+	id: string;
 	description: string;
 	image: string;
 	title: string;
@@ -10,6 +12,7 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({
+	id,
 	image,
 	description,
 	title,
@@ -20,7 +23,7 @@ const Item: React.FC<ItemProps> = ({
 	return (
 		<div className="w-[275px] max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
 			<div className="relative w-full h-64">
-				<img src={image} alt="House" className="w-full h-full object-cover" />
+				<img src={image} alt="Event" className="w-full h-full object-cover" />
 				<div className="absolute inset-0 bg-black opacity-40"></div>
 			</div>
 			<div className="p-4">
@@ -55,9 +58,11 @@ const Item: React.FC<ItemProps> = ({
 				</div>
 			</div>
 			<div className="px-4 py-3">
-				<button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-					Reserve
-				</button>
+				<Link to={`/chi-tiet-su-kien/${id}`}>
+					<button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+						Xem ngay
+					</button>
+				</Link>
 			</div>
 		</div>
 	);

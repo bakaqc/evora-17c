@@ -12,6 +12,7 @@ export const path = {
 	INTRO: '/gioi-thieu',
 	CONTACT: '/lien-he',
 	VERIFY_OTP: '/otp',
+	PARTY_DETAIL: '/chi-tiet-su-kien/:id',
 
 	// Path for admin
 	ADMINPAGE: '/',
