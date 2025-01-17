@@ -94,7 +94,8 @@ const List: React.FC<ListProps> = () => {
 							<Item
 								key={item._id}
 								id={item._id}
-								description={item?.description}
+								user={item.user}
+								options={item.options}
 								image={item?.photos[0]}
 								title={item?.title}
 								ratingCount={item?.ratingCount}
