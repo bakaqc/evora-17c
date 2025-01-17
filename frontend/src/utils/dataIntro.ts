@@ -16,18 +16,18 @@ interface Text {
 }
 
 export const text: Text = {
-	title: 'Tại sao lại chọn Evora?',
+	title: 'Tại sao chọn Evora để đăng ký sự kiện?',
 	description:
-		'Chúng tôi biết bạn có rất nhiều lựa chọn, nhưng Evora tự hào là trang web đứng top google về các từ khóa: ',
+		'Chúng tôi hiểu rằng bạn có rất nhiều lựa chọn khác nhau, nhưng Evora tự hào là nền tảng dẫn đầu trên Google trong các tìm kiếm về sự kiện và dịch vụ tổ chức sự kiện: ',
 	description2:
-		'...Vì vậy tin của bạn đăng trên website sẽ tiếp cận được với nhiều khách hàng hơn, do đó giao dịch nhanh hơn, tiết kiệm chi phí hơn',
+		'Vì vậy, khi đăng tin trên Evora, bạn sẽ tiếp cận được một lượng khách hàng lớn hơn, giúp việc giao dịch trở nên nhanh chóng và tiết kiệm chi phí hơn.',
 	statistic: [
 		{
-			name: 'Thành viên',
+			name: 'Thành viên đã đăng ký',
 			value: '116.998+',
 		},
 		{
-			name: 'Tin đăng',
+			name: 'Sự kiện đã được đăng',
 			value: '103.348+',
 		},
 		{
@@ -35,14 +35,15 @@ export const text: Text = {
 			value: '300.000+',
 		},
 		{
-			name: 'Lượt xem/tháng',
+			name: 'Lượt xem tin/tháng',
 			value: '2.500.000+',
 		},
 	],
-	price: 'Chi phí thấp, hiệu quả tối đa',
+	price: 'Chi phí hợp lý, hiệu quả cao',
 	comment:
-		'"Trước khi biết website Evora, mình phải tốn nhiều công sức và chi phí cho việc đăng tin dịch vụ, sự kiện: từ việc phát tờ rơi, dán giấy, và đăng lên các website khác nhưng hiệu quả không cao. Từ khi biết website Evora, mình đã thử đăng tin lên và đánh giá hiệu quả khá cao trong khi chi phí khá thấp."',
-	author: 'Anh Vĩ (chủ hệ thống nhà hàng, khách sạn chia sẻ)',
-	question: 'Bạn đang có sự kiện, dịch vụ cần đăng tin?',
-	answer: 'Không phải lo tìm người cho thuê dịch vụ',
+		'"Trước khi biết đến Evora, mình phải tốn nhiều thời gian và chi phí cho việc quảng bá sự kiện: từ in ấn tờ rơi, dán poster, cho đến đăng tin trên các trang web khác nhưng không đạt hiệu quả cao. Sau khi thử đăng tin trên Evora, mình đã nhận thấy sự thay đổi rõ rệt về hiệu quả, trong khi chi phí lại rất hợp lý."',
+	author: 'Anh Vĩ (Chủ hệ thống nhà hàng, khách sạn)',
+	question: 'Bạn có sự kiện cần tổ chức hoặc dịch vụ cần quảng bá?',
+	answer:
+		'Đừng lo, Evora giúp bạn kết nối với người cho thuê dịch vụ ngay lập tức.',
 };
