@@ -20,18 +20,32 @@ const Item: React.FC<ItemProps> = ({
 	ratingCount,
 	category,
 }) => {
+	// Function to determine the tag color based on the category
+	const getCategoryTagClass = (category: string) => {
+		switch (category) {
+			case 'Sinh nhật':
+				return 'bg-blue-200 text-blue-800';
+			case 'Đám cưới':
+				return 'bg-pink-200 text-pink-800';
+			case 'Khai trương':
+				return 'bg-green-200 text-green-800';
+			case 'Thôi nôi':
+				return 'bg-yellow-200 text-yellow-800';
+			default:
+				return 'bg-gray-200 text-gray-800';
+		}
+	};
+
 	return (
-		<div className="w-[275px] max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
+		<div className="w-[275px] max-w-sm bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
 			<div className="relative w-full h-64">
 				<img src={image} alt="Event" className="w-full h-full object-cover" />
 				<div className="absolute inset-0 bg-black opacity-40"></div>
 			</div>
 			<div className="p-4">
 				<div className="flex justify-between items-center mb-3">
-					<h3 className="text-xl font-semibold text-gray-800">
-						{title.trim().length > 15
-							? `${title.trim().slice(0, 15)}...`
-							: title}
+					<h3 className="text-s font-semibold text-gray-800 overflow-hidden overflow-ellipsis whitespace-nowrap">
+						{title.trim().length > 15 ? `${title.trim()}` : title}
 					</h3>
 					<div className="flex items-center text-yellow-500">
 						<svg
@@ -49,17 +63,21 @@ const Item: React.FC<ItemProps> = ({
 						<span className="ml-1">{ratingTotal / ratingCount}</span>
 					</div>
 				</div>
-				<p className="text-gray-600 text-sm mb-4">{description}</p>
+				<p className="text-gray-600 text-sm mb-4 line-clamp-2">{description}</p>
 				<div className="flex space-x-4 text-sm">
-					<div className="flex items-center">
-						<span className="text-gray-900">🎉</span>
-						<span className="ml-1 text-gray-800">{category}</span>
+					{/* Category as Tag */}
+					<div
+						className={`flex items-center px-3 py-1 rounded-full text-sm font-medium ${getCategoryTagClass(
+							category,
+						)}`}
+					>
+						{category}
 					</div>
 				</div>
 			</div>
 			<div className="px-4 py-3">
 				<Link to={`/chi-tiet-su-kien/${id}`}>
-					<button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+					<button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
 						Xem ngay
 					</button>
 				</Link>
