@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import hero from '@/assets/hero.jpg';
 import logo1 from '@/assets/logo1.png';
 import { ButtonForLogin, InputForLogin } from '@/components';
 import { AppDispatch } from '@/redux';
@@ -39,22 +40,33 @@ const LoginUser: React.FC = () => {
 	};
 
 	return (
-		<section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
-			<div className="container max-w-5xl p-6">
-				<div className="flex flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
-					<div className="w-full">
-						<div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+		<section className="gradient-form h-screen bg-neutral-200 light:bg-neutral-700 flex items-center justify-center">
+			<div className="container max-w-4xl">
+				<div className="flex flex-wrap items-center justify-center text-neutral-950 dark:text-neutral-200">
+					<div className="w-50">
+						<div className="block rounded-lg bg-white shadow-lg light:bg-neutral-800">
 							<div className="g-0 lg:flex lg:flex-wrap">
-								{/* Left Column */}
-								<div className="px-6 py-8 md:px-8 lg:w-6/12">
+								{/* Cột Trái */}
+								<div className="flex items-center justify-center rounded-b-lg lg:w-4/6 lg:rounded-e-lg lg:rounded-bl-none">
+									<div className="h-100 relative">
+										<img
+											src={hero}
+											alt="Về Evora"
+											className="w-full h-full rounded-lg shadow-lg"
+										/>
+									</div>
+								</div>
+
+								{/* Cột Phải */}
+								<div className="px-6 py-8 md:px-8 lg:w-2/6">
 									<div className="text-center">
-										<img className="mx-auto w-36" src={logo1} alt="logo" />
-										<h4 className="mb-6 mt-4 text-xl font-semibold">
-											Login for User!
+										<img className="mx-auto w-20" src={logo1} alt="logo" />
+										<h4 className="mb-6 mt-4 text-xl font-semibold text-neutral-950">
+											Đăng nhập cho người dùng
 										</h4>
 									</div>
 
-									{/* Username and Password Fields */}
+									{/* Trường Tên Đăng Nhập và Mật Khẩu */}
 									<InputForLogin
 										id="email"
 										label="Email"
@@ -67,48 +79,33 @@ const LoginUser: React.FC = () => {
 
 									<InputForLogin
 										id="password"
-										label="Password"
+										label="Mật khẩu"
 										type="password"
 										invalidField={invalidField}
 										value={payload.password}
 										setValue={setPayload}
 										setInvalidField={setInvalidField}
 									/>
-									{/* Login Button */}
-									<div className="mb-6 text-center">
-										<ButtonForLogin label="Log in" onClick={handleSubmit} />
-										<a
-											href="#!"
-											className="mt-2 inline-block text-sm text-primary"
-										>
-											Forgot password?
-										</a>
-									</div>
-
-									{/* Register Section */}
-									<div className="flex items-center justify-between">
-										<p className="text-sm">Don't have an account?</p>
+									{/* Nút Đăng Nhập */}
+									<div className="my-6 text-center">
+										<ButtonForLogin label="Đăng nhập" onClick={handleSubmit} />
 										<NavLink
-											to={path.REGISTER_USER}
-											className="rounded border border-red-500 px-4 py-2 text-sm text-red-500 hover:bg-red-50"
+											to={path.FORGOT_PASSWORD}
+											className="my-2 inline-block text-xm text-primary text-gray-900"
 										>
-											Register
+											Quên mật khẩu?
 										</NavLink>
 									</div>
-								</div>
 
-								{/* Right Column */}
-								<div className="flex items-center justify-center rounded-b-lg bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-700 lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none">
-									<div className="px-6 py-8 text-white md:px-8">
-										<h4 className="mb-6 text-xl font-semibold">
-											We are more than just a company
-										</h4>
-										<p className="text-sm">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-											sed do eiusmod tempor incididunt ut labore et dolore magna
-											aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-											ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</p>
+									{/* Phần Đăng Ký */}
+									<div className="flex items-center justify-between">
+										<p className="text-sm text-gray-900">Chưa có tài khoản?</p>
+										<NavLink
+											to={path.REGISTER_USER}
+											className="rounded border border-red-500 font-bold px-4 py-2 text-sm text-red-500 hover:bg-red-50"
+										>
+											Đăng ký ngay
+										</NavLink>
 									</div>
 								</div>
 							</div>
