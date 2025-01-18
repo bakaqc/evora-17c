@@ -62,8 +62,13 @@ const Item: React.FC<ItemProps> = ({
 	return (
 		<div className="w-[275px] max-w-sm bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
 			<div className="relative w-full h-64">
+				{/* Hiển thị tag "Được đề xuất" nếu số sao = 5 */}
+				{ratingCount > 0 && ratingTotal / ratingCount > 4.5 && (
+					<div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">
+						Được đề xuất
+					</div>
+				)}
 				<img src={image} alt="Event" className="w-full h-full object-cover" />
-				<div className="absolute inset-0 bg-black opacity-40"></div>
 			</div>
 			<div className="p-4">
 				<div className="flex justify-between items-center mb-3">
@@ -91,7 +96,7 @@ const Item: React.FC<ItemProps> = ({
 				{/* Pricing */}
 				{basicOption && (
 					<p className="text-base text-gray-800 font-medium mb-2">
-						Giá chỉ từ:{' '}
+						Chỉ từ:{' '}
 						<span className="text-red-600">
 							{new Intl.NumberFormat('vi-VN', {
 								style: 'currency',
@@ -119,7 +124,7 @@ const Item: React.FC<ItemProps> = ({
 					</div>
 				</div>
 			</div>
-			<div className="px-4 py-3">
+			<div className="px-4 pb-4">
 				<Link to={`/chi-tiet-su-kien/${id}`}>
 					<button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
 						Xem ngay

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Item } from '@/components';
+import Pagination from '@/containers/public/Pagination';
 import { AppDispatch } from '@/redux';
 import { getParties } from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
@@ -19,6 +20,7 @@ const List: React.FC<ListProps> = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const dispatch: AppDispatch = useDispatch();
 	const [searchTerm, setSearchTerm] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const removeDiacritics = (str: string) => {
 		return diacritics.remove(str);
@@ -40,6 +42,7 @@ const List: React.FC<ListProps> = () => {
 	};
 
 	useEffect(() => {
+		setIsLoading(true);
 		const params: [string, string][] = [];
 		for (const entry of searchParams.entries()) {
 			params.push(entry);
@@ -58,7 +61,9 @@ const List: React.FC<ListProps> = () => {
 			...searchParamsObject,
 			limit: 8,
 		};
-		dispatch(getParties(query));
+		dispatch(getParties(query)).finally(() => {
+			setIsLoading(false);
+		});
 	}, [searchParams, dispatch]);
 
 	const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,6 +75,14 @@ const List: React.FC<ListProps> = () => {
 
 	return (
 		<div className="w-full p-2 bg-[#FAF3EB] shadow-md rounded-md px-6">
+			<div className="items-center justify-center text-center">
+				<h1 className="font-serif mb-1.5 text-[25px] font-semibold text-[#E88F2A]">
+					Danh sách sự kiện nổi bật
+				</h1>
+				<p className="text-[40px] font-bold mb-4 text-[#2B2825]">
+					KHÁM PHÁ NGAY
+				</p>
+			</div>
 			<div className="flex items-center justify-center gap-2 my-5">
 				<form onSubmit={handleSearch} className="flex items-center gap-2">
 					<input
@@ -88,7 +101,9 @@ const List: React.FC<ListProps> = () => {
 				</form>
 			</div>
 			<div className="flex gap-4 my-5">
-				{filteredParties?.length > 0 ? (
+				{isLoading ? (
+					<p className="text-center w-full">Đang tải sự kiện...</p>
+				) : filteredParties?.length > 0 ? (
 					filteredParties.map((item) => {
 						return (
 							<Item
@@ -108,6 +123,7 @@ const List: React.FC<ListProps> = () => {
 					<p>Không tìm thấy sự kiện nào!</p>
 				)}
 			</div>
+			<Pagination />
 		</div>
 	);
 };
