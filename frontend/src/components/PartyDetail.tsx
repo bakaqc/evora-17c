@@ -17,11 +17,17 @@ import {
 	Tag,
 	Typography,
 } from 'antd';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { User } from '@/schemas/user.schema';
+import { apiCreateBooking } from '@/services/booking';
 import { Party, apiGetPartyById } from '@/services/party';
+import { apiCreatePayment } from '@/services/payment';
 import { apiGetUser } from '@/services/user';
+import { RootState } from '@/stores/reducers/rootReducer';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -30,9 +36,87 @@ interface PartyDetailProps {
 }
 
 const RegistrationForm: React.FC = () => {
-	const onFinish = (values: any) => {
-		console.log('Success:', values);
-		// Có thể thêm logic gửi form ở đây
+	const { user } = useSelector((state: RootState) => state.user);
+	const [form] = Form.useForm();
+	const [totalAmount, setTotalAmount] = useState<number>(0);
+	const [party, setParty] = useState<Party | null>(null);
+
+	const { id } = useParams<{ id: string }>();
+	const safeId: string = id ?? '';
+	useEffect(() => {
+		const fetchParty = async () => {
+			if (id) {
+				try {
+					const response = await apiGetPartyById(id);
+					setParty(response.data);
+				} catch (error) {
+					console.error('Error fetching party details:', error);
+				}
+			}
+		};
+		fetchParty();
+	}, [id]);
+
+	const calculateTotalAmount = (servicePackage: string, guestCount: number) => {
+		if (!party) return 0;
+
+		// Tìm giá của gói dịch vụ từ options của party
+		const selectedOption = party.options.find(
+			(option) => option.type.toLowerCase() === servicePackage.toLowerCase(),
+		);
+		console.log(selectedOption);
+		const price = selectedOption ? selectedOption.price : 0;
+		const amount = price * guestCount;
+		setTotalAmount(amount);
+		form.setFieldsValue({ totalAmount: amount });
+	};
+
+	// Hàm xử lý khi thay đổi form
+	const handleFormChange = () => {
+		const servicePackage = form.getFieldValue('servicePackage');
+		const guestCount = form.getFieldValue('guestCount');
+		if (servicePackage && guestCount) {
+			calculateTotalAmount(servicePackage, guestCount);
+		}
+	};
+
+	const onFinish = async (values: any) => {
+		console.log(values);
+		const formattedEventTime = values.eventTime?.format('YYYY-MM-DD HH:mm:ss');
+		const newBookingPayload = {
+			party: safeId,
+			user: user._id,
+			payment: '',
+			guestCount: Number(values.guestCount),
+			status: 'PENDING',
+			organizeDate: formattedEventTime,
+			organizedAt: values.location,
+		};
+
+		try {
+			const bookingResponse = await apiCreateBooking(newBookingPayload);
+			const bookingId = bookingResponse.data._id;
+			const newPaymentPayload = {
+				booking: bookingId,
+				voucher: '',
+				method: 'zalo-pay',
+				status: 'PENDING',
+				originPrice: totalAmount,
+				finalPrice: totalAmount,
+			};
+			console.log(newPaymentPayload);
+			const paymentResponse = await apiCreatePayment(newPaymentPayload);
+
+			if (paymentResponse?.payment_url) {
+				window.location.href = paymentResponse.payment_url;
+			} else {
+				console.error('Không nhận được URL thanh toán hợp lệ.');
+			}
+
+			console.log('Đăng ký và thanh toán thành công!');
+		} catch (error) {
+			console.error('Lỗi khi đặt chỗ hoặc thanh toán:', error);
+		}
 	};
 
 	const onFinishFailed = (errorInfo: any) => {
@@ -53,6 +137,8 @@ const RegistrationForm: React.FC = () => {
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 				layout="vertical"
+				form={form}
+				onValuesChange={handleFormChange}
 			>
 				<Form.Item
 					label="Địa điểm tổ chức"
@@ -70,7 +156,17 @@ const RegistrationForm: React.FC = () => {
 						{ required: true, message: 'Vui lòng chọn thời gian tổ chức!' },
 					]}
 				>
-					<DatePicker showTime style={{ width: '100%' }} />
+					<DatePicker
+						showTime
+						style={{ width: '100%' }}
+						format="YYYY-MM-DD HH:mm:ss"
+						value={
+							form.getFieldValue('eventTime')
+								? dayjs(form.getFieldValue('eventTime'))
+								: null
+						}
+						onChange={(date) => form.setFieldsValue({ eventTime: date })}
+					/>
 				</Form.Item>
 				<Row gutter={16}>
 					<Col span={12}>
@@ -94,10 +190,7 @@ const RegistrationForm: React.FC = () => {
 							label="Số lượng khách"
 							name="guestCount"
 							rules={[
-								{
-									required: true,
-									message: 'Vui lòng nhập số lượng khách!',
-								},
+								{ required: true, message: 'Vui lòng nhập số lượng khách!' },
 							]}
 							style={{ display: 'inline-block', width: '100%' }}
 						>
@@ -106,7 +199,7 @@ const RegistrationForm: React.FC = () => {
 					</Col>
 				</Row>
 				<Form.Item label="Tổng số tiền" name="totalAmount">
-					<Input disabled />
+					<Input value={totalAmount} disabled />
 				</Form.Item>
 				<Form.Item style={{ textAlign: 'center', width: '100%' }}>
 					<Button type="primary" htmlType="submit">

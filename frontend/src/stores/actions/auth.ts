@@ -93,7 +93,6 @@ export const login =
 	async (dispatch: Dispatch<LoginActions>): Promise<LoginResponse> => {
 		try {
 			const response = await apiLogin(payload);
-
 			if ('access_token' in response) {
 				dispatch({
 					type: actionTypes.LOGIN_SUCCESS,
