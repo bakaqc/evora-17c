@@ -120,7 +120,7 @@ const List: React.FC<ListProps> = () => {
 						);
 					})
 				) : (
-					<p>Không tìm thấy sự kiện nào!</p>
+					<p className="text-center w-full">Không tìm thấy sự kiện nào!</p>
 				)}
 			</div>
 			<Pagination />

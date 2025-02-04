@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -42,7 +43,7 @@ const LoginUser: React.FC = () => {
 	return (
 		<section className="gradient-form h-screen bg-neutral-200 light:bg-neutral-700 flex items-center justify-center">
 			<div className="container max-w-4xl">
-				<div className="flex flex-wrap items-center justify-center text-neutral-950 dark:text-neutral-200">
+				<div className="flex flex-wrap items-center justify-center text-neutral-950 ">
 					<div className="w-50">
 						<div className="block rounded-lg bg-white shadow-lg light:bg-neutral-800">
 							<div className="g-0 lg:flex lg:flex-wrap">
