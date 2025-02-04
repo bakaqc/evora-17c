@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useSearchParams } from 'react-router-dom';
 
@@ -24,6 +24,11 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 	const [isShowMenu, setIsShowMenu] = useState(false);
 	const [isShowUserDropdown, setIsShowUserDropdown] = useState(false);
 	const { isLogin } = useSelector((state: RootState) => state.auth);
+	useEffect(() => {
+		console.log(isLogin);
+	}, [isLogin]);
+	const { user } = useSelector((state: RootState) => state.user);
+	console.log(user);
 	const [searchParams] = useSearchParams();
 
 	// Hàm xử lý khi click vào category
@@ -124,9 +129,15 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 					<div className="relative h-full">
 						<button
 							onClick={() => setIsShowUserDropdown(!isShowUserDropdown)}
-							className="hover:bg-amber-600 px-4 py-2 flex items-center w-full h-full"
+							className="hover:bg-amber-600 px-4 py-2 flex items-center w-full h-full gap-2"
+							aria-label="Hiển thị menu người dùng"
 						>
-							Hi <span>User</span>
+							<span>{user.fullName}</span>
+							<img
+								src={user.avatar}
+								className="rounded-full w-[50px]"
+								alt="Avatar người dùng"
+							/>
 						</button>
 						{isShowUserDropdown && (
 							<div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md p-4 w-[300px] flex flex-col z-50">

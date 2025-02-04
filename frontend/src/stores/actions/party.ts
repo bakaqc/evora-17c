@@ -5,9 +5,8 @@ import {
 	apiGetParties,
 	apiGetPartiesByCategory,
 } from '@/services/party';
+import { actionTypes } from '@/stores/actions/actionTypes';
 import { PartyQuery } from '@/utils/type';
-
-import { actionTypes } from './actionTypes';
 
 export const getParties = (query: PartyQuery) => {
 	return async (dispatch: Dispatch): Promise<void> => {
