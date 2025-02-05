@@ -29,7 +29,7 @@ export class EmailService {
 		to: string,
 		subject: string,
 		text: string,
-		template: 'welcome' | 'verifyOTP',
+		template: 'welcome' | 'verifyOTP' | 'custom',
 	) {
 		let htmlContent = '';
 
@@ -39,6 +39,9 @@ export class EmailService {
 				break;
 			case 'verifyOTP':
 				htmlContent = emailVerifyOTP.replace('{{OTP_CODE}}', text);
+				break;
+			case 'custom':
+				htmlContent = text;
 				break;
 			default:
 				htmlContent = text;
