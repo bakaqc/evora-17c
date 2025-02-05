@@ -69,14 +69,14 @@ const determineProgress = (status: string, organizeDate: Date) => {
 
 const PaymentHistory: React.FC = () => {
 	const [data, setData] = useState([]);
-	const userId = '67668671dc51e039cfa171c2';
 	const { token } = useSelector((state: RootState) => state.auth);
+	const { user } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				if (token) {
-					const bookingsResponse = await apiGetBookingByUserId(userId, token);
+					const bookingsResponse = await apiGetBookingByUserId(user._id, token);
 					const bookings = bookingsResponse.data;
 
 					const tableData = bookings.map((booking: any, index: number) => {
@@ -113,7 +113,7 @@ const PaymentHistory: React.FC = () => {
 		};
 
 		fetchData();
-	}, [userId]);
+	}, [user._id, token]);
 
 	return (
 		<div className="w-full my-3">
