@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaFacebook } from 'react-icons/fa';
 
 import bg from '@/assets/bg.jpg';
 // Đảm bảo đường dẫn chính xác
@@ -50,8 +51,18 @@ const Footer: React.FC = () => {
 									evora.17c@gmail.com
 								</li>
 								<li className="mb-4 flex items-center gap-1">
+									<FaFacebook size={20} color="#E88F2A" />
+									<a
+										href="https://www.facebook.com/profile.php?id=61570906380951"
+										target="_blank"
+										rel="noreferrer"
+									>
+										Evora Fanpage
+									</a>
+								</li>
+								<li className="mb-4 flex items-center gap-1">
 									<CiPhone size={20} color="#E88F2A" />
-									+012 345 67890
+									038 389 8281
 								</li>
 							</ul>
 						</div>
@@ -62,23 +73,27 @@ const Footer: React.FC = () => {
 							<ul className="text-gray-200 font-medium">
 								<li className="mb-4 flex items-center gap-1">
 									<FaArrowRightLong size={20} color="#E88F2A" />
-									Trang chủ
+									<a href="/">Trang chủ</a>
 								</li>
 								<li className="mb-4 flex items-center gap-1">
 									<FaArrowRightLong size={20} color="#E88F2A" />
-									Danh sách dịch vụ
+									<a href="/sinh-nhat">Sinh nhật</a>
 								</li>
 								<li className="mb-4 flex items-center gap-1">
 									<FaArrowRightLong size={20} color="#E88F2A" />
-									Đơn vị tổ chức
+									<a href="/thoi-noi">Thôi nôi</a>
 								</li>
 								<li className="mb-4 flex items-center gap-1">
 									<FaArrowRightLong size={20} color="#E88F2A" />
-									Giới thiệu
+									<a href="/khai-truong">Khai trương</a>
 								</li>
 								<li className="mb-4 flex items-center gap-1">
 									<FaArrowRightLong size={20} color="#E88F2A" />
-									Liên hệ
+									<a href="/dam-cuoi">Đám cưới</a>
+								</li>
+								<li className="mb-4 flex items-center gap-1">
+									<FaArrowRightLong size={20} color="#E88F2A" />
+									<a href="/gioi-thieu">Giới thiệu</a>
 								</li>
 							</ul>
 						</div>
@@ -111,7 +126,7 @@ const Footer: React.FC = () => {
 					<hr className="w-full my-6 border-gray-200 dark:border-gray-700 " />
 					<div className="flex justify-center items-center text-gray-200">
 						<span className="text-sm mb-6 ml-[120px]">
-							© 2023 Evora. Bản quyền. Được phát triển bởi nhóm Evora
+							© 2025 Evora. Bản quyền. Được phát triển bởi nhóm Evora
 						</span>
 					</div>
 				</div>

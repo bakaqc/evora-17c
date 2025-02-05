@@ -31,7 +31,6 @@ export class CreateBookingDto {
 	status: 'PENDING' | 'APPROVED' | 'CANCELLED';
 
 	@ApiProperty({ description: 'Payment Id which pay for party booking' })
-	@IsMongoId()
 	@IsOptional()
 	payment: string;
 

@@ -120,19 +120,79 @@ export class PartiesService {
 		};
 	}
 
-	async getOne(identifier: string) {
-		const party = await this.findPartyByIdentifier(identifier);
+	async getByCategoryWithPagination(
+		category: string,
+		page: number,
+		limit: number,
+	) {
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
+
+		const skip = (page - 1) * limit;
+
+		const [parties, total] = await Promise.all([
+			this.partyModel.find({ category }).skip(skip).limit(limit).exec(),
+			this.partyModel.countDocuments({ category }).exec(),
+		]);
+
+		this.logger.debug('Fetching parties by category with pagination', parties);
+
+		const totalPages = Math.ceil(total / limit);
+
+		return {
+			success: true,
+			message: 'Parties fetched successfully.',
+			data: {
+				parties,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
+			},
+		};
+	}
+
+	async getByUserIdWithPagination(userId: string, page: number, limit: number) {
+		if (page < 1) page = 1;
+		if (limit < 1) limit = 10;
+
+		const skip = (page - 1) * limit;
+
+		const [parties, total] = await Promise.all([
+			this.partyModel.find({ user: userId }).skip(skip).limit(limit).exec(),
+			this.partyModel.countDocuments({ user: userId }).exec(),
+		]);
+
+		this.logger.debug('Fetching parties by user ID with pagination', parties);
+
+		const totalPages = Math.ceil(total / limit);
+
+		return {
+			success: true,
+			message: 'Parties fetched successfully.',
+			data: {
+				parties,
+				pagination: {
+					total,
+					page,
+					limit,
+					totalPages,
+				},
+			},
+		};
+	}
+
+	async getOne(id: string) {
+		const party = await this.partyModel.findById(id);
 
 		if (!party) {
-			this.logger.error(
-				`Party with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'category'} ${identifier} not found!`,
-			);
+			this.logger.error(`Party with ID ${id} not found!`);
 			throw new NotFoundException('Party not found');
 		}
 
-		this.logger.log(
-			`Party with ${/^[0-9a-fA-F]{24}$/.test(identifier) ? 'id' : 'category'} ${identifier} fetched successfully`,
-		);
+		this.logger.debug(`Fetching party with ID ${id}`, party);
 
 		return {
 			success: true,
@@ -185,7 +245,7 @@ export class PartiesService {
 	}
 
 	async delete(id: string) {
-		const party = await this.findPartyByIdentifier(id);
+		const party = await this.partyModel.findById(id);
 
 		if (!party) {
 			this.logger.error(`Party with ID ${id} not found!`);
@@ -200,12 +260,5 @@ export class PartiesService {
 			success: true,
 			message: 'Party deleted successfully.',
 		};
-	}
-
-	async findPartyByIdentifier(identifier: string) {
-		const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
-		const query = isObjectId ? { _id: identifier } : { category: identifier };
-
-		return await this.partyModel.findOne(query).select('-__v');
 	}
 }

@@ -14,7 +14,6 @@ export class CreatePaymentDto {
 	booking: string;
 
 	@ApiProperty({ description: 'Vouchers ID have used by user' })
-	@IsMongoId()
 	@IsOptional()
 	voucher: string;
 

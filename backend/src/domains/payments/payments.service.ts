@@ -29,7 +29,7 @@ export class PaymentsService {
 		this.logger.log('Payment created');
 
 		await this.bookingModel.findByIdAndUpdate(createPaymentDto.booking, {
-			$push: { payments: newPayment._id },
+			$push: { payments: newPayment._id, status: 'APPROVED' },
 		});
 
 		await newPayment.save();

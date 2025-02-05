@@ -33,7 +33,7 @@ const InputForLogin: React.FC<InputFieldProps> = ({
 	const errorMsg = invalidField.find((field) => field.name === id)?.msg;
 
 	return (
-		<div className="relative mb-8">
+		<div className="relative my-10">
 			<input
 				type={type}
 				id={id}
