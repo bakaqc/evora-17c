@@ -1,111 +1,123 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const data = [
-	{
-		key: '1',
-		eventName: 'Buổi hòa nhạc A',
-		guests: 100,
-		organizer: 'Công ty XYZ',
-		date: '2025-02-01',
-		amount: '100$',
-		method: 'Thẻ tín dụng',
-		status: 'Hoàn thành',
-	},
-	{
-		key: '2',
-		eventName: 'Hội thảo B',
-		guests: 50,
-		organizer: 'Tổ chức ABC',
-		date: '2025-01-28',
-		amount: '50$',
-		method: 'PayPal',
-		status: 'Đang chờ',
-	},
-	{
-		key: '3',
-		eventName: 'Hội nghị C',
-		guests: 200,
-		organizer: 'Công ty DEF',
-		date: '2025-01-15',
-		amount: '200$',
-		method: 'Chuyển khoản ngân hàng',
-		status: 'Hoàn thành',
-	},
-	{
-		key: '4',
-		eventName: 'Đám cưới D',
-		guests: 200,
-		organizer: 'Công ty DEF',
-		date: '2025-01-15',
-		amount: '200$',
-		method: 'Chuyển khoản ngân hàng',
-		status: 'Hoàn thành',
-	},
-	{
-		key: '5',
-		eventName: 'Tiệc khai trương F',
-		guests: 200,
-		organizer: 'Công ty DEF',
-		date: '2025-01-15',
-		amount: '200$',
-		method: 'Chuyển khoản ngân hàng',
-		status: 'Hoàn thành',
-	},
-	{
-		key: '6',
-		eventName: 'Hội nghị G',
-		guests: 200,
-		organizer: 'Công ty DEF',
-		date: '2025-01-15',
-		amount: '200$',
-		method: 'Chuyển khoản ngân hàng',
-		status: 'Hoàn thành',
-	},
-];
+import { apiGetBookingByUserId } from '@/services/booking';
+import { apiGetPartyById } from '@/services/party';
+import { RootState } from '@/stores/reducers/rootReducer';
 
 const columns = [
 	{
-		title: 'Tên sự kiện',
+		title: 'Sự kiện',
 		dataIndex: 'eventName',
 		key: 'eventName',
 	},
 	{
 		title: 'Số lượng khách',
-		dataIndex: 'guests',
-		key: 'guests',
+		dataIndex: 'guestCount',
+		key: 'guestCount',
 	},
 	{
-		title: 'Đơn vị tổ chức',
-		dataIndex: 'organizer',
-		key: 'organizer',
+		title: 'Địa điểm tổ chức',
+		dataIndex: 'organizedAt',
+		key: 'organizedAt',
 	},
 	{
-		title: 'Ngày',
-		dataIndex: 'date',
-		key: 'date',
-	},
-	{
-		title: 'Số tiền',
-		dataIndex: 'amount',
-		key: 'amount',
-	},
-	{
-		title: 'Phương thức thanh toán',
-		dataIndex: 'method',
-		key: 'method',
+		title: 'Thời gian tổ chức',
+		dataIndex: 'organizeDate',
+		key: 'organizeDate',
 	},
 	{
 		title: 'Trạng thái',
 		dataIndex: 'status',
 		key: 'status',
 	},
+	{
+		title: 'Tiến độ',
+		dataIndex: 'progress',
+		key: 'progress',
+	},
 ];
 
+const translateStatus = (status: string) => {
+	switch (status) {
+		case 'PENDING':
+			return 'Đang chờ thanh toán';
+		case 'APPROVED':
+			return 'Đã duyệt';
+		case 'CANCELLED':
+			return 'Đã hủy';
+		default:
+			return status;
+	}
+};
+
+const determineProgress = (status: string, organizeDate: Date) => {
+	if (status === 'APPROVED') {
+		const currentDate = new Date();
+		if (currentDate < organizeDate) {
+			return 'Đang chuẩn bị';
+		} else if (currentDate.toDateString() === organizeDate.toDateString()) {
+			return 'Đang diễn ra';
+		} else {
+			return 'Đã kết thúc';
+		}
+	}
+	return '';
+};
+
 const PaymentHistory: React.FC = () => {
+	const [data, setData] = useState([]);
+	const userId = '67668671dc51e039cfa171c2';
+	const { token } = useSelector((state: RootState) => state.auth);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				if (token) {
+					const bookingsResponse = await apiGetBookingByUserId(userId, token);
+					const bookings = bookingsResponse.data;
+
+					const tableData = bookings.map((booking: any, index: number) => {
+						const organizeDate = new Date(booking.organizeDate);
+						const party = apiGetPartyById(booking.party);
+						const partyPromise = party.then((response) => response.data.title);
+						console.log(partyPromise);
+						return {
+							key: index,
+							eventName: partyPromise,
+							guestCount: booking.guestCount,
+							organizedAt: booking.organizedAt,
+							organizeDate: new Intl.DateTimeFormat('vi-VN', {
+								year: 'numeric',
+								month: '2-digit',
+								day: '2-digit',
+								hour: '2-digit',
+								minute: '2-digit',
+								second: '2-digit',
+								timeZone: 'Asia/Ho_Chi_Minh',
+							}).format(organizeDate),
+							status: translateStatus(booking.status),
+							progress: determineProgress(booking.status, organizeDate),
+						};
+					});
+
+					setData(tableData);
+				} else {
+					console.error('Token is null');
+				}
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		};
+
+		fetchData();
+	}, [userId]);
+
 	return (
 		<div className="w-full my-3">
-			<h1 className="text-2xl mb-4">Lịch sử thanh toán</h1>
+			<h1 className="text-2xl mb-4">Lịch sử đặt tiệc</h1>
 			<Table columns={columns} dataSource={data} />
 		</div>
 	);
