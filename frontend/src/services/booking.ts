@@ -31,6 +31,7 @@ export const apiCreateBooking = (query: Booking): Promise<ApiResponse> => {
 			.then((response) => resolve(response.data as ApiResponse))
 			.catch((err) => reject(new Error(err)));
 	});
+};
 
 export const apiGetBookingByUserId = async (id: string, token: string) => {
 	const response = await axios.get(`${apiBaseUrl}/api/bookings/user/${id}`, {
