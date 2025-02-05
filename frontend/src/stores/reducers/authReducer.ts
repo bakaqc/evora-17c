@@ -17,6 +17,7 @@ type Action = {
 	data?: Payload;
 	token?: string;
 	msg?: string;
+	isLogin?: boolean;
 };
 
 const initState: AuthState = {
@@ -49,7 +50,7 @@ const authReducer = (
 		case actionTypes.LOGIN_SUCCESS:
 			return {
 				...state,
-				isLogin: true,
+				isLogin: action.isLogin ?? false,
 				token: action.token ?? null,
 				msg: 'Login successfully',
 			};
