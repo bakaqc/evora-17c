@@ -19,7 +19,7 @@ export class NotifiesService {
 
 	async sendPartyNotification(
 		notifyDto: NotifyDto,
-		template: 'welcome' | 'verifyOTP' | 'bookingSuccess',
+		template: 'welcome' | 'verifyOTP',
 	) {
 		const notification = new this.notifyModel(notifyDto);
 		await notification.save();
