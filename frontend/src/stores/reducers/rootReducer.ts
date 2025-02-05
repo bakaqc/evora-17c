@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 
 import authReducer from '@/stores/reducers/authReducer';
 import partyReducer from '@/stores/reducers/partyReducer';
+import userReducer, { User } from '@/stores/reducers/userReducer';
 import { Payload } from '@/utils/type';
 
 type AuthState = {
@@ -16,6 +17,11 @@ type AuthState = {
 	msgSuccess: string;
 	data: Payload;
 };
+
+interface UserState {
+	user: User;
+}
+
 const commonConfig = {
 	storage,
 	stateReconciler: autoMergeLevel2,
@@ -24,12 +30,19 @@ const commonConfig = {
 const authConfig = {
 	...commonConfig,
 	key: 'auth',
-	whitelist: ['isLoggedIn', 'token'],
+	whitelist: ['isLogin', 'token'],
+};
+
+const userConfig = {
+	...commonConfig,
+	key: 'user',
+	whitelist: ['user'],
 };
 
 const rootReducer = combineReducers({
 	auth: persistReducer<AuthState>(authConfig, authReducer),
 	party: partyReducer,
+	user: persistReducer<UserState>(userConfig, userReducer),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

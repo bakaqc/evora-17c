@@ -5,13 +5,15 @@ import { apiBaseUrl } from '@/utils/apiBase';
 const instance = axios.create({
 	baseURL: apiBaseUrl,
 });
-
-// Add a request interceptor
 instance.interceptors.request.use(
 	function (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
 		// Gắn token vào header
 		const authData = window.localStorage.getItem('persist:auth');
-		const token = authData && JSON.parse(authData)?.token?.slice(1, -1);
+		const token = authData
+			? JSON.parse(authData)?.token?.replace(/"/g, '')
+			: null;
+
+		console.log('Token trong header:', token);
 
 		if (config.headers) {
 			config.headers.authorization = token ? `Bearer ${token}` : null;
