@@ -39,7 +39,7 @@ const InputForLogin: React.FC<InputFieldProps> = ({
 				id={id}
 				className={`peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b ${
 					errorMsg ? 'border-red-500' : 'border-gray-300'
-				} outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300`}
+				} outline-none focus:ring-2 focus:ring-primary text-black dark:placeholder:text-neutral-300`}
 				value={value}
 				onChange={handleChange}
 				onFocus={() => {

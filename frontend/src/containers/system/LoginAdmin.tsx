@@ -1,12 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import hero from '@/assets/hero.jpg';
 import logo1 from '@/assets/logo1.png';
-import { ButtonForLogin } from '@/components';
-import LoginInputField from '@/components/commons/LoginInputField';
-import RegisterSection from '@/components/commons/RegisterSection';
-import RightColumn from '@/components/commons/RightColumn';
+import { ButtonForLogin, InputForLogin } from '@/components';
 import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
 import { RootState } from '@/stores/reducers/rootReducer';
@@ -27,73 +26,78 @@ const LoginAdmin: React.FC = () => {
 		password: '',
 	});
 	const [invalidField, setInvalidField] = useState<InvalidField[]>([]);
+
 	useEffect(() => {
 		if (isLoginAdmin) {
 			navigate('/quan-tri-vien');
 		}
 	}, [isLoginAdmin]);
+
 	const handleSubmit = async () => {
 		const invalid = validate(payload, setInvalidField);
-		if (invalid === 0) dispatch(actions.loginAdmin(payload));
+		if (invalid === 0) {
+			dispatch(actions.loginAdmin(payload));
+		}
 	};
 
 	return (
-		<section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
-			<div className="container max-w-5xl p-6">
-				<div className="flex flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
-					<div className="w-full">
-						<div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+		<section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-100 flex items-center justify-center">
+			<div className="container max-w-4xl">
+				<div className="flex flex-wrap items-center justify-center text-neutral-950">
+					<div className="w-50">
+						<div className="block rounded-lg bg-white shadow-lg">
 							<div className="g-0 lg:flex lg:flex-wrap">
-								{/* Left Column */}
-								<div className="px-6 py-8 md:px-8 lg:w-6/12">
+								{/* Cột Trái */}
+								<div className="flex items-center justify-center rounded-b-lg lg:w-4/6 lg:rounded-e-lg lg:rounded-bl-none">
+									<div className="h-100 relative">
+										<img
+											src={hero}
+											alt="Về Evora"
+											className="w-full h-full rounded-lg shadow-lg"
+										/>
+									</div>
+								</div>
+
+								{/* Cột Phải */}
+								<div className="px-6 py-8 md:px-8 lg:w-2/6">
 									<div className="text-center">
-										<img className="mx-auto w-36" src={logo1} alt="logo" />
-										<h4 className="mb-6 mt-4 text-xl font-semibold">
-											Login for Admin!
+										<img className="mx-auto w-20" src={logo1} alt="logo" />
+										<h4 className="mb-6 mt-4 text-xl font-semibold text-neutral-950">
+											Đăng nhập cho quản trị viên
 										</h4>
 									</div>
 
-									{/* Username and Password Fields */}
-									<LoginInputField
+									{/* Trường Email và Mật khẩu */}
+									<InputForLogin
 										id="email"
 										label="Email"
 										type="text"
 										invalidField={invalidField}
 										value={payload.email}
-										setValue={(value) =>
-											setPayload({ ...payload, email: value })
-										}
+										setValue={setPayload}
 										setInvalidField={setInvalidField}
 									/>
 
-									<LoginInputField
+									<InputForLogin
 										id="password"
-										label="Password"
+										label="Mật khẩu"
 										type="password"
 										invalidField={invalidField}
 										value={payload.password}
-										setValue={(value) =>
-											setPayload({ ...payload, password: value })
-										}
+										setValue={setPayload}
 										setInvalidField={setInvalidField}
 									/>
-									{/* Login Button */}
-									<div className="mb-6 text-center">
-										<ButtonForLogin label="Log in" onClick={handleSubmit} />
+									{/* Nút Đăng nhập */}
+									<div className="my-6 text-center">
+										<ButtonForLogin label="Đăng nhập" onClick={handleSubmit} />
 										<a
 											href="#!"
-											className="mt-2 inline-block text-sm text-primary"
+											className="my-2 inline-block text-xm text-primary text-gray-900"
 										>
-											Forgot password?
+											Quên mật khẩu?
 										</a>
 									</div>
-
-									{/* Register Section */}
-									<RegisterSection />
 								</div>
-
-								{/* Right Column */}
-								<RightColumn />
 							</div>
 						</div>
 					</div>
