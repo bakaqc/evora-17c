@@ -100,7 +100,7 @@ const List: React.FC<ListProps> = () => {
 					</button>
 				</form>
 			</div>
-			<div className="flex gap-4 my-5">
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-5">
 				{isLoading ? (
 					<p className="text-center w-full">Đang tải sự kiện...</p>
 				) : filteredParties?.length > 0 ? (
