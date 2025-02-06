@@ -102,7 +102,7 @@ const Item: React.FC<ItemProps> = ({
 								style: 'currency',
 								currency: 'VND',
 							}).format(basicOption.price)}{' '}
-							/ người
+							/ bàn tiệc
 						</span>
 					</p>
 				)}

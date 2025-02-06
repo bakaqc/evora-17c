@@ -14,7 +14,7 @@ const columns = [
 		key: 'eventName',
 	},
 	{
-		title: 'Số lượng khách',
+		title: 'Số lượng bàn tiệc',
 		dataIndex: 'guestCount',
 		key: 'guestCount',
 	},
