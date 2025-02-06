@@ -4,7 +4,6 @@ interface Option {
 	type: string;
 	price: number;
 }
-
 interface FormData {
 	user: string;
 	category: string;
@@ -15,7 +14,6 @@ interface FormData {
 	ratingTotal: number;
 	ratingCount: number;
 }
-
 const PartyForm: React.FC = () => {
 	const [formData, setFormData] = useState<FormData>({
 		user: '',
@@ -41,7 +39,6 @@ const PartyForm: React.FC = () => {
 			[name]: value,
 		}));
 	};
-
 	const handleOptionChange = (
 		index: number,
 		key: keyof Option,
@@ -75,8 +72,11 @@ const PartyForm: React.FC = () => {
 			<h2 className="text-2xl font-semibold text-center mb-6">Tạo sự kiện</h2>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
-					<label className="block font-medium mb-1">User:</label>
+					<label htmlFor="user" className="block font-medium mb-1">
+						User:
+					</label>
 					<input
+						id="user"
 						name="user"
 						value={formData.user}
 						onChange={handleChange}
@@ -84,10 +84,12 @@ const PartyForm: React.FC = () => {
 						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 					/>
 				</div>
-
 				<div>
-					<label className="block font-medium mb-1">Category:</label>
+					<label htmlFor="category" className="block font-medium mb-1">
+						Category:
+					</label>
 					<input
+						id="category"
 						name="category"
 						value={formData.category}
 						onChange={handleChange}
@@ -95,10 +97,12 @@ const PartyForm: React.FC = () => {
 						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 					/>
 				</div>
-
 				<div>
-					<label className="block font-medium mb-1">Title:</label>
+					<label htmlFor="title" className="block font-medium mb-1">
+						Title:
+					</label>
 					<input
+						id="title"
 						name="title"
 						value={formData.title}
 						onChange={handleChange}
@@ -106,10 +110,12 @@ const PartyForm: React.FC = () => {
 						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 					/>
 				</div>
-
 				<div>
-					<label className="block font-medium mb-1">Description:</label>
+					<label htmlFor="description" className="block font-medium mb-1">
+						Description:
+					</label>
 					<textarea
+						id="description"
 						name="description"
 						value={formData.description}
 						onChange={handleChange}
@@ -117,12 +123,12 @@ const PartyForm: React.FC = () => {
 						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 					/>
 				</div>
-
 				<div>
 					<label className="block font-medium mb-2">Options:</label>
 					{formData.options.map((option, index) => (
 						<div key={index} className="flex gap-2 mb-2">
 							<input
+								id={`option-type-${index}`}
 								value={option.type}
 								onChange={(e) =>
 									handleOptionChange(index, 'type', e.target.value)
@@ -131,6 +137,7 @@ const PartyForm: React.FC = () => {
 								className="w-1/2 p-2 border rounded-md focus:ring focus:ring-blue-300"
 							/>
 							<input
+								id={`option-price-${index}`}
 								type="number"
 								value={option.price}
 								onChange={(e) =>
@@ -142,11 +149,11 @@ const PartyForm: React.FC = () => {
 						</div>
 					))}
 				</div>
-
 				<div>
 					<label className="block font-medium mb-2">Photos:</label>
 					{formData.photos.map((photo, index) => (
 						<input
+							id={`photo-${index}`}
 							key={index}
 							value={photo}
 							onChange={(e) => handlePhotoChange(index, e.target.value)}
@@ -155,11 +162,13 @@ const PartyForm: React.FC = () => {
 						/>
 					))}
 				</div>
-
 				<div className="flex gap-4">
 					<div className="w-1/2">
-						<label className="block font-medium mb-1">Rating Total:</label>
+						<label htmlFor="ratingTotal" className="block font-medium mb-1">
+							Rating Total:
+						</label>
 						<input
+							id="ratingTotal"
 							name="ratingTotal"
 							type="number"
 							value={formData.ratingTotal}
@@ -168,10 +177,12 @@ const PartyForm: React.FC = () => {
 							className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 						/>
 					</div>
-
 					<div className="w-1/2">
-						<label className="block font-medium mb-1">Rating Count:</label>
+						<label htmlFor="ratingCount" className="block font-medium mb-1">
+							Rating Count:
+						</label>
 						<input
+							id="ratingCount"
 							name="ratingCount"
 							type="number"
 							value={formData.ratingCount}
@@ -181,7 +192,6 @@ const PartyForm: React.FC = () => {
 						/>
 					</div>
 				</div>
-
 				<button
 					type="submit"
 					className="w-full bg-blue-600 text-white font-semibold p-2 rounded-md hover:bg-blue-700 transition"
