@@ -205,4 +205,56 @@
     "$date": "2025-01-25T00:56:30.263Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a1bffbe96a355507c9781a"
+  },
+  "fullName": "Trang trí tổ chức sinh nhật Nini's Cake",
+  "email": "ninguyen17101997@gmail.com",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$l7zHvgO36ouy7d2ypEvy0A$rbiiWvPMp9AADATv7LP8qk9rbCwpa9vAHLPHUh0lFaQ",
+  "phoneNumber": "0392745482",
+  "address": "string",
+  "dateOfBirth": {
+    "$date": "1994-02-04T07:18:52.896Z"
+  },
+  "gender": "female",
+  "role": "admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1738653746/evora_k17/mzh84y2beokejng0wkha.jpg",
+  "createdAt": {
+    "$date": "2025-02-04T07:21:31.967Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-04T07:21:31.967Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67a1c120e96a355507c9781f"
+  },
+  "fullName": "MK Decor Quy Nhơn",
+  "email": "Phamhoangkien96@gmail.com",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$NYox6GDOgiq0HHyzrLNLZg$59W/NTbdq56hYL8MpqeorldID2ThX+hlwu50QILH7lo",
+  "phoneNumber": "0335316549",
+  "address": "259 Hoàng Văn Thụ, Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "1996-02-04T07:18:52.896Z"
+  },
+  "gender": "male",
+  "role": "admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1735439554/evora_k17/p28ey9bneyyukza4rt9q.jpg",
+  "createdAt": {
+    "$date": "2025-02-04T07:26:24.709Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-04T07:26:24.709Z"
+  },
+  "__v": 0
 }]
