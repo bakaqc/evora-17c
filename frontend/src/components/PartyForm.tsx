@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 
 interface Option {
+	id: string; 
 	type: string;
 	price: number;
 }
+
+interface Photo {
+	id: string; 
+	url: string;
+}
+
 interface FormData {
 	user: string;
 	category: string;
 	title: string;
 	description: string;
 	options: Option[];
-	photos: string[];
+	photos: Photo[];
 	ratingTotal: number;
 	ratingCount: number;
 }
+
 const PartyForm: React.FC = () => {
 	const [formData, setFormData] = useState<FormData>({
 		user: '',
@@ -21,11 +29,11 @@ const PartyForm: React.FC = () => {
 		title: '',
 		description: '',
 		options: [
-			{ type: 'Basic', price: 0 },
-			{ type: 'Premium', price: 0 },
-			{ type: 'VIP', price: 0 },
+			{ id: crypto.randomUUID(), type: 'Basic', price: 0 },
+			{ id: crypto.randomUUID(), type: 'Premium', price: 0 },
+			{ id: crypto.randomUUID(), type: 'VIP', price: 0 },
 		],
-		photos: [''],
+		photos: [{ id: crypto.randomUUID(), url: '' }],
 		ratingTotal: 0,
 		ratingCount: 0,
 	});
@@ -39,25 +47,21 @@ const PartyForm: React.FC = () => {
 			[name]: value,
 		}));
 	};
-	const handleOptionChange = (
-		index: number,
-		key: keyof Option,
-		value: string,
-	) => {
+
+	const handleOptionChange = (id: string, key: keyof Option, value: string) => {
 		setFormData((prev) => {
-			const updatedOptions = [...prev.options];
-			updatedOptions[index] = {
-				...updatedOptions[index],
-				[key]: key === 'price' ? Number(value) : value,
-			};
+			const updatedOptions = prev.options.map((option) =>
+				option.id === id ? { ...option, [key]: key === 'price' ? Number(value) : value } : option
+			);
 			return { ...prev, options: updatedOptions };
 		});
 	};
 
-	const handlePhotoChange = (index: number, value: string) => {
+	const handlePhotoChange = (id: string, value: string) => {
 		setFormData((prev) => {
-			const updatedPhotos = [...prev.photos];
-			updatedPhotos[index] = value;
+			const updatedPhotos = prev.photos.map((photo) =>
+				photo.id === id ? { ...photo, url: value } : photo
+			);
 			return { ...prev, photos: updatedPhotos };
 		});
 	};
@@ -125,41 +129,45 @@ const PartyForm: React.FC = () => {
 				</div>
 				<div>
 					<label className="block font-medium mb-2">Options:</label>
-					{formData.options.map((option, index) => (
-						<div key={index} className="flex gap-2 mb-2">
-							<input
-								id={`option-type-${index}`}
-								value={option.type}
-								onChange={(e) =>
-									handleOptionChange(index, 'type', e.target.value)
-								}
-								placeholder="Type"
-								className="w-1/2 p-2 border rounded-md focus:ring focus:ring-blue-300"
-							/>
-							<input
-								id={`option-price-${index}`}
-								type="number"
-								value={option.price}
-								onChange={(e) =>
-									handleOptionChange(index, 'price', e.target.value)
-								}
-								placeholder="Price"
-								className="w-1/2 p-2 border rounded-md focus:ring focus:ring-blue-300"
-							/>
+					{formData.options.map((option) => (
+						<div key={option.id} className="flex gap-2 mb-2">
+							<div className="w-1/2">
+								<label htmlFor={`option-type-${option.id}`} className="block font-medium"></label>
+								<input
+									id={`option-type-${option.id}`}
+									value={option.type}
+									onChange={(e) => handleOptionChange(option.id, 'type', e.target.value)}
+									placeholder="Type"
+									className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
+								/>
+							</div>
+							<div className="w-1/2">
+								<label htmlFor={`option-price-${option.id}`} className="block font-medium"></label>
+								<input
+									id={`option-price-${option.id}`}
+									type="number"
+									value={option.price}
+									onChange={(e) => handleOptionChange(option.id, 'price', e.target.value)}
+									placeholder="Price"
+									className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
+								/>
+							</div>
 						</div>
 					))}
 				</div>
 				<div>
-					<label className="block font-medium mb-2">Photos:</label>
-					{formData.photos.map((photo, index) => (
-						<input
-							id={`photo-${index}`}
-							key={index}
-							value={photo}
-							onChange={(e) => handlePhotoChange(index, e.target.value)}
-							placeholder="Photo URL"
-							className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 mb-2"
-						/>
+					<label className="block font-medium mb-2"></label>
+					{formData.photos.map((photo) => (
+						<div key={photo.id} className="mb-2">
+							<label htmlFor={`photo-${photo.id}`} className="block font-medium">Photo URL:</label>
+							<input
+								id={`photo-${photo.id}`}
+								value={photo.url}
+								onChange={(e) => handlePhotoChange(photo.id, e.target.value)}
+								placeholder="Photo URL"
+								className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
+							/>
+						</div>
 					))}
 				</div>
 				<div className="flex gap-4">
@@ -192,10 +200,7 @@ const PartyForm: React.FC = () => {
 						/>
 					</div>
 				</div>
-				<button
-					type="submit"
-					className="w-full bg-blue-600 text-white font-semibold p-2 rounded-md hover:bg-blue-700 transition"
-				>
+				<button type="submit" className="w-full bg-blue-600 text-white font-semibold p-2 rounded-md hover:bg-blue-700 transition">
 					Submit
 				</button>
 			</form>
