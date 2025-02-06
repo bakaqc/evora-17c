@@ -321,7 +321,7 @@ const PartyDetail: React.FC<PartyDetailProps> = ({ id }) => {
 							marginBottom: '20px',
 						}}
 					>
-						{party.description}
+						<span dangerouslySetInnerHTML={{ __html: party.description }} />
 					</Paragraph>
 
 					{/* Ratings */}
