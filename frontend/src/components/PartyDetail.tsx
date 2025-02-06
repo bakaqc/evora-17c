@@ -184,9 +184,9 @@ const RegistrationForm: React.FC = () => {
 							style={{ display: 'inline-block', width: '100%' }}
 						>
 							<Select>
-								<Select.Option value="basic">Cơ bản</Select.Option>
-								<Select.Option value="premium">Cao cấp</Select.Option>
-								<Select.Option value="vip">VIP</Select.Option>
+								<Select.Option value="basic">Gói Cơ bản</Select.Option>
+								<Select.Option value="premium">Gói Nâng cao</Select.Option>
+								<Select.Option value="vip">Gói Cao cấp</Select.Option>
 							</Select>
 						</Form.Item>
 					</Col>
