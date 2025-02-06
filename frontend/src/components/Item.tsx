@@ -108,8 +108,7 @@ const Item: React.FC<ItemProps> = ({
 				)}
 				{/* Owner Info */}
 				<p className="text-base text-gray-600">
-					Đơn vị tổ chức:{' '}
-					<span className="font-semibold text-gray-800">
+					<span className="font-bold text-orange-500 text-lg">
 						{owner ? owner.fullName : 'Đang cập nhật...'}
 					</span>
 				</p>

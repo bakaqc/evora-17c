@@ -357,7 +357,7 @@ const PartyDetail: React.FC<PartyDetailProps> = ({ id }) => {
 								/>
 							</Col>
 							<Col flex="auto" style={{ marginLeft: '20px' }}>
-								<Title level={4}>Đơn vị {owner?.fullName}</Title>
+								<Title level={4}>{owner?.fullName}</Title>
 								<Paragraph
 									style={{ color: '#555', fontSize: '18px', margin: 0 }}
 								>
