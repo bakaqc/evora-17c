@@ -8,6 +8,7 @@ import { IoMailOpenOutline } from 'react-icons/io5';
 import { PiMoneyWavyLight } from 'react-icons/pi';
 import { RiAdminLine, RiUserLine } from 'react-icons/ri';
 import { TbPlayerTrackNext, TbPlayerTrackPrev } from 'react-icons/tb';
+import { VscHistory } from 'react-icons/vsc';
 
 const icons = {
 	FiUserPlus,
@@ -27,5 +28,6 @@ const icons = {
 	TbPlayerTrackNext,
 	FaLocationDot,
 	PiMoneyWavyLight,
+	VscHistory,
 };
 export default icons;
