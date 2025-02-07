@@ -19,7 +19,7 @@ export const path = {
 	// Path for admin
 	ADMINPAGE: '/',
 	LOGIN_ADMIN: '/dang-nhap',
-	LISTUSER: 'danh-sach-nguoi-dung',
+	LISTUSER: '/danh-sach-nguoi-dung',
 	LISTBOOKING: '/danh-sach-dat-tiec',
 	LISTPARTIES: '/danh-sach-bua-tiec',
 	LISTVOUCHERS: '/danh-sach-ma-giam-gia',
