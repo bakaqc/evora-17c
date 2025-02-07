@@ -21,7 +21,7 @@ const Item: React.FC<ItemProps> = ({
 	category,
 }) => {
 	return (
-		<div className="w-[275px] max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
+		<div className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl">
 			<div className="relative w-full h-64">
 				<img src={image} alt="Event" className="w-full h-full object-cover" />
 				<div className="absolute inset-0 bg-black opacity-40"></div>
