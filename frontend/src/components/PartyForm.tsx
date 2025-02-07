@@ -78,11 +78,8 @@ const PartyForm: React.FC = () => {
 			<h2 className="text-2xl font-semibold text-center mb-6">Tạo sự kiện</h2>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
-					<label htmlFor="user" className="block font-medium mb-1">
-						User:
-					</label>
+					<span className="block font-medium mb-1">User:</span>
 					<input
-						id="user"
 						name="user"
 						value={formData.user}
 						onChange={handleChange}
@@ -91,11 +88,8 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<label htmlFor="category" className="block font-medium mb-1">
-						Category:
-					</label>
+					<span className="block font-medium mb-1">Category:</span>
 					<input
-						id="category"
 						name="category"
 						value={formData.category}
 						onChange={handleChange}
@@ -104,11 +98,8 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<label htmlFor="title" className="block font-medium mb-1">
-						Title:
-					</label>
+					<span className="block font-medium mb-1">Title:</span>
 					<input
-						id="title"
 						name="title"
 						value={formData.title}
 						onChange={handleChange}
@@ -117,11 +108,8 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<label htmlFor="description" className="block font-medium mb-1">
-						Description:
-					</label>
+					<span className="block font-medium mb-1">Description:</span>
 					<textarea
-						id="description"
 						name="description"
 						value={formData.description}
 						onChange={handleChange}
@@ -130,16 +118,12 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<label className="block font-medium mb-2">Options:</label>
+					<span className="block font-medium mb-2">Options:</span>
 					{formData.options.map((option) => (
 						<div key={option.id} className="flex gap-2 mb-2">
 							<div className="w-1/2">
-								<label
-									htmlFor={`option-type-${option.id}`}
-									className="block font-medium"
-								></label>
+								<span className="block font-medium"></span>
 								<input
-									id={`option-type-${option.id}`}
 									value={option.type}
 									onChange={(e) =>
 										handleOptionChange(option.id, 'type', e.target.value)
@@ -149,12 +133,8 @@ const PartyForm: React.FC = () => {
 								/>
 							</div>
 							<div className="w-1/2">
-								<label
-									htmlFor={`option-price-${option.id}`}
-									className="block font-medium"
-								></label>
+								<span className="block font-medium"></span>
 								<input
-									id={`option-price-${option.id}`}
 									type="number"
 									value={option.price}
 									onChange={(e) =>
@@ -168,15 +148,11 @@ const PartyForm: React.FC = () => {
 					))}
 				</div>
 				<div>
-					<label className="block font-medium mb-2">Photos:</label>
+					<span className="block font-medium mb-2"></span>
 					{formData.photos.map((photo) => (
 						<div key={photo.id} className="mb-2">
-							<label
-								htmlFor={`photo-${photo.id}`}
-								className="block font-medium"
-							></label>
+							<span className="block font-medium">Photo URL:</span>
 							<input
-								id={`photo-${photo.id}`}
 								value={photo.url}
 								onChange={(e) => handlePhotoChange(photo.id, e.target.value)}
 								placeholder="Photo URL"
@@ -187,11 +163,8 @@ const PartyForm: React.FC = () => {
 				</div>
 				<div className="flex gap-4">
 					<div className="w-1/2">
-						<label htmlFor="ratingTotal" className="block font-medium mb-1">
-							Rating Total:
-						</label>
+						<span className="block font-medium mb-1">Rating Total:</span>
 						<input
-							id="ratingTotal"
 							name="ratingTotal"
 							type="number"
 							value={formData.ratingTotal}
@@ -201,11 +174,8 @@ const PartyForm: React.FC = () => {
 						/>
 					</div>
 					<div className="w-1/2">
-						<label htmlFor="ratingCount" className="block font-medium mb-1">
-							Rating Count:
-						</label>
+						<span className="block font-medium mb-1">Rating Count:</span>
 						<input
-							id="ratingCount"
 							name="ratingCount"
 							type="number"
 							value={formData.ratingCount}
