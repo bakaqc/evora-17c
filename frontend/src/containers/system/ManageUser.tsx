@@ -20,7 +20,6 @@ const ManageUser: React.FC = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [searchText, setSearchText] = useState<string>('');
 
-	// Hàm lấy danh sách người dùng
 	const { token } = useSelector((state: RootState) => state.auth);
 	console.log(token);
 	const fetchUsers = async () => {
