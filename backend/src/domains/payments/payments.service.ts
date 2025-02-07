@@ -29,7 +29,8 @@ export class PaymentsService {
 		this.logger.log('Payment created');
 
 		await this.bookingModel.findByIdAndUpdate(createPaymentDto.booking, {
-			$push: { payments: newPayment._id, status: 'APPROVED' },
+			$push: { payments: newPayment._id },
+			$set: { status: 'APPROVED' },
 		});
 
 		await newPayment.save();

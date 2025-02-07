@@ -39,7 +39,7 @@ const Select: React.FC<SelectProps> = ({
 						}
 					}
 				}}
-				className="peer block w-full appearance-none rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:bg-neutral-800 dark:placeholder:text-neutral-300"
+				className="peer block w-full appearance-none rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-black  dark:placeholder:text-neutral-300"
 			>
 				{options?.map((item) => (
 					<option key={item.value} value={item.value}>

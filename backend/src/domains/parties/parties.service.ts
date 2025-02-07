@@ -204,6 +204,8 @@ export class PartiesService {
 	async update(id: string, updatePartyDto: UpdatePartyDto) {
 		const currentParty = await this.partyModel.findById(id);
 
+		this.logger.debug(`Updating party with ID ${id}`, updatePartyDto);
+
 		if (!currentParty) {
 			this.logger.error(`Party with ID ${id} not found!`);
 			throw new NotFoundException('Party not found');
@@ -230,7 +232,7 @@ export class PartiesService {
 
 		const updatedParty = await this.partyModel.findByIdAndUpdate(
 			id,
-			currentParty,
+			updatePartyDto,
 			{ new: true },
 		);
 

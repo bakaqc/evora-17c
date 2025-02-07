@@ -20,6 +20,7 @@ const RegisterUser: React.FC = () => {
 		name: string;
 		msg: string;
 	}
+
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useDispatch();
 	const [payload, setPayload] = useState<Payload>({
@@ -37,6 +38,7 @@ const RegisterUser: React.FC = () => {
 		{ code: 'Nam', value: 'male' },
 		{ code: 'Nữ', value: 'female' },
 	];
+
 	const handleSubmit = async () => {
 		if (payload.password !== rePassword) {
 			setInvalidField((prev) => [
@@ -51,24 +53,25 @@ const RegisterUser: React.FC = () => {
 			navigate(path.VERIFY_OTP);
 		}
 	};
+
 	return (
-		<section className="gradient-form h-screen bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
-			<div className="container max-w-5xl p-6">
-				<div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+		<section className="gradient-form h-screen bg-neutral-200 light:bg-neutral-700 flex items-center justify-center">
+			<div className="container max-w-5xl p-6 flex items-center justify-center">
+				<div className="w-[50%] block rounded-lg bg-white shadow-lg light:bg-neutral-800">
 					<div className="text-center py-8">
 						<img className="mx-auto w-36" src={logo1} alt="logo" />
 						<h4 className="mt-4 text-xl font-semibold">
-							Register for a New Account
+							Đăng ký tài khoản mới
 						</h4>
 					</div>
 
 					<div className="lg:flex lg:justify-between px-6">
 						{/* Left Column */}
-						<div className="lg:w-6/12 lg:pr-3">
+						<div className="lg:w-6/12 lg:pr-3 mb-6 lg:mb-0">
 							{/* Full Name Input */}
 							<InputField
 								id="fullName"
-								label="Full Name"
+								label="Họ và tên"
 								type="text"
 								invalidField={invalidField}
 								value={payload.fullName}
@@ -90,7 +93,7 @@ const RegisterUser: React.FC = () => {
 							{/* Phone Number Input */}
 							<InputField
 								id="phoneNumber"
-								label="Phone"
+								label="Số điện thoại"
 								type="text"
 								invalidField={invalidField}
 								value={payload.phoneNumber}
@@ -101,7 +104,7 @@ const RegisterUser: React.FC = () => {
 							{/* Date of Birth Input */}
 							<InputField
 								id="dateOfBirth"
-								label="Day of Birth"
+								label="Ngày sinh"
 								type="date"
 								invalidField={invalidField}
 								value={payload.dateOfBirth ? payload.dateOfBirth : ''}
@@ -115,35 +118,38 @@ const RegisterUser: React.FC = () => {
 							{/* Address Input */}
 							<InputField
 								id="address"
-								label="Address"
+								label="Địa chỉ"
 								type="text"
 								invalidField={invalidField}
 								value={payload.address}
 								setValue={setPayload}
 								setInvalidField={setInvalidField}
 							/>
+
 							{/* Gender Select */}
 							<Select
-								label="Gender"
+								label="Giới tính"
 								options={gender}
 								value={payload.gender}
 								setValue={setPayload}
 								name="gender"
 							/>
+
 							{/* Password Input */}
 							<InputField
 								id="password"
-								label="Password"
+								label="Mật khẩu"
 								type="password"
 								invalidField={invalidField}
 								value={payload.password}
 								setValue={setPayload}
 								setInvalidField={setInvalidField}
 							/>
+
 							{/* Re-Password Input */}
 							<InputForRepass
 								id="re-password"
-								label="Nhập lại Mật khẩu"
+								label="Nhập lại mật khẩu"
 								type="password"
 								value={rePassword}
 								setValue={setRePassword}
@@ -153,16 +159,16 @@ const RegisterUser: React.FC = () => {
 						</div>
 					</div>
 
-					<div className="text-center py-6">
-						<ButtonForLogin label="Register" onClick={handleSubmit} />
+					<div className="text-center p-6">
+						<ButtonForLogin label="Đăng ký" onClick={handleSubmit} />
 
 						<div className="mt-4 flex items-center justify-center gap-2">
-							<p className="text-sm">Already have an account?</p>
+							<p className="text-sm">Đã có tài khoản?</p>
 							<NavLink
 								to={path.LOGIN_USER}
 								className="mt-2 rounded border border-blue-500 px-4 py-2 text-sm text-blue-500 hover:bg-blue-50"
 							>
-								Log in
+								Đăng nhập
 							</NavLink>
 						</div>
 					</div>

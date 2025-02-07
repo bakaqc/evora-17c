@@ -14,7 +14,7 @@ const columns = [
 		key: 'eventName',
 	},
 	{
-		title: 'Số lượng khách',
+		title: 'Số lượng bàn tiệc',
 		dataIndex: 'guestCount',
 		key: 'guestCount',
 	},
@@ -68,40 +68,53 @@ const determineProgress = (status: string, organizeDate: Date) => {
 };
 
 const PaymentHistory: React.FC = () => {
-	const [data, setData] = useState([]);
-	const userId = '67668671dc51e039cfa171c2';
+	interface TableData {
+		key: number;
+		eventName: string;
+		guestCount: number;
+		organizedAt: string;
+		organizeDate: string;
+		status: string;
+		progress: string;
+	}
+
+	const [data, setData] = useState<TableData[]>([]);
 	const { token } = useSelector((state: RootState) => state.auth);
+	const { user } = useSelector((state: RootState) => state.user);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				if (token) {
-					const bookingsResponse = await apiGetBookingByUserId(userId, token);
+					const bookingsResponse = await apiGetBookingByUserId(user._id, token);
 					const bookings = bookingsResponse.data;
 
-					const tableData = bookings.map((booking: any, index: number) => {
-						const organizeDate = new Date(booking.organizeDate);
-						const party = apiGetPartyById(booking.party);
-						const partyPromise = party.then((response) => response.data.title);
-						console.log(partyPromise);
-						return {
-							key: index,
-							eventName: partyPromise,
-							guestCount: booking.guestCount,
-							organizedAt: booking.organizedAt,
-							organizeDate: new Intl.DateTimeFormat('vi-VN', {
-								year: 'numeric',
-								month: '2-digit',
-								day: '2-digit',
-								hour: '2-digit',
-								minute: '2-digit',
-								second: '2-digit',
-								timeZone: 'Asia/Ho_Chi_Minh',
-							}).format(organizeDate),
-							status: translateStatus(booking.status),
-							progress: determineProgress(booking.status, organizeDate),
-						};
-					});
+					const tableData = await Promise.all(
+						bookings.map(async (booking: any, index: number) => {
+							const organizeDate = new Date(booking.organizeDate);
+							const party = apiGetPartyById(booking.party);
+							const response = await party;
+							const partyTitle = response.data.title;
+							console.log('party data', partyTitle);
+							return {
+								key: index,
+								eventName: partyTitle,
+								guestCount: booking.guestCount,
+								organizedAt: booking.organizedAt,
+								organizeDate: new Intl.DateTimeFormat('vi-VN', {
+									year: 'numeric',
+									month: '2-digit',
+									day: '2-digit',
+									hour: '2-digit',
+									minute: '2-digit',
+									second: '2-digit',
+									timeZone: 'Asia/Ho_Chi_Minh',
+								}).format(organizeDate),
+								status: translateStatus(booking.status),
+								progress: determineProgress(booking.status, organizeDate),
+							};
+						}),
+					);
 
 					setData(tableData);
 				} else {
@@ -113,7 +126,7 @@ const PaymentHistory: React.FC = () => {
 		};
 
 		fetchData();
-	}, [userId]);
+	}, [user._id, token]);
 
 	return (
 		<div className="w-full my-3">

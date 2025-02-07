@@ -67,8 +67,13 @@ const RegistrationForm: React.FC = () => {
 		console.log(selectedOption);
 		const price = selectedOption ? selectedOption.price : 0;
 		const amount = price * guestCount;
+		const formattedAmount = new Intl.NumberFormat('vi-VN', {
+			style: 'currency',
+			currency: 'VND',
+		}).format(amount);
+
 		setTotalAmount(amount);
-		form.setFieldsValue({ totalAmount: amount });
+		form.setFieldsValue({ totalAmount: formattedAmount });
 	};
 
 	// Hàm xử lý khi thay đổi form
@@ -197,7 +202,7 @@ const RegistrationForm: React.FC = () => {
 						onChange={(date) => form.setFieldsValue({ eventTime: date })}
 					/>
 				</Form.Item>
-				<Row gutter={16}>
+				<Row gutter={24}>
 					<Col span={12}>
 						<Form.Item
 							label="Gói dịch vụ"
@@ -208,16 +213,17 @@ const RegistrationForm: React.FC = () => {
 							style={{ display: 'inline-block', width: '100%' }}
 						>
 							<Select>
-								<Select.Option value="basic">Cơ bản</Select.Option>
-								<Select.Option value="premium">Cao cấp</Select.Option>
-								<Select.Option value="vip">VIP</Select.Option>
+								<Select.Option value="basic">Gói Cơ bản</Select.Option>
+								<Select.Option value="premium">Gói Nâng cao</Select.Option>
+								<Select.Option value="vip">Gói Cao cấp</Select.Option>
 							</Select>
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item
-							label="Số lượng khách"
+							label="Số lượng bàn tiệc"
 							name="guestCount"
+							initialValue={1}
 							rules={[
 								{ required: true, message: 'Vui lòng nhập số lượng khách!' },
 							]}
@@ -228,11 +234,11 @@ const RegistrationForm: React.FC = () => {
 					</Col>
 				</Row>
 				<Form.Item label="Tổng số tiền" name="totalAmount">
-					<Input value={totalAmount} disabled />
+					<Input value={totalAmount} readOnly />
 				</Form.Item>
 				<Form.Item style={{ textAlign: 'center', width: '100%' }}>
 					<Button type="primary" htmlType="submit">
-						Đăng ký
+						Đặt tiệc ngay
 					</Button>
 				</Form.Item>
 			</Form>
@@ -344,7 +350,7 @@ const PartyDetail: React.FC<PartyDetailProps> = ({ id }) => {
 							marginBottom: '20px',
 						}}
 					>
-						{party.description}
+						<span dangerouslySetInnerHTML={{ __html: party.description }} />
 					</Paragraph>
 
 					{/* Ratings */}
@@ -380,7 +386,7 @@ const PartyDetail: React.FC<PartyDetailProps> = ({ id }) => {
 								/>
 							</Col>
 							<Col flex="auto" style={{ marginLeft: '20px' }}>
-								<Title level={4}>Đơn vị {owner?.fullName}</Title>
+								<Title level={4}>{owner?.fullName}</Title>
 								<Paragraph
 									style={{ color: '#555', fontSize: '18px', margin: 0 }}
 								>
@@ -447,7 +453,7 @@ const PartyDetail: React.FC<PartyDetailProps> = ({ id }) => {
 													style: 'currency',
 													currency: 'VND',
 												}).format(option.price)}{' '}
-												/ người
+												/ bàn tiệc
 											</Text>
 										}
 									/>
