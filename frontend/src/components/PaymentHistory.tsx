@@ -116,7 +116,7 @@ const PaymentHistory: React.FC = () => {
 						}),
 					);
 
-					setData(tableData);
+					setData(tableData.reverse());
 				} else {
 					console.error('Token is null');
 				}
