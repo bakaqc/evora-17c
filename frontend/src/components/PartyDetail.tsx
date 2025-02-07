@@ -24,6 +24,7 @@ import { useParams } from 'react-router-dom';
 
 import { User } from '@/schemas/user.schema';
 import { apiCreateBooking } from '@/services/booking';
+import { apiSendNotifies } from '@/services/notifies';
 import { Party, apiGetPartyById } from '@/services/party';
 import { apiCreatePayment } from '@/services/payment';
 import { apiGetUser } from '@/services/user';
@@ -40,7 +41,6 @@ const RegistrationForm: React.FC = () => {
 	const [form] = Form.useForm();
 	const [totalAmount, setTotalAmount] = useState<number>(0);
 	const [party, setParty] = useState<Party | null>(null);
-
 	const { id } = useParams<{ id: string }>();
 	const safeId: string = id ?? '';
 	useEffect(() => {
@@ -104,11 +104,40 @@ const RegistrationForm: React.FC = () => {
 				originPrice: totalAmount,
 				finalPrice: totalAmount,
 			};
-			console.log(newPaymentPayload);
 			const paymentResponse = await apiCreatePayment(newPaymentPayload);
-
+			const notifiesPayload = {
+				notifyDto: {
+					users: [user._id],
+					title: 'Chúc mừng bạn đã đặt tiệc thành công!',
+					message: `
+      <h1>📌 EVORA - XÁC NHẬN ĐẶT TIỆC 🎉</h1>
+        <p class="content">Kính gửi <strong>${user.fullName}</strong>,</p>        
+        <div class="info">
+            <p><strong>📅 Thông tin đơn hàng của bạn:</strong></p>
+            <ul>
+                <li><strong>Tên sự kiện:</strong> ${party?.category}</li>
+                <li><strong>Ngày tổ chức:</strong> ${newBookingPayload.organizeDate}</li>
+                <li><strong>Địa điểm:</strong> ${newBookingPayload.organizedAt}</li>
+                <li><strong>Tổng chi phí:</strong> ${totalAmount} VNĐ</li>
+            </ul>
+        </div>
+        <p class="content">Chúng tôi sẽ liên hệ bạn trước ngày sự kiện để xác nhận chi tiết lần cuối.</p>
+        <p class="content">💖 <strong>Evora cam kết mang đến trải nghiệm tốt nhất với:</strong></p>
+        <ul>
+            <li>✔️ Dịch vụ tận tâm, chuyên nghiệp</li>
+            <li>✔️ Chất lượng đảm bảo, giá cả hợp lý</li>
+        </ul>
+        
+        <p class="content">📢 Nếu có bất kỳ thay đổi hoặc yêu cầu đặc biệt, vui lòng liên hệ hotline <strong>0123456789</strong> hoặc phản hồi email này.</p>
+        
+        <p class="footer">&copy; 2024 EVORA. Tất cả quyền được bảo lưu.</p>
+    `,
+				},
+				template: 'custom',
+			};
 			if (paymentResponse?.payment_url) {
 				window.location.href = paymentResponse.payment_url;
+				await apiSendNotifies(notifiesPayload);
 			} else {
 				console.error('Không nhận được URL thanh toán hợp lệ.');
 			}
