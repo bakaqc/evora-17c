@@ -115,28 +115,31 @@ const RegistrationForm: React.FC = () => {
 					users: [user._id],
 					title: 'Chúc mừng bạn đã đặt tiệc thành công!',
 					message: `
-      <h1>📌 EVORA - XÁC NHẬN ĐẶT TIỆC 🎉</h1>
-        <p class="content">Kính gửi <strong>${user.fullName}</strong>,</p>        
-        <div class="info">
-            <p><strong>📅 Thông tin đơn hàng của bạn:</strong></p>
-            <ul>
-                <li><strong>Tên sự kiện:</strong> ${party?.title}</li>
-                <li><strong>Ngày tổ chức:</strong> ${newBookingPayload.organizeDate}</li>
-                <li><strong>Địa điểm:</strong> ${newBookingPayload.organizedAt}</li>
-                <li><strong>Tổng chi phí:</strong> ${totalAmount} VNĐ</li>
-            </ul>
-        </div>
-        <p class="content">Chúng tôi sẽ liên hệ bạn trước ngày sự kiện để xác nhận chi tiết lần cuối.</p>
-        <p class="content">💖 <strong>Evora cam kết mang đến trải nghiệm tốt nhất với:</strong></p>
-        <ul>
-            <li>✔️ Dịch vụ tận tâm, chuyên nghiệp</li>
-            <li>✔️ Chất lượng đảm bảo, giá cả hợp lý</li>
-        </ul>
-        
-        <p class="content">📢 Nếu có bất kỳ thay đổi hoặc yêu cầu đặc biệt, vui lòng liên hệ hotline <strong>0123456789</strong> hoặc phản hồi email này.</p>
-        
-        <p class="footer">&copy; 2024 EVORA. Tất cả quyền được bảo lưu.</p>
-    `,
+		<h1>📌 EVORA - XÁC NHẬN ĐẶT TIỆC 🎉</h1>
+		<p class="content">Kính gửi <strong>${user.fullName}</strong>,</p>        
+		<div class="info">
+			<p><strong>📅 Thông tin đơn hàng của bạn:</strong></p>
+			<ul>
+				<li><strong>Tên sự kiện:</strong> ${party?.title}</li>
+				<li><strong>Ngày tổ chức:</strong> ${newBookingPayload.organizeDate}</li>
+				<li><strong>Địa điểm:</strong> ${newBookingPayload.organizedAt}</li>
+				<li><strong>Tổng chi phí:</strong> ${new Intl.NumberFormat('vi-VN', {
+					style: 'currency',
+					currency: 'VND',
+				}).format(totalAmount)}</li>
+			</ul>
+		</div>
+		<p class="content">Chúng tôi sẽ liên hệ bạn trước ngày sự kiện để xác nhận chi tiết lần cuối.</p>
+		<p class="content">💖 <strong>Evora cam kết mang đến trải nghiệm tốt nhất với:</strong></p>
+		<ul>
+			<li>✔️ Dịch vụ tận tâm, chuyên nghiệp</li>
+			<li>✔️ Chất lượng đảm bảo, giá cả hợp lý</li>
+		</ul>
+		
+		<p class="content">📢 Nếu có bất kỳ thay đổi hoặc yêu cầu đặc biệt, vui lòng liên hệ hotline <strong>038 389 8281</strong> hoặc phản hồi email này.</p>
+		
+		<p class="footer">&copy; 2024 EVORA. Tất cả quyền được bảo lưu.</p>
+	`,
 				},
 				template: 'custom',
 			};
