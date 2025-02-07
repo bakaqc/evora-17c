@@ -29,9 +29,15 @@ export const getUsers = async (
 		};
 	} catch (error) {
 		console.error('API Error:', error);
+		if (error instanceof Error) {
+			return {
+				success: false,
+				message: error.message,
+			};
+		}
 		return {
 			success: false,
-			message: error.response?.data?.message || error.message,
+			message: 'An unknown error occurred',
 		};
 	}
 };
