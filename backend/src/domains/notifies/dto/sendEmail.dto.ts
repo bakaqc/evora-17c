@@ -10,6 +10,6 @@ export class SendEmailDto {
 
 	@ApiProperty({ description: 'Notify template' })
 	@IsString()
-	@IsIn(['welcome', 'verifyOTP', 'bookingSuccess'])
-	template: 'welcome' | 'verifyOTP' | 'bookingSuccess';
+	@IsIn(['welcome', 'verifyOTP', 'custom'])
+	template: 'welcome' | 'verifyOTP' | 'custom';
 }

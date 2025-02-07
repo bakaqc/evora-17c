@@ -262,8 +262,11 @@ const PartyDetail: React.FC<PartyDetailProps> = ({ id }) => {
 
 	if (!party) {
 		return (
-			<div style={{ textAlign: 'center', marginTop: '50px', color: '#555' }}>
-				Không tìm thấy sự kiện.
+			<div
+				className="my-5"
+				style={{ textAlign: 'center', marginTop: '50px', color: '#555' }}
+			>
+				Đang tải thông tin sự kiện...
 			</div>
 		);
 	}

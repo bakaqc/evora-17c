@@ -1,0 +1,208 @@
+[{
+  "_id": {
+    "$oid": "676c0edde30f879dc1964fef"
+  },
+  "fullName": "Đinh Quốc Chương",
+  "email": "chuongdqqe170097@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$n5KBHZ2Jz9cJXjob+LyJXA$vYbjgGFmhRkPmYjAyMsdK/xQKvTBmaQluGxn8nFjqpI",
+  "phoneNumber": "0763707144",
+  "address": "179 Đường Hoàng Văn Thụ, Phường Ngô Mây, Tp Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "2003-01-01T00:00:00.000Z"
+  },
+  "gender": "male",
+  "avatar": "https://avatars.githubusercontent.com/u/126387856?v=4",
+  "role": "super-admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "createdAt": {
+    "$date": "2024-12-25T13:55:41.969Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-25T14:23:22.914Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67943208f295f27df898ef16"
+  },
+  "fullName": "Tô Thế Vĩ",
+  "email": "vittqe170234@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$MzA3PvN9phc8VDR+kEZOCQ$fVOpqKVeZhbDONbj6UeDgVn3scDJNEuKiIZ2S/DnO1Y",
+  "phoneNumber": "0867438577",
+  "address": "Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "2003-01-10T00:33:02.615Z"
+  },
+  "gender": "male",
+  "role": "super-admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1735439554/evora_k17/p28ey9bneyyukza4rt9q.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:36:24.311Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:36:24.311Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67943244f295f27df898ef19"
+  },
+  "fullName": "Lê Phước Thắng",
+  "email": "thanglpqe170122@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$1OwkHvoiIM1LEHgmGC37zQ$5/RcQPHmmHyKTnUpC9RvAxsS7wkEU3PhheNO56EcRqM",
+  "phoneNumber": "0362028005",
+  "address": "Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "2003-01-10T00:33:02.615Z"
+  },
+  "gender": "male",
+  "role": "super-admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1737765151/evora_k17/ttgyga2ia6ybbaaru9ml.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:37:24.249Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:37:24.249Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679432c3f295f27df898ef1c"
+  },
+  "fullName": "Võ Nguyễn Quỳnh Hoa",
+  "email": "hoavnqqs170120@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$xKmjYFBxB08Hici8CFavUg$CkY2R1Cm+Tiqvufp3GMbctWEOgl5bbwe7IdVzQ9QkZA",
+  "phoneNumber": "0383898281",
+  "address": "Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "2003-01-10T00:33:02.615Z"
+  },
+  "gender": "female",
+  "role": "super-admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1737765150/evora_k17/jzzgv8yorhrizfadvtqo.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:39:31.177Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:39:31.177Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67943303f295f27df898ef1f"
+  },
+  "fullName": "Nguyễn Thị Thanh Huyền",
+  "email": "huyennttqs170122@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$xNTuzh3zE3lL0Ihuc2y65A$bMk/Iw1xTMu+crIoNc/nPJ4h5os5QUso44XJBBzGwSg",
+  "phoneNumber": "0338266519",
+  "address": "Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "2003-01-10T00:33:02.615Z"
+  },
+  "gender": "female",
+  "role": "super-admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1737765150/evora_k17/da3f0pccauev2caipgyx.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:40:35.335Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:40:35.335Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67943332f295f27df898ef22"
+  },
+  "fullName": "Phạm Ngọc Trâm",
+  "email": "trampnqe170131@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$oEe91WiCSVm/GNlM/iv68Q$kcbFtLcFfRKD+TG30g1Lrh4QgzqCu8xrRMcLb2PBHmc",
+  "phoneNumber": "0869948253",
+  "address": "Quy Nhơn, Bình Định",
+  "dateOfBirth": {
+    "$date": "2003-01-10T00:33:02.615Z"
+  },
+  "gender": "female",
+  "role": "super-admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1737765150/evora_k17/kx7bhbbsijn5oscgtygx.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:41:22.541Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:41:22.541Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679435ecf295f27df898ef25"
+  },
+  "fullName": "DV Đồ Cúng Trọn Gói Phước Huy - Quy Nhơn",
+  "email": "docungphuochuy@gmail.com",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$VSvzIkqyAsy+HQ9zXFPTAw$VEoaakbebLGVjMmDNCsBIbiJDIlKUV6ILWfvndvBnyQ",
+  "phoneNumber": "0388607753",
+  "address": "306/13A Hoàng Văn Thụ, Quy Nhon, Bình Định, Việt Nam",
+  "dateOfBirth": {
+    "$date": "1990-01-10T00:33:02.615Z"
+  },
+  "gender": "male",
+  "role": "admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1737766165/evora_k17/h4us8kwhiconlazgugik.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:53:00.934Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:53:00.934Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679436bef295f27df898ef28"
+  },
+  "fullName": "Trang trí cưới Quy Nhơn - NHƯ Ý Wedding Decor",
+  "email": "nguyennoo369@gmail.com",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$nhCDMRcPm6+tyRzQ9MBjRg$dgLF2gXbYudHOoX4WPkB+sAfBe5q9yRgcE1RxZOeWK0",
+  "phoneNumber": "0856303995",
+  "address": "20/8 Ngọc Hân Công Chúa , Quy Nhơn, Bình Định, Việt Nam",
+  "dateOfBirth": {
+    "$date": "1990-01-10T00:33:02.615Z"
+  },
+  "gender": "female",
+  "role": "admin",
+  "verificationCode": null,
+  "verificationCodeExpires": null,
+  "isVerified": true,
+  "avatar": "https://res.cloudinary.com/dmggkeyon/image/upload/v1737766616/evora_k17/piejiixuqdqh5z7wmwcv.jpg",
+  "createdAt": {
+    "$date": "2025-01-25T00:56:30.263Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T00:56:30.263Z"
+  },
+  "__v": 0
+}]

@@ -13,6 +13,8 @@ export const path = {
 	CONTACT: '/lien-he',
 	VERIFY_OTP: '/otp',
 	PARTY_DETAIL: '/chi-tiet-su-kien/:id',
+	FORGOT_PASSWORD: '/quen-mat-khau',
+	PAYMENT_HISTORY: '/lich-su-thanh-toan',
 
 	// Path for admin
 	ADMINPAGE: '/',

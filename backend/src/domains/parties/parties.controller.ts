@@ -43,10 +43,42 @@ export class PartiesController {
 	}
 
 	@Public()
-	@ApiOperation({ summary: 'Fetch a party by ID or Category' })
-	@Get(':identifier')
-	async getOne(@Param('identifier') identifier: string) {
-		return this.partiesService.getOne(identifier);
+	@ApiOperation({ summary: 'Fetch parties by category with pagination' })
+	@ApiPagination()
+	@Get('category/:category')
+	async getByCategory(
+		@Param('category') category: string,
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return await this.partiesService.getByCategoryWithPagination(
+			category,
+			page,
+			limit,
+		);
+	}
+
+	@Public()
+	@ApiOperation({ summary: 'Fetch parties by organizer ID with pagination' })
+	@ApiPagination()
+	@Get('user/:userId')
+	async getByUserId(
+		@Param('userId') userId: string,
+		@Query('page') page: number = 1,
+		@Query('limit') limit: number = 10,
+	) {
+		return await this.partiesService.getByUserIdWithPagination(
+			userId,
+			page,
+			limit,
+		);
+	}
+
+	@Public()
+	@ApiOperation({ summary: 'Fetch a party by ID' })
+	@Get(':id')
+	async getOne(@Param('id') id: string) {
+		return this.partiesService.getOne(id);
 	}
 
 	@Roles(Role.SUPER_ADMIN, Role.ADMIN)

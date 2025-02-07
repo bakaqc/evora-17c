@@ -13,8 +13,8 @@ interface Statistic {
 const Intro: React.FC = () => {
 	return (
 		<div className="w-4/5  bg-[#FAF3EB] rounded-md p-4 gap-4 shadow-md flex flex-col justify-center items-center">
-			<h3 className="font-bold text-lg">{text.title}</h3>
-			<p className="text-gray-800 text-center my-4 text-sm">
+			<h2 className="font-bold text-xl">{text.title}</h2>
+			<p className="text-gray-800 text-center my-4 text-xl">
 				{text.description}
 				<span></span>
 				{text.description2}

@@ -14,7 +14,7 @@ export class NotifiesController {
 	@Public()
 	@ApiOperation({
 		summary:
-			'Send email notification using template one of: welcome | verifyOTP | bookingSuccess',
+			'Send email notification using template one of: welcome | verifyOTP | custom',
 	})
 	@Post('send-email-notification')
 	async sendPartyNotification(@Body() sendEmailDto: SendEmailDto) {
