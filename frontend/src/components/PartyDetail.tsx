@@ -115,7 +115,7 @@ const RegistrationForm: React.FC = () => {
         <div class="info">
             <p><strong>📅 Thông tin đơn hàng của bạn:</strong></p>
             <ul>
-                <li><strong>Tên sự kiện:</strong> ${party?.category}</li>
+                <li><strong>Tên sự kiện:</strong> ${party?.title}</li>
                 <li><strong>Ngày tổ chức:</strong> ${newBookingPayload.organizeDate}</li>
                 <li><strong>Địa điểm:</strong> ${newBookingPayload.organizedAt}</li>
                 <li><strong>Tổng chi phí:</strong> ${totalAmount} VNĐ</li>
