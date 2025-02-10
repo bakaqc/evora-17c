@@ -149,7 +149,8 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 									<IoIosLogOut />
 									Lịch sử đặt tiệc
 								</NavLink>
-								<span
+								<button
+									type="button"
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
 									onClick={() => {
 										dispatch(actions.logout());
@@ -159,7 +160,7 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 								>
 									<IoIosLogOut />
 									Đăng xuất
-								</span>
+								</button>
 							</div>
 						)}
 					</div>
