@@ -44,6 +44,9 @@ export const getUser = (identifier: string) => {
 				type: actionTypes.GET_USER,
 				user: null,
 			});
+			dispatch({
+				type: actionTypes.LOG_OUT,
+			});
 		}
 	};
 };

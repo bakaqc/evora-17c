@@ -12,9 +12,6 @@ instance.interceptors.request.use(
 		const token = authData
 			? JSON.parse(authData)?.token?.replace(/"/g, '')
 			: null;
-
-		console.log('Token trong header:', token);
-
 		if (config.headers) {
 			config.headers.authorization = token ? `Bearer ${token}` : null;
 		}

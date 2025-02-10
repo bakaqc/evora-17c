@@ -57,7 +57,12 @@ const userReducer = (
 		case actionTypes.GET_USER:
 			return {
 				...state,
-				user: action.user ?? state.user, // ✅ Nếu action.user là undefined, giữ nguyên state.user
+				user: action.user ?? state.user,
+			};
+		case actionTypes.LOG_OUT:
+			return {
+				...state,
+				user: initUser,
 			};
 		default:
 			return state;

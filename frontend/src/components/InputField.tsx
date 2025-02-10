@@ -36,7 +36,7 @@ const InputField: React.FC<InputFieldProps> = ({
 			<input
 				type={type || 'text'}
 				id={id}
-				className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary dark:text-white dark:placeholder:text-neutral-300"
+				className="peer block w-full rounded bg-transparent px-3 py-2.5 leading-6 border-b border-gray-300 outline-none focus:ring-2 focus:ring-primary"
 				value={value}
 				onChange={handleChange}
 				onFocus={() => {

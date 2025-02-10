@@ -87,6 +87,14 @@ const authReducer = (
 				msgSuccess: 'Verify failed',
 				data: {},
 			};
+		case actionTypes.LOG_OUT:
+			return {
+				...state,
+				isLogin: false,
+				token: null,
+				msg: '',
+				msgSuccess: '',
+			};
 		default:
 			return state;
 	}
