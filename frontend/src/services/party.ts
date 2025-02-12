@@ -30,14 +30,14 @@ interface Option {
 }
 
 interface PartyQuery {
-	user: string;
-	category: string;
-	title: string;
-	description: string;
-	options: Option[];
-	photos: string[];
-	ratingTotal: number;
-	ratingCount: number;
+	user?: string;
+	category?: string;
+	title?: string;
+	description?: string;
+	options?: Option[];
+	photos?: string[];
+	ratingTotal?: number;
+	ratingCount?: number;
 }
 
 interface Pagination {
