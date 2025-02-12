@@ -55,9 +55,7 @@ const ManageUser: React.FC = () => {
 		}
 		setLoading(false);
 	};
-	interface FormatGenderFunction {
-		(gender: string): string;
-	}
+	type FormatGenderFunction = (gender: string) => string;
 
 	const formatGender: FormatGenderFunction = (gender) => {
 		return gender === 'male' ? 'Nam' : gender === 'female' ? 'Nữ' : 'Khác';
