@@ -8,31 +8,24 @@ import { apiGetPartyById } from '@/services/party';
 import { apiGetUser } from '@/services/user';
 import { RootState } from '@/stores/reducers/rootReducer';
 
-const translateStatus = (status: string) => {
-	switch (status) {
-		case 'PENDING':
-			return 'Đang chờ thanh toán';
-		case 'APPROVED':
-			return 'Đã duyệt';
-		case 'CANCELLED':
-			return 'Đã hủy';
-		default:
-			return status;
-	}
+const STATUS_TRANSLATIONS: Record<string, string> = {
+	PENDING: 'Đang chờ thanh toán',
+	APPROVED: 'Đã duyệt',
+	CANCELLED: 'Đã hủy',
 };
 
+const translateStatus = (status: string) =>
+	STATUS_TRANSLATIONS[status] || status;
+
 const determineProgress = (status: string, organizeDate: Date) => {
-	if (status === 'APPROVED') {
-		const currentDate = new Date();
-		if (currentDate < organizeDate) {
-			return 'Đang chuẩn bị';
-		} else if (currentDate.toDateString() === organizeDate.toDateString()) {
-			return 'Đang diễn ra';
-		} else {
-			return 'Đã kết thúc';
-		}
-	}
-	return '';
+	if (status !== 'APPROVED') return '';
+
+	const currentDate = new Date();
+	const isSameDay = currentDate.toDateString() === organizeDate.toDateString();
+
+	if (currentDate < organizeDate) return 'Đang chuẩn bị';
+	if (isSameDay) return 'Đang diễn ra';
+	return 'Đã kết thúc';
 };
 
 const ListBooking: React.FC = () => {
@@ -76,9 +69,6 @@ const ListBooking: React.FC = () => {
 			console.log('API Response bookings:', response.data);
 			if (response.success) {
 				const bookings = response.data || [];
-				// const bookings = bookingsResponse.data;
-
-				// console.log('API Response bookings:', bookingsData);
 				const tableData = await Promise.all(
 					bookings.map(async (booking: any) => {
 						const organizeDate = new Date(booking.organizeDate);
