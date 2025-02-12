@@ -1,17 +1,14 @@
-// Sử dụng react-router-dom thay cho next/link
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import booking from '@/assets/booking.png';
 import homeIcon from '@/assets/home.png';
 import logout from '@/assets/logout.png';
-import notify from '@/assets/notify.png';
 import party from '@/assets/party.png';
 import payment from '@/assets/payment.png';
 import profile from '@/assets/profile.png';
 import setting from '@/assets/setting.png';
 import userIcon from '@/assets/user.png';
-import voucher from '@/assets/voucher.png';
 import { path } from '@/utils/constant';
 
 const menuItems = [
@@ -20,38 +17,28 @@ const menuItems = [
 		items: [
 			{
 				icon: homeIcon,
-				label: 'Home',
+				label: 'Bảng điều khiển',
 				path: '/quan-tri-vien',
 			},
 			{
 				icon: userIcon,
-				label: 'User',
+				label: 'Người dùng',
 				path: '/quan-tri-vien/danh-sach-nguoi-dung',
 			},
 			{
 				icon: booking,
-				label: 'Booking',
+				label: 'Đặt tiệc',
 				path: '/quan-tri-vien/danh-sach-dat-tiec',
 			},
 			{
 				icon: party,
-				label: 'Party',
+				label: 'Bữa tiệc',
 				path: '/quan-tri-vien/danh-sach-bua-tiec',
 			},
 			{
-				icon: voucher,
-				label: 'Vouchers',
-				path: '/quan-tri-vien/danh-sach-ma-giam-gia',
-			},
-			{
 				icon: payment,
-				label: 'Payments',
+				label: 'Thanh toán',
 				path: '/quan-tri-vien/danh-sach-thanh-toan',
-			},
-			{
-				icon: notify,
-				label: 'Notifies',
-				path: '/quan-tri-vien/thong-bao',
 			},
 		],
 	},
@@ -60,17 +47,17 @@ const menuItems = [
 		items: [
 			{
 				icon: profile,
-				label: 'Profile',
+				label: 'Thông tin cá nhân',
 				path: path.PROFILE,
 			},
 			{
 				icon: setting,
-				label: 'Settings',
+				label: 'Cài đặt',
 				path: path.SETTING,
 			},
 			{
 				icon: logout,
-				label: 'Logout',
+				label: 'Đăng xuất',
 				path: path.LOGOUT,
 			},
 		],
@@ -78,6 +65,8 @@ const menuItems = [
 ];
 
 const Menu: FC = () => {
+	const location = useLocation();
+
 	return (
 		<div className="mt-4 text-sm">
 			{menuItems.map((i) => (
@@ -87,9 +76,11 @@ const Menu: FC = () => {
 					</span>
 					{i.items.map((item) => (
 						<Link
-							to={item.path} // Sử dụng "to" thay vì "href"
+							to={item.path}
 							key={item.label}
-							className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight"
+							className={`flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-lamaSkyLight ${
+								location.pathname === item.path ? 'bg-orange-300' : ''
+							}`}
 						>
 							<img src={item.icon} alt={item.label} width={20} height={20} />
 							<span className="hidden lg:block">{item.label}</span>

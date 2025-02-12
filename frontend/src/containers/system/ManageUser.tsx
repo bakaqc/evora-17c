@@ -12,8 +12,6 @@ interface UserType {
 	email: string;
 	phoneNumber: string;
 	address: string;
-	dateOfBirth: string;
-	gender: string;
 }
 
 const ManageUser: React.FC = () => {
@@ -42,8 +40,6 @@ const ManageUser: React.FC = () => {
 					email: user.email,
 					phoneNumber: user.phoneNumber,
 					address: user.address,
-					dateOfBirth: new Date(user.dateOfBirth).toLocaleDateString(),
-					gender: user.gender,
 				}));
 				setUsers(tableData);
 			} else {
@@ -54,21 +50,6 @@ const ManageUser: React.FC = () => {
 			setError('Failed to fetch users');
 		}
 		setLoading(false);
-	};
-	type FormatGenderFunction = (gender: string) => string;
-
-	const formatGender: FormatGenderFunction = (gender) => {
-		let result: string;
-
-		if (gender === 'male') {
-			result = 'Nam';
-		} else if (gender === 'female') {
-			result = 'Nữ';
-		} else {
-			result = 'Khác';
-		}
-
-		return result;
 	};
 
 	useEffect(() => {
@@ -81,18 +62,18 @@ const ManageUser: React.FC = () => {
 	return (
 		<DashboardLayout>
 			<div className="p-6">
-				<h1 className="text-2xl font-bold mb-4">Manage Users</h1>
+				<h1 className="text-2xl font-bold mb-6 text-center">
+					Quản lí người dùng
+				</h1>
 				<div className="overflow-x-auto">
 					<table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
 						<thead>
 							<tr className="bg-gray-200 text-gray-700">
-								<th className="py-2 px-4 text-left">Full Name</th>
-								<th className="py-2 px-4 text-left">Email</th>
-								<th className="py-2 px-4 text-left">Phone Number</th>
-								<th className="py-2 px-4 text-left">Address</th>
-								<th className="py-2 px-4 text-left">Date of Birth</th>
-								<th className="py-2 px-4 text-left">Gender</th>
-								<th className="py-2 px-4 text-left">Actions</th>
+								<th className="py-2 px-4 text-left w-[20%]">Họ và Tên</th>
+								<th className="py-2 px-4 text-left w-[20%]">Email</th>
+								<th className="py-2 px-4 text-left w-[15%]">Số điện thoại</th>
+								<th className="py-2 px-4 text-left w-[30%]">Địa chỉ</th>
+								<th className="py-2 px-4 text-left w-[15%]">Thao tác</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -102,10 +83,6 @@ const ManageUser: React.FC = () => {
 									<td className="border px-4 py-2">{user.email}</td>
 									<td className="border px-4 py-2">{user.phoneNumber}</td>
 									<td className="border px-4 py-2">{user.address}</td>
-									<td className="border px-4 py-2">{user.dateOfBirth}</td>
-									<td className="border px-4 py-2">
-										{formatGender(user.gender)}
-									</td>
 									<td className="border px-4 py-2 flex space-x-2">
 										<button className="bg-blue-500 text-white px-3 py-1 rounded">
 											Edit

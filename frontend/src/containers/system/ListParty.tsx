@@ -60,35 +60,61 @@ const ListParty: React.FC = () => {
 	}, []);
 	if (loading) return <div>Loading...</div>;
 	if (error) return <div>Error: {error}</div>;
+
+	const getCategoryTagClass = (category: string) => {
+		switch (category) {
+			case 'Sinh nhật':
+				return 'bg-blue-200 text-blue-800';
+			case 'Đám cưới':
+				return 'bg-pink-200 text-pink-800';
+			case 'Khai trương':
+				return 'bg-green-200 text-green-800';
+			case 'Thôi nôi':
+				return 'bg-yellow-200 text-yellow-800';
+			default:
+				return 'bg-gray-200 text-gray-800';
+		}
+	};
 	return (
 		<DashboardLayout>
 			<div className="p-6">
 				<div className="flex justify-between items-center">
-					<h1 className="text-2xl font-bold mb-4">List Parties</h1>
+					<h1 className="text-2xl font-bold mb-4 m-auto text-center">
+						Danh sách bữa tiệc
+					</h1>
 					<button
-						className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300"
+						className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 m-4 rounded-lg shadow-md transition duration-300"
 						onClick={() => navigate('/quan-tri-vien/them-bua-tiec')}
 					>
-						Create Party
+						Tạo bữa tiệc
 					</button>
 				</div>
 				<div className="overflow-x-auto">
 					<table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
 						<thead>
 							<tr className="bg-gray-200 text-gray-700">
-								<th className="py-2 px-4 text-left">Title</th>
-								<th className="py-2 px-4 text-left">Category</th>
-								<th className="py-2 px-4 text-left">Description</th>
-								<th className="py-2 px-4 text-left">Created At</th>
-								<th className="py-2 px-4 text-left">Actions</th>
+								<th className="py-2 px-4 text-left w-[30%]">Tên</th>
+								<th className="py-2 px-4 text-left w-[10%]">Phân loại</th>
+								<th className="py-2 px-4 text-left w-[40%]">Mô tả</th>
+								<th className="py-2 px-4 text-left w-[10%]">Ngày tạo</th>
+								<th className="py-2 px-4 text-left w-[10%]">Thao tác</th>
 							</tr>
 						</thead>
 						<tbody>
 							{parties.map((party) => (
 								<tr key={party.key}>
 									<td className="border px-4 py-2">{party.title}</td>
-									<td className="border px-4 py-2">{party.category}</td>
-									<td className="border px-4 py-2">{party.description}</td>
+									<td
+										className={`border px-4 py-2 ${getCategoryTagClass(party.category)}`}
+									>
+										{party.category}
+									</td>
+									<td className="border px-4 py-2">
+										<div
+											className="line-clamp-3 hover:line-clamp-none"
+											dangerouslySetInnerHTML={{ __html: party.description }}
+										></div>
+									</td>
 									<td className="border px-4 py-2">{party.createdAt}</td>
 									<td className="border px-4 py-2 flex space-x-2">
 										<button className="bg-blue-500 text-white px-3 py-1 rounded">

@@ -1,10 +1,39 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import DashboardLayout from '@/components/DashBoardLayout';
-import { Booking } from '@/schemas/booking.schema';
 import { getBookings } from '@/services/bookingService';
+import { apiGetPartyById } from '@/services/party';
+import { apiGetUser } from '@/services/user';
 import { RootState } from '@/stores/reducers/rootReducer';
+
+const translateStatus = (status: string) => {
+	switch (status) {
+		case 'PENDING':
+			return 'Đang chờ thanh toán';
+		case 'APPROVED':
+			return 'Đã duyệt';
+		case 'CANCELLED':
+			return 'Đã hủy';
+		default:
+			return status;
+	}
+};
+
+const determineProgress = (status: string, organizeDate: Date) => {
+	if (status === 'APPROVED') {
+		const currentDate = new Date();
+		if (currentDate < organizeDate) {
+			return 'Đang chuẩn bị';
+		} else if (currentDate.toDateString() === organizeDate.toDateString()) {
+			return 'Đang diễn ra';
+		} else {
+			return 'Đã kết thúc';
+		}
+	}
+	return '';
+};
 
 const ListBooking: React.FC = () => {
 	const [bookings, setBookings] = useState<
@@ -14,10 +43,10 @@ const ListBooking: React.FC = () => {
 			partyTitle: string;
 			userName: string;
 			guestCount: number;
-			status: string;
-			paymentStatus: string;
+			organizeAt: string;
 			organizeDate: string;
-			createdAt: string;
+			status: string;
+			progress: string;
 		}[]
 	>([]);
 
@@ -34,7 +63,6 @@ const ListBooking: React.FC = () => {
 		}
 	};
 	const { token } = useSelector((state: RootState) => state.auth);
-
 	const fetchBookings = async () => {
 		setLoading(true);
 		setError(null);
@@ -47,22 +75,41 @@ const ListBooking: React.FC = () => {
 			const response = await getBookings(token);
 			console.log('API Response bookings:', response.data);
 			if (response.success) {
-				const bookingsData = response.data || [];
-				const tableData = bookingsData.map((booking: Booking) => ({
-					key: booking._id,
-					bookingId: booking._id,
-					partyTitle: booking.party.title,
-					userName: booking.user.fullName || 'Unknown',
-					guestCount: booking.guestCount,
-					status: booking.status,
-					paymentStatus: booking.payment ? 'Đã thanh toán' : 'Chưa thanh toán',
-					organizeDate: booking.organizeDate
-						? new Date(booking.organizeDate).toLocaleDateString()
-						: 'N/A',
-					createdAt: booking.createdAt
-						? new Date(booking.createdAt).toLocaleDateString()
-						: 'N/A',
-				}));
+				const bookings = response.data || [];
+				// const bookings = bookingsResponse.data;
+
+				// console.log('API Response bookings:', bookingsData);
+				const tableData = await Promise.all(
+					bookings.map(async (booking: any) => {
+						const organizeDate = new Date(booking.organizeDate);
+						const user = apiGetUser(booking.user);
+						const responseUser = await user;
+						const userName = responseUser.data.fullName;
+						const party = apiGetPartyById(booking.party);
+						const response = await party;
+						const partyTitle = response.data.title;
+						console.log('booking data', booking);
+						return {
+							key: booking._id,
+							bookingId: booking._id,
+							partyTitle: partyTitle,
+							userName: userName,
+							guestCount: booking.guestCount,
+							organizeAt: booking.organizedAt,
+							organizeDate: new Intl.DateTimeFormat('vi-VN', {
+								year: 'numeric',
+								month: '2-digit',
+								day: '2-digit',
+								hour: '2-digit',
+								minute: '2-digit',
+								second: '2-digit',
+								timeZone: 'Asia/Ho_Chi_Minh',
+							}).format(organizeDate),
+							status: translateStatus(booking.status),
+							progress: determineProgress(booking.status, organizeDate),
+						};
+					}),
+				);
 				setBookings(tableData);
 			} else {
 				setError(response.message);
@@ -84,38 +131,41 @@ const ListBooking: React.FC = () => {
 	return (
 		<DashboardLayout>
 			<div className="p-6">
-				<h1 className="text-2xl font-bold mb-4">List Bookings</h1>
+				<h1 className="text-2xl font-bold mb-4 text-center">
+					Danh sách đặt tiệc
+				</h1>
 
 				<div className="overflow-x-auto">
 					<table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
 						<thead>
 							<tr className="bg-gray-200 text-gray-700">
-								<th className="py-2 px-4 text-left">Booking ID</th>
-								<th className="py-2 px-4 text-left">Party Title</th>
-								<th className="py-2 px-4 text-left">User</th>
-								<th className="py-2 px-4 text-left">Guest Count</th>
-								<th className="py-2 px-4 text-left">Status</th>
-								<th className="py-2 px-4 text-left">Payment</th>
-								<th className="py-2 px-4 text-left">Organize Date</th>
-								<th className="py-2 px-4 text-left">Created At</th>
-								<th className="py-2 px-4 text-left">Actions</th>
+								<th className="py-2 px-4 text-left w-[15%]">Tên bữa tiệc</th>
+								<th className="py-2 px-4 text-left w-[10%]">Người đặt</th>
+								<th className="py-2 px-4 text-left w-[10%]">Số bàn tiệc</th>
+								<th className="py-2 px-4 text-left w-[15%]">
+									Thời gian tổ chức
+								</th>
+								<th className="py-2 px-4 text-left w-[15%]">Địa điểm</th>
+								<th className="py-2 px-4 text-left w-[10%]">Trạng thái</th>
+								<th className="py-2 px-4 text-left w-[15%]">Tiến độ</th>
+								<th className="py-2 px-4 text-left w-[10%]">Thao tác</th>
 							</tr>
 						</thead>
 						<tbody>
 							{bookings.map((booking) => (
 								<tr key={booking.key}>
-									<td className="border px-4 py-2">{booking.bookingId}</td>
 									<td className="border px-4 py-2">{booking.partyTitle}</td>
 									<td className="border px-4 py-2">{booking.userName}</td>
 									<td className="border px-4 py-2">{booking.guestCount}</td>
+									<td className="border px-4 py-2">{booking.organizeDate}</td>
+									<td className="border px-4 py-2">{booking.organizeAt}</td>
 									<td
 										className={`border px-4 py-2 ${getStatusColor(booking.status)}`}
 									>
 										{booking.status}
 									</td>
-									<td className="border px-4 py-2">{booking.paymentStatus}</td>
-									<td className="border px-4 py-2">{booking.organizeDate}</td>
-									<td className="border px-4 py-2">{booking.createdAt}</td>
+
+									<td className="border px-4 py-2">{booking.progress}</td>
 									<td className="border px-4 py-2 flex space-x-2">
 										<button className="bg-blue-500 text-white px-3 py-1 rounded">
 											Edit
