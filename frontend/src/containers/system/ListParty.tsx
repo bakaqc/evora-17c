@@ -3,29 +3,10 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import DashboardLayout from '@/components/DashBoardLayout';
-import { PartyType } from '@/schemas/party.schema';
+import { Party } from '@/schemas/party.schema';
 import { getParties } from '@/services/partyService';
 import { RootState } from '@/stores/reducers/rootReducer';
 
-interface Option {
-	type: string;
-	price: number;
-	_id: string;
-}
-export interface Party {
-	_id: string;
-	user: string;
-	category: string;
-	title: string;
-	description: string;
-	options: Option[];
-	photos: string[];
-	ratingTotal: number;
-	ratingCount: number;
-	createdAt: string;
-	updatedAt: string;
-	__v: number;
-}
 const ListParty: React.FC = () => {
 	const navigate = useNavigate();
 	const [parties, setParties] = useState<
@@ -54,7 +35,7 @@ const ListParty: React.FC = () => {
 			console.log('API Response manage:', response.data);
 			if (response.success) {
 				const partiesData = response.data || [];
-				const tableData = partiesData.map((party: PartyType) => ({
+				const tableData = partiesData.map((party: Party) => ({
 					key: party._id,
 					title: party.title,
 					category: party.category,
