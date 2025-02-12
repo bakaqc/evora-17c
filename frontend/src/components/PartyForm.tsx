@@ -9,7 +9,7 @@ interface Option {
 	price: number;
 }
 
-interface FormData {
+export interface FormData {
 	user: string;
 	category: string;
 	title: string;

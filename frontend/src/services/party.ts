@@ -1,6 +1,7 @@
 import axiosConfig from '../axiosConfig';
 import axios from 'axios';
 
+import { FormData } from '@/components/PartyForm';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 interface Option {
@@ -91,7 +92,7 @@ export const apiGetPartyById = async (id: string) => {
 	const response = await axios.get(`${apiBaseUrl}/api/parties/${id}`);
 	return response.data;
 };
-export const apiCreateParty = (query: PartyQuery): Promise<ApiResponse> => {
+export const apiCreateParty = (query: FormData): Promise<ApiResponse> => {
 	return new Promise((resolve, reject) => {
 		axiosConfig
 			.post('/api/parties', query)
