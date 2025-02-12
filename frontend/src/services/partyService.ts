@@ -1,5 +1,5 @@
 import axiosConfig from '@/axiosConfig';
-import { Party } from '@/schemas/party.schema';
+import { PartyType } from '@/schemas/party.schema';
 
 interface ApiResponse<T> {
 	success: boolean;
@@ -11,7 +11,7 @@ export const getParties = async (
 	token: string,
 	page: number = 1,
 	limit: number = 10,
-): Promise<ApiResponse<Party[]>> => {
+): Promise<ApiResponse<PartyType[]>> => {
 	try {
 		const response = await axiosConfig.get(
 			`/api/parties?page=${page}&limit=${limit}`,

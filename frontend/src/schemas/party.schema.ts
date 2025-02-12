@@ -1,6 +1,6 @@
 import { User } from '@/schemas/user.schema';
 
-export interface Party {
+export interface PartyType {
 	_id: string;
 	user: User;
 	category: 'Sinh nhật' | 'Đám cưới' | 'Khai trương' | 'Thôi nôi';

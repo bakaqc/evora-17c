@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import DashboardLayout from '@/components/DashBoardLayout';
-import { Party } from '@/schemas/party.schema';
+import { PartyType } from '@/schemas/party.schema';
 import { getParties } from '@/services/partyService';
 import { RootState } from '@/stores/reducers/rootReducer';
 
@@ -54,7 +54,7 @@ const ListParty: React.FC = () => {
 			console.log('API Response manage:', response.data);
 			if (response.success) {
 				const partiesData = response.data || [];
-				const tableData = partiesData.map((party: Party) => ({
+				const tableData = partiesData.map((party: PartyType) => ({
 					key: party._id,
 					title: party.title,
 					category: party.category,
