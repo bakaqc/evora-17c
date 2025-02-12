@@ -25,6 +25,7 @@ export interface Party {
 }
 
 interface Option {
+	_id?: string;
 	type: string;
 	price: number;
 }

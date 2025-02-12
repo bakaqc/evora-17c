@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { apiCreateParty } from '@/services/party';
 
 interface Option {
+	_id: string;
 	type: string;
 	price: number;
 }
@@ -26,9 +27,9 @@ const PartyForm: React.FC = () => {
 		title: '',
 		description: '',
 		options: [
-			{ type: 'Basic', price: 0 },
-			{ type: 'Premium', price: 0 },
-			{ type: 'VIP', price: 0 },
+			{ _id: 'opt1', type: 'Basic', price: 0 },
+			{ _id: 'opt2', type: 'Premium', price: 0 },
+			{ _id: 'opt3', type: 'VIP', price: 0 },
 		],
 		photos: [''],
 		ratingTotal: 0,
@@ -116,7 +117,7 @@ const PartyForm: React.FC = () => {
 				<div>
 					<span className="block font-medium mb-2">Lựa chọn:</span>
 					{formData.options.map((option, index) => (
-						<div key={index} className="flex gap-2 mb-2">
+						<div key={option._id} className="flex gap-2 mb-2">
 							<div className="w-1/2">
 								<input
 									value={option.type}
