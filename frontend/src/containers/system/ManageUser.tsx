@@ -55,7 +55,13 @@ const ManageUser: React.FC = () => {
 		}
 		setLoading(false);
 	};
+	interface FormatGenderFunction {
+		(gender: string): string;
+	}
 
+	const formatGender: FormatGenderFunction = (gender) => {
+		return gender === 'male' ? 'Nam' : gender === 'female' ? 'Nữ' : 'Khác';
+	};
 	useEffect(() => {
 		fetchUsers();
 	}, []);
@@ -88,7 +94,9 @@ const ManageUser: React.FC = () => {
 									<td className="border px-4 py-2">{user.phoneNumber}</td>
 									<td className="border px-4 py-2">{user.address}</td>
 									<td className="border px-4 py-2">{user.dateOfBirth}</td>
-									<td className="border px-4 py-2">{user.gender}</td>
+									<td className="border px-4 py-2">
+										{formatGender(user.gender)}
+									</td>
 									<td className="border px-4 py-2 flex space-x-2">
 										<button className="bg-blue-500 text-white px-3 py-1 rounded">
 											Edit

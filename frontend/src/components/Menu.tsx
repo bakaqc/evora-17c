@@ -21,7 +21,7 @@ const menuItems = [
 			{
 				icon: homeIcon,
 				label: 'Home',
-				path: '/*',
+				path: '/quan-tri-vien',
 			},
 			{
 				icon: userIcon,
