@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { apiCreateParty } from '@/services/party';
 
 interface Option {
-	id: string;
 	type: string;
 	price: number;
-}
-
-interface Photo {
-	id: string;
-	url: string;
 }
 
 interface FormData {
@@ -17,23 +14,23 @@ interface FormData {
 	title: string;
 	description: string;
 	options: Option[];
-	photos: Photo[];
+	photos: string[];
 	ratingTotal: number;
 	ratingCount: number;
 }
 
 const PartyForm: React.FC = () => {
 	const [formData, setFormData] = useState<FormData>({
-		user: '',
+		user: '6775073942bd87dd4e77450b',
 		category: 'Sinh nhật',
 		title: '',
 		description: '',
 		options: [
-			{ id: crypto.randomUUID(), type: 'Basic', price: 0 },
-			{ id: crypto.randomUUID(), type: 'Premium', price: 0 },
-			{ id: crypto.randomUUID(), type: 'VIP', price: 0 },
+			{ type: 'Basic', price: 0 },
+			{ type: 'Premium', price: 0 },
+			{ type: 'VIP', price: 0 },
 		],
-		photos: [{ id: crypto.randomUUID(), url: '' }],
+		photos: [''],
 		ratingTotal: 0,
 		ratingCount: 0,
 	});
@@ -48,10 +45,14 @@ const PartyForm: React.FC = () => {
 		}));
 	};
 
-	const handleOptionChange = (id: string, key: keyof Option, value: string) => {
+	const handleOptionChange = (
+		index: number,
+		key: keyof Option,
+		value: string,
+	) => {
 		setFormData((prev) => {
-			const updatedOptions = prev.options.map((option) =>
-				option.id === id
+			const updatedOptions = prev.options.map((option, i) =>
+				i === index
 					? { ...option, [key]: key === 'price' ? Number(value) : value }
 					: option,
 			);
@@ -59,18 +60,23 @@ const PartyForm: React.FC = () => {
 		});
 	};
 
-	const handlePhotoChange = (id: string, value: string) => {
+	const handlePhotoChange = (index: number, value: string) => {
 		setFormData((prev) => {
-			const updatedPhotos = prev.photos.map((photo) =>
-				photo.id === id ? { ...photo, url: value } : photo,
-			);
+			const updatedPhotos = [...prev.photos];
+			updatedPhotos[index] = value;
 			return { ...prev, photos: updatedPhotos };
 		});
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('Form Data:', formData);
+		try {
+			const response = await apiCreateParty(formData);
+			toast.success(response.message);
+		} catch (error) {
+			console.error('Error creating party:', error);
+			alert('Failed to create party');
+		}
 	};
 
 	return (
@@ -78,17 +84,7 @@ const PartyForm: React.FC = () => {
 			<h2 className="text-2xl font-semibold text-center mb-6">Tạo sự kiện</h2>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
-					<span className="block font-medium mb-1">User:</span>
-					<input
-						name="user"
-						value={formData.user}
-						onChange={handleChange}
-						placeholder="Enter your name"
-						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
-					/>
-				</div>
-				<div>
-					<span className="block font-medium mb-1">Category:</span>
+					<span className="block font-medium mb-1">Thể loại:</span>
 					<input
 						name="category"
 						value={formData.category}
@@ -98,7 +94,7 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<span className="block font-medium mb-1">Title:</span>
+					<span className="block font-medium mb-1">Tiêu đề:</span>
 					<input
 						name="title"
 						value={formData.title}
@@ -108,7 +104,7 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<span className="block font-medium mb-1">Description:</span>
+					<span className="block font-medium mb-1">Mô tả:</span>
 					<textarea
 						name="description"
 						value={formData.description}
@@ -118,27 +114,25 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<span className="block font-medium mb-2">Options:</span>
-					{formData.options.map((option) => (
-						<div key={option.id} className="flex gap-2 mb-2">
+					<span className="block font-medium mb-2">Lựa chọn:</span>
+					{formData.options.map((option, index) => (
+						<div key={index} className="flex gap-2 mb-2">
 							<div className="w-1/2">
-								<span className="block font-medium"></span>
 								<input
 									value={option.type}
 									onChange={(e) =>
-										handleOptionChange(option.id, 'type', e.target.value)
+										handleOptionChange(index, 'type', e.target.value)
 									}
 									placeholder="Type"
 									className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 								/>
 							</div>
 							<div className="w-1/2">
-								<span className="block font-medium"></span>
 								<input
 									type="number"
 									value={option.price}
 									onChange={(e) =>
-										handleOptionChange(option.id, 'price', e.target.value)
+										handleOptionChange(index, 'price', e.target.value)
 									}
 									placeholder="Price"
 									className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
@@ -148,42 +142,17 @@ const PartyForm: React.FC = () => {
 					))}
 				</div>
 				<div>
-					<span className="block font-medium mb-2"></span>
-					{formData.photos.map((photo) => (
-						<div key={photo.id} className="mb-2">
-							<span className="block font-medium">Photo URL:</span>
+					<span className="block font-medium mb-2">Ảnh:</span>
+					{formData.photos.map((photo, index) => (
+						<div key={index} className="mb-2">
 							<input
-								value={photo.url}
-								onChange={(e) => handlePhotoChange(photo.id, e.target.value)}
+								value={photo}
+								onChange={(e) => handlePhotoChange(index, e.target.value)}
 								placeholder="Photo URL"
 								className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
 							/>
 						</div>
 					))}
-				</div>
-				<div className="flex gap-4">
-					<div className="w-1/2">
-						<span className="block font-medium mb-1">Rating Total:</span>
-						<input
-							name="ratingTotal"
-							type="number"
-							value={formData.ratingTotal}
-							onChange={handleChange}
-							placeholder="Rating Total"
-							className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
-						/>
-					</div>
-					<div className="w-1/2">
-						<span className="block font-medium mb-1">Rating Count:</span>
-						<input
-							name="ratingCount"
-							type="number"
-							value={formData.ratingCount}
-							onChange={handleChange}
-							placeholder="Rating Count"
-							className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
-						/>
-					</div>
 				</div>
 				<button
 					type="submit"
