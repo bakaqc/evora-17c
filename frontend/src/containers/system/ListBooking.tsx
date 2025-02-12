@@ -23,7 +23,16 @@ const ListBooking: React.FC = () => {
 
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-
+	const getStatusColor = (status: string) => {
+		switch (status) {
+			case 'APPROVED':
+				return 'text-green-600';
+			case 'CANCELLED':
+				return 'text-red-600';
+			default:
+				return 'text-yellow-600';
+		}
+	};
 	const { token } = useSelector((state: RootState) => state.auth);
 
 	const fetchBookings = async () => {
@@ -100,13 +109,7 @@ const ListBooking: React.FC = () => {
 									<td className="border px-4 py-2">{booking.userName}</td>
 									<td className="border px-4 py-2">{booking.guestCount}</td>
 									<td
-										className={`border px-4 py-2 ${
-											booking.status === 'APPROVED'
-												? 'text-green-600'
-												: booking.status === 'CANCELLED'
-													? 'text-red-600'
-													: 'text-yellow-600'
-										}`}
+										className={`border px-4 py-2 ${getStatusColor(booking.status)}`}
 									>
 										{booking.status}
 									</td>
