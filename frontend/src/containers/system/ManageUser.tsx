@@ -58,8 +58,19 @@ const ManageUser: React.FC = () => {
 	type FormatGenderFunction = (gender: string) => string;
 
 	const formatGender: FormatGenderFunction = (gender) => {
-		return gender === 'male' ? 'Nam' : gender === 'female' ? 'Nữ' : 'Khác';
+		let result: string;
+
+		if (gender === 'male') {
+			result = 'Nam';
+		} else if (gender === 'female') {
+			result = 'Nữ';
+		} else {
+			result = 'Khác';
+		}
+
+		return result;
 	};
+
 	useEffect(() => {
 		fetchUsers();
 	}, []);

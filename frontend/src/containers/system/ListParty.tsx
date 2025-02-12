@@ -12,7 +12,6 @@ interface Option {
 	price: number;
 	_id: string;
 }
-
 export interface Party {
 	_id: string;
 	user: string;
@@ -27,7 +26,6 @@ export interface Party {
 	updatedAt: string;
 	__v: number;
 }
-
 const ListParty: React.FC = () => {
 	const navigate = useNavigate();
 	const [parties, setParties] = useState<
@@ -42,9 +40,7 @@ const ListParty: React.FC = () => {
 	>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-
 	const { token } = useSelector((state: RootState) => state.auth);
-
 	const fetchParties = async () => {
 		setLoading(true);
 		setError(null);
@@ -78,14 +74,11 @@ const ListParty: React.FC = () => {
 		}
 		setLoading(false);
 	};
-
 	useEffect(() => {
 		fetchParties();
 	}, []);
-
 	if (loading) return <div>Loading...</div>;
 	if (error) return <div>Error: {error}</div>;
-
 	return (
 		<DashboardLayout>
 			<div className="p-6">
