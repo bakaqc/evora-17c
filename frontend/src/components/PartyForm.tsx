@@ -79,7 +79,7 @@ const PartyForm: React.FC = () => {
 				<div className="grid grid-cols-2 gap-4">
 					{/* User */}
 					<div>
-						<label className="block text-gray-700 font-medium">User:</label>
+						<span className="block text-gray-700 font-medium">User:</span>
 						<input
 							name="user"
 							value={formData.user}
@@ -90,7 +90,7 @@ const PartyForm: React.FC = () => {
 					</div>
 					{/* Category */}
 					<div>
-						<label className="block text-gray-700 font-medium">Category:</label>
+						<span className="block text-gray-700 font-medium">Category:</span>
 						<input
 							name="category"
 							value={formData.category}
@@ -103,7 +103,7 @@ const PartyForm: React.FC = () => {
 
 				{/* Title & Description */}
 				<div>
-					<label className="block text-gray-700 font-medium">Title:</label>
+					<span className="block text-gray-700 font-medium">Title:</span>
 					<input
 						name="title"
 						value={formData.title}
@@ -113,9 +113,7 @@ const PartyForm: React.FC = () => {
 					/>
 				</div>
 				<div>
-					<label className="block text-gray-700 font-medium">
-						Description:
-					</label>
+					<span className="block text-gray-700 font-medium">Description:</span>
 					<textarea
 						name="description"
 						value={formData.description}
@@ -128,9 +126,7 @@ const PartyForm: React.FC = () => {
 
 				{/* Options */}
 				<div>
-					<label className="block text-gray-700 font-medium mb-2">
-						Options:
-					</label>
+					<span className="block text-gray-700 font-medium mb-2">Options:</span>
 					{formData.options.map((option) => (
 						<div key={option.id} className="flex gap-3 items-center mb-2">
 							<input
@@ -153,10 +149,9 @@ const PartyForm: React.FC = () => {
 						</div>
 					))}
 				</div>
-
 				{/* Photos */}
 				<div>
-					<label className="block text-gray-700 font-medium">Photos:</label>
+					<span className="block text-gray-700 font-medium">Photos:</span>
 					{formData.photos.map((photo) => (
 						<div key={photo.id} className="flex items-center gap-3 mb-2">
 							<input
