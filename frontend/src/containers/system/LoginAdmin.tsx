@@ -37,6 +37,7 @@ const LoginAdmin: React.FC = () => {
 		const invalid = validate(payload, setInvalidField);
 		if (invalid === 0) {
 			dispatch(actions.loginAdmin(payload));
+			dispatch(actions.getUser(payload.email));
 		}
 	};
 
