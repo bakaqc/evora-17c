@@ -10,6 +10,10 @@ const AdminPage = () => {
 			<div className="p-4 flex gap-4 flex-col md:flex-row">
 				{/* BÊN TRÁI */}
 				<div className="w-full lg:w-2/3 flex flex-col gap-8">
+					{/* BIỂU ĐỒ TÀI CHÍNH */}
+					<div className="w-full h-[500px]">
+						<FinanceChart />
+					</div>
 					{/* BIỂU ĐỒ Ở GIỮA */}
 					<div className="flex gap-4 flex-col lg:flex-row">
 						{/* BIỂU ĐỒ ĐẾM */}
@@ -20,10 +24,6 @@ const AdminPage = () => {
 						<div className="w-full lg:w-2/3 h-[450px]">
 							<BookingChart />
 						</div>
-					</div>
-					{/* BIỂU ĐỒ TÀI CHÍNH */}
-					<div className="w-full h-[500px]">
-						<FinanceChart />
 					</div>
 				</div>
 				{/* BÊN PHẢI */}

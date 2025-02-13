@@ -22,6 +22,7 @@ export const path = {
 	LISTUSER: '/danh-sach-nguoi-dung',
 	LISTBOOKING: '/danh-sach-dat-tiec',
 	LISTPARTIES: '/danh-sach-bua-tiec',
+	CREATEPARTY: '/them-bua-tiec',
 	LISTVOUCHERS: '/danh-sach-ma-giam-gia',
 	LISTPAYMENTS: '/danh-sach-thanh-toan',
 	NOTIFIES: '/thong-bao',

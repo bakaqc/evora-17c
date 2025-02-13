@@ -14,28 +14,28 @@ import moreDark from '@/assets/moreDark.png';
 const data = [
 	{
 		name: 'Mon',
-		present: 60,
-		absent: 40,
+		processing: 60,
+		cancel: 40,
 	},
 	{
 		name: 'Tue',
-		present: 70,
-		absent: 60,
+		processing: 70,
+		cancel: 60,
 	},
 	{
 		name: 'Wed',
-		present: 90,
-		absent: 75,
+		processing: 90,
+		cancel: 75,
 	},
 	{
 		name: 'Thu',
-		present: 90,
-		absent: 75,
+		processing: 90,
+		cancel: 75,
 	},
 	{
 		name: 'Fri',
-		present: 65,
-		absent: 55,
+		processing: 65,
+		cancel: 55,
 	},
 ];
 
@@ -65,13 +65,13 @@ const BookingChart = () => {
 						wrapperStyle={{ paddingTop: '20px', paddingBottom: '40px' }}
 					/>
 					<Bar
-						dataKey="present"
+						dataKey="processing"
 						fill="#FAE27C"
 						legendType="circle"
 						radius={[10, 10, 0, 0]}
 					/>
 					<Bar
-						dataKey="absent"
+						dataKey="cancel"
 						fill="#C3EBFA"
 						legendType="circle"
 						radius={[10, 10, 0, 0]}
