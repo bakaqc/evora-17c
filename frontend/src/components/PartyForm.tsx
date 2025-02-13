@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { apiCreateParty } from '@/services/party';
+import { RootState } from '@/stores/reducers/rootReducer';
 
 interface Option {
-	_id: string;
 	type: string;
 	price: number;
 }
@@ -21,15 +23,17 @@ export interface FormData {
 }
 
 const PartyForm: React.FC = () => {
+	const { user } = useSelector((state: RootState) => state.user);
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState<FormData>({
-		user: '6775073942bd87dd4e77450b',
+		user: user._id,
 		category: 'Sinh nhật',
 		title: '',
 		description: '',
 		options: [
-			{ _id: 'opt1', type: 'Basic', price: 0 },
-			{ _id: 'opt2', type: 'Premium', price: 0 },
-			{ _id: 'opt3', type: 'VIP', price: 0 },
+			{ type: 'Basic', price: 0 },
+			{ type: 'Premium', price: 0 },
+			{ type: 'VIP', price: 0 },
 		],
 		photos: [''],
 		ratingTotal: 0,
@@ -40,10 +44,7 @@ const PartyForm: React.FC = () => {
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
 		const { name, value } = e.target;
-		setFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
 	const handleOptionChange = (
@@ -74,6 +75,7 @@ const PartyForm: React.FC = () => {
 		try {
 			const response = await apiCreateParty(formData);
 			toast.success(response.message);
+			navigate('/quan-tri-vien/danh-sach-bua-tiec');
 		} catch (error) {
 			console.error('Error creating party:', error);
 			alert('Failed to create party');
@@ -101,7 +103,7 @@ const PartyForm: React.FC = () => {
 						value={formData.title}
 						onChange={handleChange}
 						placeholder="Enter title"
-						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
+						className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
 					/>
 				</div>
 				<div>
@@ -111,13 +113,16 @@ const PartyForm: React.FC = () => {
 						value={formData.description}
 						onChange={handleChange}
 						placeholder="Enter description"
-						className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300"
+						className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+						rows={4}
 					/>
 				</div>
+
+				{/* Options */}
 				<div>
 					<span className="block font-medium mb-2">Lựa chọn:</span>
 					{formData.options.map((option, index) => (
-						<div key={option._id} className="flex gap-2 mb-2">
+						<div key={index} className="flex gap-2 mb-2">
 							<div className="w-1/2">
 								<input
 									value={option.type}
@@ -157,7 +162,7 @@ const PartyForm: React.FC = () => {
 				</div>
 				<button
 					type="submit"
-					className="w-full bg-blue-600 text-white font-semibold p-2 rounded-md hover:bg-blue-700 transition"
+					className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold p-3 rounded-lg hover:opacity-90 transition"
 				>
 					Submit
 				</button>

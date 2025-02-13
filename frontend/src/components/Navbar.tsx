@@ -1,12 +1,14 @@
-import avatar from '@/assets/avatar.png';
-import notify from '@/assets/notify.png';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '@/stores/reducers/rootReducer';
 
 const Navbar = () => {
+	const { user } = useSelector((state: RootState) => state.user);
+	console.log('navbar:', user);
 	return (
 		<div className="flex items-center justify-between p-4">
 			{/* SEARCH BAR */}
 			<div className="hidden md:flex items-center gap-2 text-xs rounded-full ring-[1.5px] ring-gray-300 px-2">
-				<img src="/search.png" alt="" width={14} height={14} />
 				<input
 					type="text"
 					placeholder="Search..."
@@ -15,19 +17,18 @@ const Navbar = () => {
 			</div>
 			{/* ICONS AND USER */}
 			<div className="flex items-center gap-6 justify-end w-full">
-				<div className="bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer relative">
-					<img src={notify} alt="" width={20} height={20} />
-					<div className="absolute -top-3 -right-3 w-5 h-5 flex items-center justify-center bg-purple-500 text-white rounded-full text-xs">
-						1
-					</div>
-				</div>
+				{/* User Info */}
 				<div className="flex flex-col">
-					<span className="text-xs leading-3 font-medium">ThangLP</span>
-					<span className="text-[10px] text-gray-500 text-right">Admin</span>
+					<span className="text-xs leading-3 font-medium">{user.fullName}</span>
+					<span className="text-[10px] text-gray-500 text-right">
+						{user.role}
+					</span>
 				</div>
+
+				{/* User Avatar */}
 				<img
-					src={avatar}
-					alt=""
+					src={user?.avatar}
+					alt="Avatar"
 					width={36}
 					height={36}
 					className="rounded-full"

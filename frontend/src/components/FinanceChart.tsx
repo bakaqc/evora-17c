@@ -15,63 +15,63 @@ import moreDark from '@/assets/moreDark.png';
 const data = [
 	{
 		name: 'Jan',
-		income: 4000,
-		expense: 2400,
+		khach_hang: 4000,
+		don_vi_to_chuc: 2400,
 	},
 	{
 		name: 'Feb',
-		income: 3000,
-		expense: 1398,
+		khach_hang: 3000,
+		don_vi_to_chuc: 1398,
 	},
 	{
 		name: 'Mar',
-		income: 2000,
-		expense: 9800,
+		khach_hang: 2000,
+		don_vi_to_chuc: 9800,
 	},
 	{
 		name: 'Apr',
-		income: 2780,
-		expense: 3908,
+		khach_hang: 2780,
+		don_vi_to_chuc: 3908,
 	},
 	{
 		name: 'May',
-		income: 1890,
-		expense: 4800,
+		khach_hang: 1890,
+		don_vi_to_chuc: 4800,
 	},
 	{
 		name: 'Jun',
-		income: 2390,
-		expense: 3800,
+		khach_hang: 2390,
+		don_vi_to_chuc: 3800,
 	},
 	{
 		name: 'Jul',
-		income: 3490,
-		expense: 4300,
+		khach_hang: 3490,
+		don_vi_to_chuc: 4300,
 	},
 	{
 		name: 'Aug',
-		income: 3490,
-		expense: 4300,
+		khach_hang: 3490,
+		don_vi_to_chuc: 4300,
 	},
 	{
 		name: 'Sep',
-		income: 3490,
-		expense: 4300,
+		khach_hang: 3490,
+		don_vi_to_chuc: 4300,
 	},
 	{
 		name: 'Oct',
-		income: 3490,
-		expense: 4300,
+		khach_hang: 3490,
+		don_vi_to_chuc: 4300,
 	},
 	{
 		name: 'Nov',
-		income: 3490,
-		expense: 4300,
+		khach_hang: 3490,
+		don_vi_to_chuc: 4300,
 	},
 	{
 		name: 'Dec',
-		income: 3490,
-		expense: 4300,
+		khach_hang: 3490,
+		don_vi_to_chuc: 4300,
 	},
 ];
 
@@ -79,7 +79,7 @@ const FinanceChart = () => {
 	return (
 		<div className="bg-white rounded-xl w-full h-full p-4">
 			<div className="flex justify-between items-center">
-				<h1 className="text-lg font-semibold">Finance</h1>
+				<h1 className="text-lg font-semibold">Doanh thu</h1>
 				<img src={moreDark} alt="More" width={20} height={20} />
 			</div>
 			<ResponsiveContainer width="100%" height="90%">
@@ -116,14 +116,14 @@ const FinanceChart = () => {
 					/>
 					<Line
 						type="monotone"
-						dataKey="income"
-						stroke="#C3EBFA"
+						dataKey="khach_hang"
+						stroke="#3361bd"
 						strokeWidth={5}
 					/>
 					<Line
 						type="monotone"
-						dataKey="expense"
-						stroke="#CFCEFF"
+						dataKey="don_vi_to_chuc"
+						stroke="#f5ca48"
 						strokeWidth={5}
 					/>
 				</LineChart>
