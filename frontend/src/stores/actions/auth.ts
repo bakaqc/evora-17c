@@ -203,3 +203,6 @@ export const verifyOTP =
 			toast.error('An error occurred while verifying OTP.');
 		}
 	};
+export const logout = () => ({
+	type: actionTypes.LOG_OUT,
+});

@@ -20,7 +20,7 @@ import {
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { User } from '@/schemas/user.schema';
 import { apiCreateBooking } from '@/services/booking';
@@ -38,11 +38,13 @@ interface PartyDetailProps {
 
 const RegistrationForm: React.FC = () => {
 	const { user } = useSelector((state: RootState) => state.user);
+	const { token } = useSelector((state: RootState) => state.auth);
 	const [form] = Form.useForm();
 	const [totalAmount, setTotalAmount] = useState<number>(0);
 	const [party, setParty] = useState<Party | null>(null);
 	const { id } = useParams<{ id: string }>();
 	const safeId: string = id ?? '';
+	const navigate = useNavigate();
 	useEffect(() => {
 		const fetchParty = async () => {
 			if (id) {
@@ -159,6 +161,12 @@ const RegistrationForm: React.FC = () => {
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
+	const handleCheckLogin = () => {
+		console.log(token);
+		if (!token) {
+			navigate('/dang-nhap');
+		}
+	};
 
 	return (
 		<Card
@@ -240,7 +248,7 @@ const RegistrationForm: React.FC = () => {
 					<Input value={totalAmount} readOnly />
 				</Form.Item>
 				<Form.Item style={{ textAlign: 'center', width: '100%' }}>
-					<Button type="primary" htmlType="submit">
+					<Button type="primary" htmlType="submit" onClick={handleCheckLogin}>
 						Đặt tiệc ngay
 					</Button>
 				</Form.Item>

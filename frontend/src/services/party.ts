@@ -1,13 +1,13 @@
 import axiosConfig from '../axiosConfig';
 import axios from 'axios';
 
+import { FormData } from '@/components/PartyForm';
 import { apiBaseUrl } from '@/utils/apiBase';
-import { PartyQuery } from '@/utils/type';
 
 interface Option {
 	type: string;
 	price: number;
-	_id: string;
+	_id?: string;
 }
 
 export interface Party {
@@ -24,6 +24,24 @@ export interface Party {
 	updatedAt: string;
 	__v: number;
 }
+
+interface Option {
+	_id?: string;
+	type: string;
+	price: number;
+}
+
+interface PartyQuery {
+	user?: string;
+	category?: string;
+	title?: string;
+	description?: string;
+	options?: Option[];
+	photos?: string[];
+	ratingTotal?: number;
+	ratingCount?: number;
+}
+
 interface Pagination {
 	total: number;
 	page: string;
@@ -73,4 +91,12 @@ export const apiGetPartiesByCategory = ({
 export const apiGetPartyById = async (id: string) => {
 	const response = await axios.get(`${apiBaseUrl}/api/parties/${id}`);
 	return response.data;
+};
+export const apiCreateParty = (query: FormData): Promise<ApiResponse> => {
+	return new Promise((resolve, reject) => {
+		axiosConfig
+			.post('/api/parties', query)
+			.then((response) => resolve(response.data as ApiResponse))
+			.catch((err) => reject(new Error(err)));
+	});
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { VscHistory } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
@@ -149,13 +150,18 @@ const Navigation: React.FC<NavigationProps> = ({ isAdmin = false }) => {
 									<VscHistory />
 									Lịch sử đặt tiệc
 								</NavLink>
-								<NavLink
+								<button
+									type="button"
 									className="hover:text-orange-500 border-y border-gray-200 py-2 flex items-center gap-2 whitespace-nowrap text-slate-950"
-									to={'/'}
+									onClick={() => {
+										dispatch(actions.logout());
+										setIsShowUserDropdown(false);
+										toast.success('Đăng xuất thành công');
+									}}
 								>
 									<IoIosLogOut />
 									Đăng xuất
-								</NavLink>
+								</button>
 							</div>
 						)}
 					</div>
