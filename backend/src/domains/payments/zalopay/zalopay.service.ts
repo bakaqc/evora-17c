@@ -18,10 +18,8 @@ export class ZalopayService {
 	) {}
 
 	async create(dto: CreateZaloPayOrderDto) {
-		const frontendURL =
-			process.env.FRONTEND_URL?.split(',').map((origin) => origin.trim()) || [];
 		const embed_data = {
-			redirecturl: `${frontendURL}/lich-su-dat-tiec`,
+			redirecturl: `${process.env.FRONTEND_URL}/lich-su-dat-tiec`,
 		};
 
 		const items = [];
