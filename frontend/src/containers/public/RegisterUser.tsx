@@ -13,7 +13,6 @@ import { AppDispatch } from '@/redux';
 import * as actions from '@/stores/actions';
 import { path } from '@/utils/constant';
 import { Payload } from '@/utils/type';
-import validate from '@/utils/validateField';
 
 const RegisterUser: React.FC = () => {
 	interface InvalidField {
@@ -40,18 +39,8 @@ const RegisterUser: React.FC = () => {
 	];
 
 	const handleSubmit = async () => {
-		if (payload.password !== rePassword) {
-			setInvalidField((prev) => [
-				...prev,
-				{ name: 'rePassword', msg: 'Mật khẩu nhập lại không khớp.' },
-			]);
-			return;
-		}
-		const invalid = validate(payload, setInvalidField);
-		if (invalid === 0) {
-			await dispatch(actions.register(payload));
-			navigate(path.VERIFY_OTP);
-		}
+		await dispatch(actions.register(payload));
+		navigate(path.VERIFY_OTP);
 	};
 
 	return (
