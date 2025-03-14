@@ -10,7 +10,7 @@ interface ApiResponse<T> {
 export const getUsers = async (
 	token: string,
 	page: number = 1,
-	limit: number = 10,
+	limit: number = 100,
 ): Promise<ApiResponse<User[]>> => {
 	try {
 		const response = await axiosConfig.get(

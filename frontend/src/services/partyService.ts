@@ -10,7 +10,7 @@ interface ApiResponse<T> {
 export const getParties = async (
 	token: string,
 	page: number = 1,
-	limit: number = 10,
+	limit: number = 100,
 ): Promise<ApiResponse<Party[]>> => {
 	try {
 		const response = await axiosConfig.get(

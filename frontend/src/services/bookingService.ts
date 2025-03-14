@@ -10,7 +10,7 @@ interface ApiResponse<T> {
 export const getBookings = async (
 	token: string,
 	page: number = 1,
-	limit: number = 10,
+	limit: number = 100,
 ): Promise<ApiResponse<Booking[]>> => {
 	try {
 		const response = await axiosConfig.get(
